@@ -236,16 +236,16 @@ class KS2:
                 print("Warning: the number of samples mismatched!")
 
             # data size less than or equal to 512MiB
-            if nBytes <= 256 * 1024:
+            if nBytes <= 512 * 1024 * 1024:
                 self.raw = np.frombuffer(self.fid.read(nBytes), dtype=rdtp)\
                     .reshape((self.sampN, self.chN))
             # greater than 512MiB
             else:
                 # n samples pre read block
-                n0 = 256 * 1024 // nBytesPerSample
+                n0 = 512 * 1024 * 1024 // nBytesPerSample
                 # num of WHOLE read block
                 n = nBytes // (n0 * nBytesPerSample)
-                # n samples in the last block
+                # n samples in the final block (broken)
                 n1 = self.sampN - n * n0
                 self.raw = np.zeros((self.sampN, self.chN), dtype=rdtp)
                 for i in range(n):
@@ -293,7 +293,7 @@ A python code for converting ks2 to mat.
     By Dr. ZC Fang (Copyright 2018)
         """)
 
-    ks2 = KS2('Mea439.ks2')
+    ks2 = KS2('test.ks2')
     print(ks2)
     print(ks2.raw)
     ks2.convertData()
