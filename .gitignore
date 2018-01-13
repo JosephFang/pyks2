@@ -10,3 +10,5 @@
 !*.md
 
 !CMakeLists.txt
+
+!example.ks2
