@@ -1,0 +1,12 @@
+*.*
+
+!.gitignore
+
+!*.m
+!*.py
+!*.h
+!*.c
+!*.cpp
+!*.md
+
+!CMakeLists.txt
