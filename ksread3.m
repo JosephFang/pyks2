@@ -1,98 +1,98 @@
 function [KSX, Header] = ksread3(file,dataBlockNo)
 %--------------------------------------------------------------------------
 %% ksread3
-%   ‹¤˜a•W€ƒf[ƒ^ƒtƒ@ƒCƒ‹ƒtƒH[ƒ}ƒbƒgKS2‚ğMATLAB‚Å“Ç‚İ‚İ‚½‚ß‚ÌƒXƒNƒŠƒvƒgƒtƒ@ƒCƒ‹‚Å‚·B
+%   å…±å’Œæ¨™æº–ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆKS2ã‚’MATLABã§èª­ã¿è¾¼ã¿ãŸã‚ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã§ã™ã€‚
 %
-%    g—p–@:
+%    ä½¿ç”¨æ³•:
 %    KSX          = ksread3('FileName');
 %    [KSX,Header] = ksread3('FileName');
 %    KSX          = ksread3('FileName',OptNo);
 %    [KSX,Header] = ksread3('FileName',OptNo);
 %
-%      ˆø”
-%          FileName         ... ‘ÎÛƒf[ƒ^ƒtƒ@ƒCƒ‹(Šg’£qŠÜ‚Ş:KS2 or E4A)
-%                               E4Aƒtƒ@ƒCƒ‹‚ğw’è‚µ‚½ê‡C2‚Â–Ú‚Ìˆø”‚Í–³‹‚³‚ê‚Ü‚·
-%          OptNo(option)    ... ƒuƒƒbƒNƒf[ƒ^‚Ì“Ç‚İ‚İ”Ô†‚Ü‚½‚ÍCKS2‚ÆE4Aƒtƒ@ƒCƒ‹‚Ì“¯“Ç‚İ‚İƒ‚[ƒh
-%                               OptNo‚ğw’è‚µ‚È‚¢ê‡C©“®“I‚ÉƒuƒƒbƒN
-%                               ”Ô†‚Í1‚É‚È‚è‚Ü‚·B
-%@@@@@@@@@@@@@@@@@'-1'‚ğw’è‚µ‚½ê‡C'Filename'‚Åw’è‚µ‚½
-%                               ƒtƒ@ƒCƒ‹–¼‚Æ“¯–¼‚ÌE4Aƒtƒ@ƒCƒ‹‚ğ“¯‚É“Ç‚İ‚İ‚Ü‚·
-%                               “¯–¼‚ÌE4Aƒtƒ@ƒCƒ‹‚ª–³‚¢ê‡CKS2‚Ì‚İ“Ç‚İ‚İ‚Ü‚·
-%      –ß‚è’l
-%          KSX              ... ŠÔƒf[ƒ^ŠÜ‚ß‚½’Šo‚µ‚½W˜^ƒf[ƒ^B
-%                               [M,(time)+N]‚Ì‘½ŸŒ³”z—ñB
-%          Header           ... CHî•ñ(Cell”z—ñ)
+%      å¼•æ•°
+%          FileName         ... å¯¾è±¡ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«(æ‹¡å¼µå­å«ã‚€:KS2 or E4A)
+%                               E4Aãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã—ãŸå ´åˆï¼Œ2ã¤ç›®ã®å¼•æ•°ã¯ç„¡è¦–ã•ã‚Œã¾ã™
+%          OptNo(option)    ... ãƒ–ãƒ­ãƒƒã‚¯ãƒ‡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿ç•ªå·ã¾ãŸã¯ï¼ŒKS2ã¨E4Aãƒ•ã‚¡ã‚¤ãƒ«ã®åŒæ™‚èª­ã¿è¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+%                               OptNoã‚’æŒ‡å®šã—ãªã„å ´åˆï¼Œè‡ªå‹•çš„ã«ãƒ–ãƒ­ãƒƒã‚¯
+%                               ç•ªå·ã¯1ã«ãªã‚Šã¾ã™ã€‚
+%ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€'-1'ã‚’æŒ‡å®šã—ãŸå ´åˆï¼Œ'Filename'ã§æŒ‡å®šã—ãŸ
+%                               ãƒ•ã‚¡ã‚¤ãƒ«åã¨åŒåã®E4Aãƒ•ã‚¡ã‚¤ãƒ«ã‚’åŒæ™‚ã«èª­ã¿è¾¼ã¿ã¾ã™
+%                               åŒåã®E4Aãƒ•ã‚¡ã‚¤ãƒ«ãŒç„¡ã„å ´åˆï¼ŒKS2ã®ã¿èª­ã¿è¾¼ã¿ã¾ã™
+%      æˆ»ã‚Šå€¤
+%          KSX              ... æ™‚é–“ãƒ‡ãƒ¼ã‚¿å«ã‚ãŸæŠ½å‡ºã—ãŸé›†éŒ²ãƒ‡ãƒ¼ã‚¿ã€‚
+%                               [M,(time)+N]ã®å¤šæ¬¡å…ƒé…åˆ—ã€‚
+%          Header           ... CHæƒ…å ±(Cellé…åˆ—)
 %
 %
-%   Àsƒvƒƒ“ƒvƒg•\¦î•ñ
-%   ƒtƒ@ƒCƒ‹ID              ƒf[ƒ^‚ğW˜^‚µ‚½»•i‚ÌŒ^®‚Å‚·
-%   ƒo[ƒWƒ‡ƒ“              KS2‚Ìƒo[ƒWƒ‡ƒ“‚Å‚·
-%   Å‘åƒf[ƒ^ƒuƒƒbƒN”     ƒf[ƒ^‚ÌƒuƒƒbƒN”‚Å‚·
-%   w’èƒf[ƒ^ƒuƒƒbƒN”Ô†   BlockNo‚Åw’è‚µ‚½ƒuƒƒbƒN”‚Å‚·
-%   W˜^CH”                ƒAƒiƒƒOCH”‚ÆƒfƒWƒ^ƒ‹CH”‚ğ‘«‚µ‚½CH”‚Å‚·
-%   ŒÂ•ÊW˜^CH”            ƒAƒiƒƒOCH”‚Å‚·
-%   ƒTƒ“ƒvƒŠƒ“ƒOü”g”(Hz)   ƒf[ƒ^W˜^‚ÌƒTƒ“ƒvƒŠƒ“ƒOü”g”‚Å‚·
-%   ƒf[ƒ^W˜^”            1CH“–‚½‚è‚ÌW˜^ƒf[ƒ^”‚Å‚·
+%   å®Ÿè¡Œæ™‚ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆè¡¨ç¤ºæƒ…å ±
+%   ãƒ•ã‚¡ã‚¤ãƒ«ID              ãƒ‡ãƒ¼ã‚¿ã‚’é›†éŒ²ã—ãŸè£½å“ã®å‹å¼ã§ã™
+%   ãƒãƒ¼ã‚¸ãƒ§ãƒ³              KS2ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§ã™
+%   æœ€å¤§ãƒ‡ãƒ¼ã‚¿ãƒ–ãƒ­ãƒƒã‚¯æ•°     ãƒ‡ãƒ¼ã‚¿ã®ãƒ–ãƒ­ãƒƒã‚¯æ•°ã§ã™
+%   æŒ‡å®šãƒ‡ãƒ¼ã‚¿ãƒ–ãƒ­ãƒƒã‚¯ç•ªå·   BlockNoã§æŒ‡å®šã—ãŸãƒ–ãƒ­ãƒƒã‚¯æ•°ã§ã™
+%   é›†éŒ²CHæ•°                ã‚¢ãƒŠãƒ­ã‚°CHæ•°ã¨ãƒ‡ã‚¸ã‚¿ãƒ«CHæ•°ã‚’è¶³ã—ãŸCHæ•°ã§ã™
+%   å€‹åˆ¥é›†éŒ²CHæ•°            ã‚¢ãƒŠãƒ­ã‚°CHæ•°ã§ã™
+%   ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°(Hz)   ãƒ‡ãƒ¼ã‚¿é›†éŒ²æ™‚ã®ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°ã§ã™
+%   ãƒ‡ãƒ¼ã‚¿é›†éŒ²æ•°            1CHå½“ãŸã‚Šã®é›†éŒ²ãƒ‡ãƒ¼ã‚¿æ•°ã§ã™
 %
-%   ‚»‚Ì‘¼F
-%           ‚¢‚­‚Â‚©‚ÌƒOƒ[ƒoƒ‹•Ï”‚Åˆ—•û–@‚ªˆÙ‚È‚è‚Ü‚·B
+%   ãã®ä»–ï¼š
+%           ã„ãã¤ã‹ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã§å‡¦ç†æ–¹æ³•ãŒç•°ãªã‚Šã¾ã™ã€‚
 %
 %
-%    global g_CsvFormat;     %ƒwƒbƒ_î•ñ‚ÌƒtƒH[ƒ}ƒbƒg‚Ì‹Œ®E•W€‚ğØ‚è‘Ö‚¦‚Ü‚·      0F‹Œƒ^ƒCƒv  1F•W€ƒ^ƒCƒv
-%                                   ‹Œƒ^ƒCƒvFDAS-200A‚ÌVer01.05ˆÈ‘O‚ÌCSV•ÏŠ·Œ`®
-%                                   •W€ƒ^ƒCƒvFVer01.06‚Å‚ÌV‚½‚ÈCSV•ÏŠ·Œ`®
-%    global g_IndexType;     %ƒf[ƒ^‚ÌƒCƒ“ƒfƒbƒNƒX‚ğØ‚è‘Ö‚¦‚Ü‚·                     0FŠÔ      1F”Ô†
-%    global g_StartNumber;   %ƒf[ƒ^‚ÌƒCƒ“ƒfƒbƒNƒX‚ÌŠJn”Ô†‚ğØ‚è‘Ö‚¦‚Ü‚·            0F0n‚Ü‚è   1F1n‚Ü‚è
-%    global g_LanguageType;  %•\¦Œ¾Œê‚ğØ‚è‘Ö‚¦‚Ü‚·                                0:“ú–{Œê     1:‰pŒê
+%    global g_CsvFormat;     %ãƒ˜ãƒƒãƒ€æƒ…å ±ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®æ—§å¼ãƒ»æ¨™æº–ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™      0ï¼šæ—§ã‚¿ã‚¤ãƒ—  1ï¼šæ¨™æº–ã‚¿ã‚¤ãƒ—
+%                                   æ—§ã‚¿ã‚¤ãƒ—ï¼šDAS-200Aã®Ver01.05ä»¥å‰ã®CSVå¤‰æ›å½¢å¼
+%                                   æ¨™æº–ã‚¿ã‚¤ãƒ—ï¼šVer01.06ã§ã®æ–°ãŸãªCSVå¤‰æ›å½¢å¼
+%    global g_IndexType;     %ãƒ‡ãƒ¼ã‚¿ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™                     0ï¼šæ™‚é–“      1ï¼šç•ªå·
+%    global g_StartNumber;   %ãƒ‡ãƒ¼ã‚¿ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®é–‹å§‹ç•ªå·ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™            0ï¼š0å§‹ã¾ã‚Š   1ï¼š1å§‹ã¾ã‚Š
+%    global g_LanguageType;  %è¡¨ç¤ºè¨€èªã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™                                0:æ—¥æœ¬èª     1:è‹±èª
 %
 %
 %   Copyright 2016 Kyowa ELECTRONIC INSTRUMENTS CO.,LTD.
 %   version 1.03 2016/02/19
 %
 %   Date 13/12/25
-%   ver1.00 V‹KƒŠƒŠ[ƒX
-%           CANî•ñ“Ç‚İ‚İ‚É‘Î‰
+%   ver1.00 æ–°è¦ãƒªãƒªãƒ¼ã‚¹
+%           CANæƒ…å ±èª­ã¿è¾¼ã¿ã«å¯¾å¿œ
 
 %   Date 14/01/24
-%   ver1.01 E4A‚Ì“Ç‚İ‚İ‚É‘Î‰
+%   ver1.01 E4Aã®èª­ã¿è¾¼ã¿ã«å¯¾å¿œ
 %
 %   Date 14/06/20
-%   ver1.02 ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^‚Ìˆ—‚ğC³
-%           EDX-200A‚ÅW˜^‚µ‚½Û‚ÌW˜^ŠJnƒJƒEƒ“ƒ^’l‚ª‚È‚¢ê‡‚Ìˆ—‚ğ’Ç‰Á
-%           floatŒ^‚Ìƒf[ƒ^ˆ—‚ğC³
-%           CANƒf[ƒ^ˆ—‚ÌSignedŒ^‚Ì•s‹ï‡‚ğC³
+%   ver1.02 ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã®å‡¦ç†ã‚’ä¿®æ­£
+%           EDX-200Aã§é›†éŒ²ã—ãŸéš›ã®é›†éŒ²é–‹å§‹ã‚«ã‚¦ãƒ³ã‚¿å€¤ãŒãªã„å ´åˆã®å‡¦ç†ã‚’è¿½åŠ 
+%           floatå‹ã®ãƒ‡ãƒ¼ã‚¿å‡¦ç†ã‚’ä¿®æ­£
+%           CANãƒ‡ãƒ¼ã‚¿å‡¦ç†ã®Signedå‹ã®ä¸å…·åˆã‚’ä¿®æ­£
 
 %   Date 16/02/19
-%   ver1.03 KS2ƒtƒ@ƒCƒ‹‚ÌW˜^ŠJnƒJƒEƒ“ƒ^’l‚Ìæ“¾•”‚ğC³
-%           CSV•W€ƒ^ƒCƒvCE4A‚ÆKS2‚ğ“¯‚É“Ç‚İ‚ñ‚¾Û‚É‘ª’èCH”‚ªNaN‚É‚È‚é•s‹ï‡‚ğC³
+%   ver1.03 KS2ãƒ•ã‚¡ã‚¤ãƒ«ã®é›†éŒ²é–‹å§‹ã‚«ã‚¦ãƒ³ã‚¿å€¤ã®å–å¾—éƒ¨ã‚’ä¿®æ­£
+%           CSVæ¨™æº–ã‚¿ã‚¤ãƒ—æ™‚ï¼ŒE4Aã¨KS2ã‚’åŒæ™‚ã«èª­ã¿è¾¼ã‚“ã éš›ã«æ¸¬å®šCHæ•°ãŒNaNã«ãªã‚‹ä¸å…·åˆã‚’ä¿®æ­£
 %
 %
 %--------------------------------------------------------------------------
 
 % initalized variable
 %
-    global g_NtbFlag;       %‘ª’èŠí‚ªNTB‚©‚ğ¦‚·ƒtƒ‰ƒO
-    global g_Ks2VerNum;     %KS2‚ÌVerî•ñ
+    global g_NtbFlag;       %æ¸¬å®šå™¨ãŒNTBã‹ã‚’ç¤ºã™ãƒ•ãƒ©ã‚°
+    global g_Ks2VerNum;     %KS2ã®Veræƒ…å ±
 
 
-    global g_CsvFormat;     %ƒwƒbƒ_î•ñŒ`®‚Ì‹Œƒ^ƒCƒvE•W€ƒ^ƒCƒv‚ğØ‚è‘Ö‚¦‚Ü‚·
-                            %0F‹Œƒ^ƒCƒv  1F•W€ƒ^ƒCƒv
-                            %‹Œƒ^ƒCƒvFDAS-200A‚Ì‰Šú•Û‘¶Œ`®
-                            %•W€ƒ^ƒCƒvFVer01.06‚Å’Ç‰Á‚³‚ê‚½V‚½‚ÈCSV•Û‘¶Œ`®
+    global g_CsvFormat;     %ãƒ˜ãƒƒãƒ€æƒ…å ±å½¢å¼ã®æ—§ã‚¿ã‚¤ãƒ—ãƒ»æ¨™æº–ã‚¿ã‚¤ãƒ—ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™
+                            %0ï¼šæ—§ã‚¿ã‚¤ãƒ—  1ï¼šæ¨™æº–ã‚¿ã‚¤ãƒ—
+                            %æ—§ã‚¿ã‚¤ãƒ—ï¼šDAS-200Aã®åˆæœŸä¿å­˜å½¢å¼
+                            %æ¨™æº–ã‚¿ã‚¤ãƒ—ï¼šVer01.06ã§è¿½åŠ ã•ã‚ŒãŸæ–°ãŸãªCSVä¿å­˜å½¢å¼
 
-    global g_IndexType;     %“Ç‚İ‚ñ‚¾W˜^ƒf[ƒ^s—ñ‚Ìæ“ª—ñ‚É•t‰Á‚·‚éƒf[ƒ^Œ`®‚ğØ‚è‘Ö‚¦‚Ü‚·
-                            %0FŠÔ      1F”Ô†
+    global g_IndexType;     %èª­ã¿è¾¼ã‚“ã é›†éŒ²ãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®å…ˆé ­åˆ—ã«ä»˜åŠ ã™ã‚‹ãƒ‡ãƒ¼ã‚¿å½¢å¼ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™
+                            %0ï¼šæ™‚é–“      1ï¼šç•ªå·
 
-    global g_StartNumber;   %“Ç‚İ‚ñ‚¾W˜^ƒf[ƒ^s—ñ‚Ìæ“ª—ñ‚É•t‰Á‚·‚éƒf[ƒ^‚Ìæ“ª‚ÌŠJn”Ô†‚ğØ‚è‘Ö‚¦‚Ü‚·B
-                            %0F0n‚Ü‚è   1F1n‚Ü‚è
+    global g_StartNumber;   %èª­ã¿è¾¼ã‚“ã é›†éŒ²ãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®å…ˆé ­åˆ—ã«ä»˜åŠ ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã®å…ˆé ­ã®é–‹å§‹ç•ªå·ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™ã€‚
+                            %0ï¼š0å§‹ã¾ã‚Š   1ï¼š1å§‹ã¾ã‚Š
 
-    global g_LanguageType;  %–{ƒXƒNƒŠƒvƒgÀs‚ÌƒRƒ}ƒ“ƒhƒvƒƒ“ƒvƒgã‚É•\¦‚·‚éŒ¾Œê‚ğØ‚è‘Ö‚¦‚Ü‚·
-                            %0:“ú–{Œê     1:‰pŒê
+    global g_LanguageType;  %æœ¬ã‚¹ã‚¯ãƒªãƒ—ãƒˆå®Ÿè¡Œæ™‚ã®ã‚³ãƒãƒ³ãƒ‰ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆä¸Šã«è¡¨ç¤ºã™ã‚‹è¨€èªã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™
+                            %0:æ—¥æœ¬èª     1:è‹±èª
 
-    g_CsvFormat    = 0;     %‹Œƒ^ƒCƒv
-    g_IndexType    = 0;     %ŠÔ
-    g_StartNumber  = 0;     %0n‚Ü‚è
-    %g_LanguageType = 0;     %“ú–{Œê
+    g_CsvFormat    = 0;     %æ—§ã‚¿ã‚¤ãƒ—
+    g_IndexType    = 0;     %æ™‚é–“
+    g_StartNumber  = 0;     %0å§‹ã¾ã‚Š
+    %g_LanguageType = 0;     %æ—¥æœ¬èª
     g_LanguageType = 1;     %English
 
     tblInfo = [];
@@ -115,11 +115,11 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
     tblInfo.err.identifier = '';
     tblInfo.err.stack      = [];
 
-    % MATLAB‚Ìversionƒ`ƒFƒbƒN
+    % MATLABã®versionãƒã‚§ãƒƒã‚¯
     vers = version;
     tblInfo.MATLAB_Ver   = str2double(vers(1:3));
 
-    tblInfo.HeadSeek     = 256; % ŒÅ’è’·ƒwƒbƒ_•”‚Ì‘å‚«‚³
+    tblInfo.HeadSeek     = 256; % å›ºå®šé•·ãƒ˜ãƒƒãƒ€éƒ¨ã®å¤§ãã•
     tblInfo.InfoSeek     = 6;
     tblInfo.FixCH        = 16;
     tblInfo.CmpExt       = 'ks2';
@@ -127,7 +127,7 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
     tblInfo.CmpMachine2  = 'PCD-300A';
     tblInfo.CmpMachine10 = 'UDAS-100A';
 
-    % ver1.01  MATLAB‚ÌVer(R2008ˆÈ~)‚É‚æ‚Á‚ÄŒ¾ŒêØ‚è‘Ö‚¦‚ª¢“ï‚Ì‚½‚ßCƒpƒ‰ƒ[ƒ^‚Åİ’è‚·‚é
+    % ver1.01  MATLABã®Ver(R2008ä»¥é™)ã«ã‚ˆã£ã¦è¨€èªåˆ‡ã‚Šæ›¿ãˆãŒå›°é›£ã®ãŸã‚ï¼Œãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã§è¨­å®šã™ã‚‹
     tblInfo.CmpLang = 'jhelp';
     if g_LanguageType == 0
         tblInfo.Lang = 'jhelp';
@@ -135,30 +135,30 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
         tblInfo.Lang = 'Dummy';
     end
 
-    % (1)ˆø”‚ªw’è‚³‚ê‚Ä‚¢‚È‚¢ê‡
+    % (1)å¼•æ•°ãŒæŒ‡å®šã•ã‚Œã¦ã„ãªã„å ´åˆ
     if nargin < 1 || isempty(file)
         error(makeDispMessage(1,tblInfo));
         exit;
     elseif nargin < 2
         dataBlockNo = 1;
     elseif nargin > 2
-        % (2)ˆø”‚Ì”‚ª“KØ‚Å‚È‚¢
+        % (2)å¼•æ•°ã®æ•°ãŒé©åˆ‡ã§ãªã„
         strMsgBuf = makeDispMessage(2,tblInfo);
         error(strMsgBuf);
         exit;
     end
 
     [tbls,num] = split_str(file,delm);
-    % (3)Šg’£q‚ª–³‚¢
+    % (3)æ‹¡å¼µå­ãŒç„¡ã„
     if num < 2
         tblInfo.err = tbls;
         strMsgBuf = makeDispMessage(3,tblInfo);
         error(strMsgBuf);
         exit;
     end
-    tblInfo.ext = lower(tbls{2}); % æ“¾‚µ‚½Šg’£q
+    tblInfo.ext = lower(tbls{2}); % å–å¾—ã—ãŸæ‹¡å¼µå­
 
-    %2”Ô–Ú‚Ìˆø”‚ª•‰‚È‚ç
+    %2ç•ªç›®ã®å¼•æ•°ãŒè² ãªã‚‰
     if(dataBlockNo < 0)
         ReadBoth = 1;
         dataBlockNo = 0;
@@ -168,35 +168,35 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
         tblInfo.dataBlockNo = dataBlockNo;
     end
 
-    %Šg’£q‚ªKS2‚È‚ç
+    %æ‹¡å¼µå­ãŒKS2ãªã‚‰
     if(strcmpi(tblInfo.CmpExt, tblInfo.ext) == 1)
 
-        %KS2ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+        %KS2ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
         fid = fopen(file,'r');
-        % (11)ƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢ê‡
+        % (11)ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„å ´åˆ
         if fid < 0
             strMsgBuf = makeDispMessage(11,tblInfo);
             error(strMsgBuf);
             exit;
         end
-        % (14)Šg’£q‚ªˆÙ‚È‚é
+        % (14)æ‹¡å¼µå­ãŒç•°ãªã‚‹
         if(strcmpi(tblInfo.CmpExt, tblInfo.ext) == 0)
             strMsgBuf = makeDispMessage(14,tblInfo);
             error(strMsgBuf);
             exit;
         end
 
-        %KS2‚æ‚èƒeƒLƒXƒgî•ñ‚Ìæ“¾
+        %KS2ã‚ˆã‚Šãƒ†ã‚­ã‚¹ãƒˆæƒ…å ±ã®å–å¾—
         tblInfo = getInfo(fid,tblInfo);
 
-        %ƒuƒƒbƒN”Ô†‚Ìƒ`ƒFƒbƒN
+        %ãƒ–ãƒ­ãƒƒã‚¯ç•ªå·ã®ãƒã‚§ãƒƒã‚¯
         if isnumeric(dataBlockNo) < 1
-            % (13)w’è‚³‚ê‚½ƒuƒƒbƒNNo‚ª”’l‚Å‚Í‚È‚¢ê‡
+            % (13)æŒ‡å®šã•ã‚ŒãŸãƒ–ãƒ­ãƒƒã‚¯NoãŒæ•°å€¤ã§ã¯ãªã„å ´åˆ
             strMsgBuf = makeDispMessage(13,tblInfo);
             error(strMsgBuf);
             exit;
         else
-            % (12)w’è‚³‚ê‚½ƒuƒƒbƒNNo‚ª•s³‚Èê‡
+            % (12)æŒ‡å®šã•ã‚ŒãŸãƒ–ãƒ­ãƒƒã‚¯NoãŒä¸æ­£ãªå ´åˆ
             if dataBlockNo > tblInfo.BlockNo
                 strMsgBuf = makeDispMessage(12,tblInfo);
                 error(strMsgBuf);
@@ -205,41 +205,41 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
             end
         end
 
-        %ƒIƒvƒVƒ‡ƒ“‚É“¯“Ç‚İ‚İ‚ªİ’è‚³‚ê‚Ä‚¢‚È‚©‚Á‚½‚ç
+        %ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã«åŒæ™‚èª­ã¿è¾¼ã¿ãŒè¨­å®šã•ã‚Œã¦ã„ãªã‹ã£ãŸã‚‰
         if(ReadBoth == 0)
             ReadMode = 0;
-        %“¯“Ç‚İ‚İ‚È‚ç
+        %åŒæ™‚èª­ã¿è¾¼ã¿ãªã‚‰
         else
-            %ƒtƒ@ƒCƒ‹–¼‚ÌŠg’£q‚ğKS2¨E4A‚É’uŠ·
+            %ãƒ•ã‚¡ã‚¤ãƒ«åã®æ‹¡å¼µå­ã‚’KS2â†’E4Aã«ç½®æ›
             file((strfind(file, '.') + 1):end) = 'e4a';
 
-            %E4Aƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚é‚©–‘O‚ÉŠm”F‚·‚é
+            %E4Aãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹ã‹äº‹å‰ã«ç¢ºèªã™ã‚‹
             e4afid = fopen(file,'r');
 
-            %ƒtƒ@ƒCƒ‹–¼‚ÌŠg’£q‚ğE4A¨KS2‚É’uŠ·
+            %ãƒ•ã‚¡ã‚¤ãƒ«åã®æ‹¡å¼µå­ã‚’E4Aâ†’KS2ã«ç½®æ›
             file((strfind(file, '.') + 1):end) = 'ks2';
 
-            %E4Aƒtƒ@ƒCƒ‹‚ª‚È‚¢‚È‚ç
+            %E4Aãƒ•ã‚¡ã‚¤ãƒ«ãŒãªã„ãªã‚‰
             if(e4afid<0)
                 ReadMode = 0;
-            %E4Aƒtƒ@ƒCƒ‹‚ª‚ ‚é‚È‚ç
+            %E4Aãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹ãªã‚‰
             else
                 ReadMode = 2;
                 fclose(e4afid);
             end
         end
-    %Šg’£q‚ªE4A‚È‚ç
+    %æ‹¡å¼µå­ãŒE4Aãªã‚‰
     elseif(strcmpi('e4a', tblInfo.ext) == 1)
         ReadMode = 1;
-    %KS2ƒtƒ@ƒCƒ‹‚Å‚àE4Aƒtƒ@ƒCƒ‹‚Å‚Í‚È‚¢ê‡
+    %KS2ãƒ•ã‚¡ã‚¤ãƒ«ã§ã‚‚E4Aãƒ•ã‚¡ã‚¤ãƒ«ã§ã¯ãªã„å ´åˆ
     else
-        % (17)KS2ƒtƒ@ƒCƒ‹‚Å‚àE4Aƒtƒ@ƒCƒ‹‚Å‚à‚È‚¢ê‡
+        % (17)KS2ãƒ•ã‚¡ã‚¤ãƒ«ã§ã‚‚E4Aãƒ•ã‚¡ã‚¤ãƒ«ã§ã‚‚ãªã„å ´åˆ
         strMsgBuf = makeDispMessage(17,tblInfo);
         error(strMsgBuf);
         exit;
     end
 
-    %‚à‚µE4A‚Ì‚İƒtƒ@ƒCƒ‹“Ç‚İ‚Ş‚È‚ç
+    %ã‚‚ã—E4Aã®ã¿ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã‚€ãªã‚‰
     if(ReadMode == 1)
         [KSX, Header, ErrNo] = e4read(file);
         if(ErrNo ~= 0)
@@ -250,35 +250,35 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
         return;
     end
 
-    %ƒRƒ}ƒ“ƒhƒEƒBƒ“ƒhƒE‚ÉW˜^ğŒ‚Ì•\¦
+    %ã‚³ãƒãƒ³ãƒ‰ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«é›†éŒ²æ¡ä»¶ã®è¡¨ç¤º
     %makeDispMessage(100,tblInfo);
 
-    %KS2‚Ìƒo[ƒWƒ‡ƒ“”Ô†‚Ìæ“¾
+    %KS2ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç•ªå·ã®å–å¾—
     VerStr = split_str(tblInfo.version,delm);
     g_Ks2VerNum = str2double(cell2mat(VerStr(2)));
 
-%KS2‚ÌW˜^ŠJnƒJƒEƒ“ƒ^’l‚Ìæ“¾
+%KS2ã®é›†éŒ²é–‹å§‹ã‚«ã‚¦ãƒ³ã‚¿å€¤ã®å–å¾—
 
     if(strcmpi(tblInfo.machine, 'EDX-200A') == 1)
         tblInfo.DataReadBody = (tblInfo.HeadSeek + tblInfo.variableHeader+tblInfo.dataHeader + 2);
 
-        %W˜^ƒf[ƒ^•”‚Ìƒ{ƒfƒB•”ƒoƒCƒg”‚Ü‚Åƒ|ƒCƒ“ƒ^‚ğˆÚ“®
+        %é›†éŒ²ãƒ‡ãƒ¼ã‚¿éƒ¨ã®ãƒœãƒ‡ã‚£éƒ¨ãƒã‚¤ãƒˆæ•°ã¾ã§ãƒã‚¤ãƒ³ã‚¿ã‚’ç§»å‹•
         fseek(fid, tblInfo.DataReadBody,'bof');
 
-        %ƒ{ƒfƒB•”ƒoƒCƒg”‚ğæ“¾
+        %ãƒœãƒ‡ã‚£éƒ¨ãƒã‚¤ãƒˆæ•°ã‚’å–å¾—
         tblInfo.DataBodyByte = fread(fid, 1,'int64=>double');
 
-        %ƒf[ƒ^ƒtƒbƒ^•”‚Ü‚Åƒ|ƒCƒ“ƒ^‚ğˆÚ“®
+        %ãƒ‡ãƒ¼ã‚¿ãƒ•ãƒƒã‚¿éƒ¨ã¾ã§ãƒã‚¤ãƒ³ã‚¿ã‚’ç§»å‹•
         fseek(fid, (tblInfo.DataReadBody + tblInfo.DataBodyByte + 8),'bof');
 
-        %ƒIƒtƒZƒbƒg—p‚ÌƒoƒCƒg”‚ğİ’è
+        %ã‚ªãƒ•ã‚»ãƒƒãƒˆç”¨ã®ãƒã‚¤ãƒˆæ•°ã‚’è¨­å®š
         OffsetSeek = (tblInfo.DataReadBody + tblInfo.DataBodyByte + 8);
 
-        %W˜^ŠJnƒJƒEƒ“ƒ^’l‚ğ’T¸(0x12 0x19)
+        %é›†éŒ²é–‹å§‹ã‚«ã‚¦ãƒ³ã‚¿å€¤ã‚’æ¢æŸ»(0x12 0x19)
         while(1)
             [parent, child] = checkFlag(fid, OffsetSeek, 0);    %ver1.03
 
-            %ƒf[ƒ^ƒtƒbƒ^•”‚Ì€–Ú‚ª–³‚¢‚È‚ç“Ç‚İ‚İI—¹
+            %ãƒ‡ãƒ¼ã‚¿ãƒ•ãƒƒã‚¿éƒ¨ã®é …ç›®ãŒç„¡ã„ãªã‚‰èª­ã¿è¾¼ã¿çµ‚äº†
             if(isempty(parent) == 1)
                 tblInfo.StCnt = 0;
                 break;
@@ -292,10 +292,10 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
                 end
             end
 
-            %‘å•ª—ŞC¬•ª—ŞC€–Úƒtƒ‰ƒOCƒf[ƒ^Œ^‚Ì4ƒoƒCƒg•ª‚ğ‰ÁZ‚·‚é
+            %å¤§åˆ†é¡ï¼Œå°åˆ†é¡ï¼Œé …ç›®ãƒ•ãƒ©ã‚°ï¼Œãƒ‡ãƒ¼ã‚¿å‹ã®4ãƒã‚¤ãƒˆåˆ†ã‚’åŠ ç®—ã™ã‚‹
             OffsetSeek = OffsetSeek + 4;
 
-            %ƒ{ƒfƒBƒoƒCƒg”‚ÌŒ^‚ÌƒTƒCƒY•ªƒV[ƒNˆÊ’u‚ğXV
+            %ãƒœãƒ‡ã‚£ãƒã‚¤ãƒˆæ•°ã®å‹ã®ã‚µã‚¤ã‚ºåˆ†ã‚·ãƒ¼ã‚¯ä½ç½®ã‚’æ›´æ–°
             if (child == 25)
                 OffsetSeek = OffsetSeek + 8;
             elseif (child == 26)
@@ -310,39 +310,39 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
                 OffsetSeek = OffsetSeek + 2;
             end
 
-            %ƒ{ƒfƒBƒoƒCƒg”•ªƒV[ƒNˆÊ’u‚ğXV
+            %ãƒœãƒ‡ã‚£ãƒã‚¤ãƒˆæ•°åˆ†ã‚·ãƒ¼ã‚¯ä½ç½®ã‚’æ›´æ–°
             OffsetSeek = OffsetSeek + SeekByte;     %ver1.03
         end
     else
         tblInfo.StCnt = 0;
     end
 
-    %E4A‚ÆKS2‚ğ“Ç‚İ‚±‚Ş‚È‚ç
+    %E4Aã¨KS2ã‚’èª­ã¿ã“ã‚€ãªã‚‰
     if(ReadMode == 2)
-        %ƒtƒ@ƒCƒ‹–¼‚ÌŠg’£q‚ğKS2¨E4A‚É’uŠ·
+        %ãƒ•ã‚¡ã‚¤ãƒ«åã®æ‹¡å¼µå­ã‚’KS2â†’E4Aã«ç½®æ›
         file((strfind(file, '.') + 1):end) = 'e4a';
 
-        %E4A‚Ìƒwƒbƒ_î•ñ‚Ìæ“¾
+        %E4Aã®ãƒ˜ãƒƒãƒ€æƒ…å ±ã®å–å¾—
         tblInfoE4a = e4readHeader(file);
 
-        %KS2‚ÆE4A‚ÌW˜^ğŒ‚ªˆê’v‚µ‚Ä‚¢‚é‚©Šm”F
+        %KS2ã¨E4Aã®é›†éŒ²æ¡ä»¶ãŒä¸€è‡´ã—ã¦ã„ã‚‹ã‹ç¢ºèª
         if(tblInfo.StCnt ~= tblInfoE4a.StCnt)
-            %(16)‘ª’èğŒ‚ªˆÙ‚È‚é‚½‚ßKS2‚ÆE4Aƒtƒ@ƒCƒ‹‚ÌŒİŠ·«‚ª–³‚¢
+            %(16)æ¸¬å®šæ¡ä»¶ãŒç•°ãªã‚‹ãŸã‚KS2ã¨E4Aãƒ•ã‚¡ã‚¤ãƒ«ã®äº’æ›æ€§ãŒç„¡ã„
             strMsgBuf = makeDispMessage(16,tblInfo);
             error(strMsgBuf);
             exit;
         end
 
         if(tblInfo.Hz ~= tblInfoE4a.Fs)
-            %(16)‘ª’èğŒ‚ªˆÙ‚È‚é‚½‚ßKS2‚ÆE4Aƒtƒ@ƒCƒ‹‚ÌŒİŠ·«‚ª–³‚¢
+            %(16)æ¸¬å®šæ¡ä»¶ãŒç•°ãªã‚‹ãŸã‚KS2ã¨E4Aãƒ•ã‚¡ã‚¤ãƒ«ã®äº’æ›æ€§ãŒç„¡ã„
             strMsgBuf = makeDispMessage(16,tblInfo);
             error(strMsgBuf);
             exit;
         end
 
-        %E4Aƒtƒ@ƒCƒ‹‚Ì‚ğ“Ç‚İ‚Ş‚½‚ß‚Ìƒƒ‚ƒŠ‚ª•s‘«‚µ‚Ä‚¢‚½‚ç
+        %E4Aãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚’èª­ã¿è¾¼ã‚€ãŸã‚ã®ãƒ¡ãƒ¢ãƒªãŒä¸è¶³ã—ã¦ã„ãŸã‚‰
         try
-            %CANƒf[ƒ^s—ñ‚ğNaN‚Å‰Šú‰»
+            %CANãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã‚’NaNã§åˆæœŸåŒ–
             e4X(1:tblInfoE4a.e4XLen-tblInfoE4a.StCnt,1:tblInfoE4a.TransChStsNum) = NaN;
         catch
             strMsgBuf = makeDispMessage(21,tblInfo);
@@ -352,42 +352,42 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
             clear e4X;
     end
 
-%ŠeƒZƒ‹ƒf[ƒ^‚Ì‰Šú‰»
+%å„ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
         tblfileID = cell(1,tblInfo.chAll+1);
         tblfileID(:,:) = {''};
-        %tblfileID(1,1) = {'[ID”Ô†]'};
+        %tblfileID(1,1) = {'[IDç•ªå·]'};
         tblfileID(1,1) = {'[ID No.]'};
 
         tblfileTitle = cell(1,tblInfo.chAll+1);
         tblfileTitle(:,:) = {''};
-        %tblfileTitle(1,1) = {'[ƒ^ƒCƒgƒ‹]'};
+        %tblfileTitle(1,1) = {'[ã‚¿ã‚¤ãƒˆãƒ«]'};
         tblfileTitle(1,1) = {'[Title]'};
 
         tblfileCh_num = cell(1,tblInfo.chAll+1);
         tblfileCh_num(:,:) = {''};
-        %tblfileCh_num(1,1) = {'[‘ª’èCH”]'};
+        %tblfileCh_num(1,1) = {'[æ¸¬å®šCHæ•°]'};
         tblfileCh_num(1,1) = {'[Number of Channels]'};
 
         tblfileSf = cell(1,tblInfo.chAll+1);
         tblfileSf(:,:) = {''};
-        %tblfileSf(1,1) = {'[ƒTƒ“ƒvƒŠƒ“ƒOü”g”(Hz)]'};
+        %tblfileSf(1,1) = {'[ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°(Hz)]'};
         tblfileSf(1,1) = {'[Sampling Frequency (Hz)]'};
 
         tblfileDigi_ch = cell(1,tblInfo.chAll+1);
         tblfileDigi_ch(:,:) = {''};
-        %tblfileDigi_ch(1,1) = {'[ƒfƒWƒ^ƒ‹“ü—Í]'};
+        %tblfileDigi_ch(1,1) = {'[ãƒ‡ã‚¸ã‚¿ãƒ«å…¥åŠ›]'};
         tblfileDigi_ch(1,1) = {'[Digital Input]'};
 
         tblfileTime = cell(1,tblInfo.chAll+1);
         tblfileTime(:,:) = {''};
-        %tblfileTime(1,1) = {'[‘ª’èŠÔ(sec)]'};
+        %tblfileTime(1,1) = {'[æ¸¬å®šæ™‚é–“(sec)]'};
         tblfileTime(1,1) = {'[Time (sec)]'};
 
-%ID”Ô†
+%IDç•ªå·
         fseek(fid,0,'bof');
         header_array = fread(fid,20,'uchar');
-        header_array(end-2:end,:)=[];           %"(0x22)‚ÆI’[2•¶šCRLF(0DC0A)‚Ìíœ
-        header_array(1,:)=[];                   %æ“ª‚Ì"(0x22)‚Ìíœ
+        header_array(end-2:end,:)=[];           %"(0x22)ã¨çµ‚ç«¯2æ–‡å­—CRLF(0Dï¼Œ0A)ã®å‰Šé™¤
+        header_array(1,:)=[];                   %å…ˆé ­ã®"(0x22)ã®å‰Šé™¤
         for n=1:size(header_array,1)
             if(header_array(end,1)==32)
                 header_array(end,:)=[];
@@ -400,10 +400,10 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
         end
         clear header_array;
 
-%ƒ^ƒCƒgƒ‹
+%ã‚¿ã‚¤ãƒˆãƒ«
         fseek(fid,30,'bof');
         header_array = fread(fid,44,'uchar');
-        header_array(end-2:end,:)=[];           %I’[2•¶šCRLF(0DC0A)‚Æh(0x22)
+        header_array(end-2:end,:)=[];           %çµ‚ç«¯2æ–‡å­—CRLF(0Dï¼Œ0A)ã¨â€(0x22)
         header_array(1,:)=[];
         for n=1:size(header_array,1)
             if(header_array(end,1)==32)
@@ -417,10 +417,10 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
         end
         clear header_array;
 
-%‘ª’èƒ`ƒƒƒ“ƒlƒ‹”
+%æ¸¬å®šãƒãƒ£ãƒ³ãƒãƒ«æ•°
         fseek(fid,74,'bof');
         header_array = fread(fid,8,'uchar');
-        header_array(end-1:end,:)=[];           %W˜^CH”`ƒTƒ“ƒvƒŠƒ“ƒOü”g”‚Ü‚Å‚Íh(0x22)‚ª–³‚¢
+        header_array(end-1:end,:)=[];           %é›†éŒ²CHæ•°ã€œã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°ã¾ã§ã¯â€(0x22)ãŒç„¡ã„
         for n=1:size(header_array,1)
             if(header_array(end,1)==32)
                 header_array(end,:)=[];
@@ -433,10 +433,10 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
         end
         clear header_array;
 
-%ƒTƒ“ƒvƒŠƒ“ƒOü”g”
+%ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°
         fseek(fid,90,'bof');
         header_array = fread(fid,16,'uchar');
-        header_array(end-2:end,:)=[];           %I’[2•¶šCRLF(0DC0A)‚Æh(0x22)
+        header_array(end-2:end,:)=[];           %çµ‚ç«¯2æ–‡å­—CRLF(0Dï¼Œ0A)ã¨â€(0x22)
         for n=1:size(header_array,1)
             if(header_array(end,1)==32)
                 header_array(end,:)=[];
@@ -449,9 +449,9 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
         end
         clear header_array;
 
-%‰Â•Ï’·ƒwƒbƒ_•”‚ÌƒoƒCƒg”‚Ì’Šo
+%å¯å¤‰é•·ãƒ˜ãƒƒãƒ€éƒ¨ã®ãƒã‚¤ãƒˆæ•°ã®æŠ½å‡º
         fseek(fid,176,'bof');
-        header_array = fread(fid,14,'uchar');    %‰Â•Ï’·ƒwƒbƒ_•”`‰Â•Ï’·ƒtƒbƒ^•”‚Ü‚Å‚Íh(0x22)‚ª–³‚¢
+        header_array = fread(fid,14,'uchar');    %å¯å¤‰é•·ãƒ˜ãƒƒãƒ€éƒ¨ã€œå¯å¤‰é•·ãƒ•ãƒƒã‚¿éƒ¨ã¾ã§ã¯â€(0x22)ãŒç„¡ã„
         header_array(end-1:end,:)=[];
         for n=1:size(header_array,1)
             if(header_array(end,1)==32)
@@ -465,8 +465,8 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
         end
         clear header_array;
 
-%ƒfƒBƒWƒ^ƒ‹“ü—ÍCH”
-%‰Â•Ï’·ƒwƒbƒ_•”æ“ª‚©‚ç0x01‚Æ0x2C‚ª˜A‘±‚µ‚½2ƒoƒCƒg‚ğ’T‚·
+%ãƒ‡ã‚£ã‚¸ã‚¿ãƒ«å…¥åŠ›CHæ•°
+%å¯å¤‰é•·ãƒ˜ãƒƒãƒ€éƒ¨å…ˆé ­ã‹ã‚‰0x01ã¨0x2CãŒé€£ç¶šã—ãŸ2ãƒã‚¤ãƒˆã‚’æ¢ã™
 
     for n=1:var_Header
         fseek(fid,256+n-1,'bof');
@@ -489,17 +489,17 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
         end
     end
 
-    % W˜^CANCH”0‚ğİ’è
+    % é›†éŒ²CANCHæ•°0ã‚’è¨­å®š
     tblInfo.CanChNum = 0;
 
     [strRcvBuf,tblHeader, tblInfo.CanChNum] = DataRead12(fid,tblInfo);
-    % “WŠJ‚·‚é”z—ñƒTƒCƒY‚ªŒ»İg—p‰Â”\‚Èƒƒ‚ƒŠ‹óŠÔˆÈã‚Ìê‡
+    % å±•é–‹ã™ã‚‹é…åˆ—ã‚µã‚¤ã‚ºãŒç¾åœ¨ä½¿ç”¨å¯èƒ½ãªãƒ¡ãƒ¢ãƒªç©ºé–“ä»¥ä¸Šã®å ´åˆ
     if strRcvBuf == 999
         strMsgBuf = makeDispMessage(21,tblHeader);
         error(strMsgBuf);
         exit;
     elseif strRcvBuf == 111
-        % edit at 2008/01/25 ƒƒ‚ƒŠˆÈŠO‚ÌƒGƒ‰[‚ª”­¶‚µ‚½ê‡
+        % edit at 2008/01/25 ãƒ¡ãƒ¢ãƒªä»¥å¤–ã®ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ãŸå ´åˆ
         strMsgBuf = makeDispMessage(22,tblHeader);
         error(strMsgBuf);
         exit;
@@ -508,10 +508,10 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
     KSX = strRcvBuf;
     clear strRcvBuf;
 
-    %CAN-CH”Ô†•ª‘ª’èCH”‚ğ‰ÁZ
+    %CAN-CHç•ªå·åˆ†æ¸¬å®šCHæ•°ã‚’åŠ ç®—
     tblfileCh_num(1,2)={(tblInfo.CanChNum + tblInfo.chAll)};
 
-%CANƒf[ƒ^‚ª‚ ‚éê‡‚Ìˆ—
+%CANãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚‹å ´åˆã®å‡¦ç†
     if (tblInfo.CAN ~= 0)
         if(tblInfo.chAll ~= 0)
             tblfileID(      tblInfo.chAll+2:tblInfo.CanChNum+tblInfo.chAll+1)={''};
@@ -523,10 +523,10 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
         end
     end
 
-    %‘ª’èŠÔ‚ÌZo    ƒf[ƒ^/Ch‚ğƒTƒ“ƒvƒŠƒ“ƒOüŠú‚ÅŠ„‚é
+    %æ¸¬å®šæ™‚é–“ã®ç®—å‡º    ãƒ‡ãƒ¼ã‚¿/Chã‚’ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æœŸã§å‰²ã‚‹
      tblfileTime(1,2)={cell2mat(tblHeader(end,2))/cell2mat(tblfileSf(1,2))};
 
-    %ƒ`ƒƒƒ“ƒlƒ‹”‚ª1CH‚Ìê‡CŒ±“ú‚Å3ƒZƒ‹ˆµ‚¤‚Ì‚É‘Î‚µC‘¼‚Í2ƒZƒ‹‚Æ‚È‚é‚½‚ß‹ó‚Ì3ƒZƒ‹–Ú‚ğ’Ç‰Á
+    %ãƒãƒ£ãƒ³ãƒãƒ«æ•°ãŒ1CHã®å ´åˆï¼Œè©¦é¨“æ—¥æ™‚ã§3ã‚»ãƒ«æ‰±ã†ã®ã«å¯¾ã—ï¼Œä»–ã¯2ã‚»ãƒ«ã¨ãªã‚‹ãŸã‚ç©ºã®3ã‚»ãƒ«ç›®ã‚’è¿½åŠ 
 
     if(tblInfo.chAll<=1)
         tblfileID(:,3)={''};
@@ -541,9 +541,9 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
         Header = [tblfileID;tblfileTitle;tblfileCh_num;tblfileDigi_ch;tblfileSf;tblHeader;tblfileTime];
     end
 
-    %‹Œƒ^ƒCƒv
+    %æ—§ã‚¿ã‚¤ãƒ—
     if g_CsvFormat == 0
-        %NTBˆÈŠO
+        %NTBä»¥å¤–
         if g_NtbFlag == 0
             Header=cat(1,Header(1:2,:),Header(end-2,:),Header(3:end,:));
             Header=cat(1,Header(1:6,:),Header(end-1:end,:),Header(7:end,:));
@@ -554,9 +554,9 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
             Header=cat(1,Header(1:6,:),Header(end-1:end,:),Header(7:end,:));
             Header(19:end,:)=[];
         end
-    %•W€ƒ^ƒCƒv
+    %æ¨™æº–ã‚¿ã‚¤ãƒ—
     else
-        %NTBˆÈŠO
+        %NTBä»¥å¤–
         if g_NtbFlag == 0
             Header=cat(1,Header(1:2,:),Header(end-2,:),Header(3:end,:));
             Header=cat(1,Header(1:6,:),Header(end-1:end,:),Header(7:end,:));
@@ -579,93 +579,93 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
     clear tblfileTitle
     clear tblHeader
 
-    %E4A‚ÆKS2‚ğ“Ç‚İ‚Ş‚È‚ç
+    %E4Aã¨KS2ã‚’èª­ã¿è¾¼ã‚€ãªã‚‰
     if(ReadMode == 2)
         [e4X, e4Header] = e4read(file);
 
-        %E4A‚Ìƒf[ƒ^s—ñ‚Ì’·‚³‚ğæ“¾
+        %E4Aã®ãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®é•·ã•ã‚’å–å¾—
         [e4M,~] = size(e4X);
 
-        %KS2‚Ìƒf[ƒ^s—ñ‚Ì’·‚³‚ğæ“¾
+        %KS2ã®ãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®é•·ã•ã‚’å–å¾—
         [ksM,ksN] = size(KSX);
 
-        %E4A‚Ìƒf[ƒ^”‚ªKS2‚æ‚è­‚È‚¢‚È‚ç
+        %E4Aã®ãƒ‡ãƒ¼ã‚¿æ•°ãŒKS2ã‚ˆã‚Šå°‘ãªã„ãªã‚‰
         if(e4M < ksM)
-            %KS2‚Ìƒf[ƒ^”•ª‚Ü‚Å‘O’l•Û‚·‚é
+            %KS2ã®ãƒ‡ãƒ¼ã‚¿æ•°åˆ†ã¾ã§å‰å€¤ä¿æŒã™ã‚‹
 
-            %ÅIs‚Ìƒf[ƒ^‚ğæ“¾
+            %æœ€çµ‚è¡Œã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
             MatrixV= e4X(e4M,:);
 
-            %ÅIs‚ğKS2‚Ì’·‚³•ªƒRƒs[
+            %æœ€çµ‚è¡Œã‚’KS2ã®é•·ã•åˆ†ã‚³ãƒ”ãƒ¼
             e4X = vertcat(e4X,MatrixV(ones(1,ksM-e4M),:));
         end
 
-        %E4A‚Ìƒwƒbƒ_î•ñ‚Ì€–Ú—ñ‚ğíœ‚·‚é
-        %‹Œƒ^ƒCƒv‚Ìê‡
+        %E4Aã®ãƒ˜ãƒƒãƒ€æƒ…å ±ã®é …ç›®åˆ—ã‚’å‰Šé™¤ã™ã‚‹
+        %æ—§ã‚¿ã‚¤ãƒ—ã®å ´åˆ
         if(g_CsvFormat == 0)
 
-            %ID”Ô†‚Ìíœ
+            %IDç•ªå·ã®å‰Šé™¤
             e4Header(1,2)={''};
 
-            %ƒ^ƒCƒgƒ‹‚Ìíœ
+            %ã‚¿ã‚¤ãƒˆãƒ«ã®å‰Šé™¤
             e4Header(2,2)={''};
 
-            %Œ±“ú‚Ìíœ
+            %è©¦é¨“æ—¥æ™‚ã®å‰Šé™¤
             e4Header(3,2:3)={''};
 
-            %KS2‚Ì‘ª’èCH”‚Ì’u‚«Š·‚¦
+            %KS2ã®æ¸¬å®šCHæ•°ã®ç½®ãæ›ãˆ
             Header(4,2)= {(cell2mat(Header(4,2)) + cell2mat(e4Header(4,2)))};
 
-            %‘ª’èCH”‚Ìíœ
+            %æ¸¬å®šCHæ•°ã®å‰Šé™¤
             e4Header(4,2)={''};
 
-            %ƒTƒ“ƒvƒŠƒ“ƒOü”g”‚Ìíœ
+            %ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°ã®å‰Šé™¤
             e4Header(6,2)={''};
 
-            %W˜^ƒf[ƒ^”‚Ìíœ
+            %é›†éŒ²ãƒ‡ãƒ¼ã‚¿æ•°ã®å‰Šé™¤
             e4Header(7,2)={''};
 
-            %‘ª’èŠÔ‚Ìíœ
+            %æ¸¬å®šæ™‚é–“ã®å‰Šé™¤
             e4Header(8,2)={''};
 
-        %•W€ƒ^ƒCƒv‚Ìê‡
+        %æ¨™æº–ã‚¿ã‚¤ãƒ—ã®å ´åˆ
         else
 
-            %ID”Ô†‚Ìíœ
+            %IDç•ªå·ã®å‰Šé™¤
             e4Header(1,2)={''};
 
-            %ƒ^ƒCƒgƒ‹‚Ìíœ
+            %ã‚¿ã‚¤ãƒˆãƒ«ã®å‰Šé™¤
             e4Header(2,2)={''};
 
-            %Œ±“ú‚Ìíœ
+            %è©¦é¨“æ—¥æ™‚ã®å‰Šé™¤
             e4Header(3,2:3)={''};
 
-            %KS2‚Ì‘ª’èCH”‚Ì’u‚«Š·‚¦
+            %KS2ã®æ¸¬å®šCHæ•°ã®ç½®ãæ›ãˆ
             Header(4,2)= {(cell2mat(Header(4,2)) + cell2mat(e4Header(4,2)))};     %ver1.03
 
-            %‘ª’èCH”‚Ìíœ
+            %æ¸¬å®šCHæ•°ã®å‰Šé™¤
             e4Header(4,2)={''};
 
-            %ƒTƒ“ƒvƒŠƒ“ƒOü”g”‚Ìíœ
+            %ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°ã®å‰Šé™¤
             e4Header(5,2)={''};
 
-            %W˜^ƒf[ƒ^”‚Ìíœ
+            %é›†éŒ²ãƒ‡ãƒ¼ã‚¿æ•°ã®å‰Šé™¤
             e4Header(6,2)={''};
 
-            %‘ª’èŠÔ‚Ìíœ
+            %æ¸¬å®šæ™‚é–“ã®å‰Šé™¤
             e4Header(7,2)={''};
         end
 
-        %KS2‚ÌW˜^CH”‚Ì‡Œv‚ª1CH‚Ìê‡CKS2‚Ìƒwƒbƒ_î•ñ‚ÌŒ±“ú‚Ì3—ñ–Ú‚ğE4AŒ±“ú‚Ì2—ñ–Ú‚ÉƒRƒs[
+        %KS2ã®é›†éŒ²CHæ•°ã®åˆè¨ˆãŒ1CHã®å ´åˆï¼ŒKS2ã®ãƒ˜ãƒƒãƒ€æƒ…å ±ã®è©¦é¨“æ—¥æ™‚ã®3åˆ—ç›®ã‚’E4Aè©¦é¨“æ—¥æ™‚ã®2åˆ—ç›®ã«ã‚³ãƒ”ãƒ¼
         if(ksN == 2)
             e4Header(3,2) = Header(3,3);
 
             Header(:,3)=[];
         end
-        %E4A‚Ìƒwƒbƒ_‚ÆKS2‚Ìƒwƒbƒ_‚ğŒ‹‡
+        %E4Aã®ãƒ˜ãƒƒãƒ€ã¨KS2ã®ãƒ˜ãƒƒãƒ€ã‚’çµåˆ
         Header = horzcat(Header,e4Header(:,2:end));
 
-        %E4Aƒf[ƒ^‚ÆKS2ƒf[ƒ^‚ğŒ‹‡
+        %E4Aãƒ‡ãƒ¼ã‚¿ã¨KS2ãƒ‡ãƒ¼ã‚¿ã‚’çµåˆ
         KSX = horzcat(KSX,e4X(:,2:end));
     end
 
@@ -676,77 +676,77 @@ function [KSX, Header] = ksread3(file,dataBlockNo)
 
 %--------------------------------------------------------------------------
 
-%% makeDispMessage - ƒGƒ‰[ƒƒbƒZ[ƒW‚Ì¶¬
-%    ˆø”
-%        pos       ... ƒGƒ‰[‚Ì”Ô†
-%    –ß‚è’l
-%        strSndBuf ... ‘ÎÛ‚Ì•¶š—ñ
+%% makeDispMessage - ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ç”Ÿæˆ
+%    å¼•æ•°
+%        pos       ... ã‚¨ãƒ©ãƒ¼æ™‚ã®ç•ªå·
+%    æˆ»ã‚Šå€¤
+%        strSndBuf ... å¯¾è±¡ã®æ–‡å­—åˆ—
 function strSndBuf = makeDispMessage(pos,tblInfo)
 
     if strcmp(tblInfo.Lang,tblInfo.CmpLang)
         switch pos
             case 1
                 strMsgBuf = tblInfo.Error{1};
-                strMsgBuf = sprintf('%s:ƒtƒ@ƒCƒ‹–¼‚ğŠg’£q•t‚Å“ü—Í‚µ‚Ä‰º‚³‚¢B', strMsgBuf);
-                strMsgBuf = sprintf('%s\n—á : X    = ksread3(''filename'');', strMsgBuf);
+                strMsgBuf = sprintf('%s:ãƒ•ã‚¡ã‚¤ãƒ«åã‚’æ‹¡å¼µå­ä»˜ã§å…¥åŠ›ã—ã¦ä¸‹ã•ã„ã€‚', strMsgBuf);
+                strMsgBuf = sprintf('%s\nä¾‹ : X    = ksread3(''filename'');', strMsgBuf);
                 strMsgBuf = sprintf('%s\nor  [X,H] = ksread3(''filename'');', strMsgBuf);
                 strMsgBuf = sprintf('%s\nor   X    = ksread3(''filename'',OptNo);', strMsgBuf);
                 strMsgBuf = sprintf('%s\nor  [X,H] = ksread3(''filename'',OptNo);\n', strMsgBuf);
-                strMsgBuf = sprintf('%s\nX                ... ’Šo‚µ‚½ƒf[ƒ^”z—ñ', strMsgBuf);
-                strMsgBuf = sprintf('%s\nH                ... CHî•ñ\n', strMsgBuf);
-                strMsgBuf = sprintf('%s\nfilename         ... ‘ÎÛƒf[ƒ^ƒtƒ@ƒCƒ‹(Šg’£q‚àŠÜ‚Ş)', strMsgBuf);
-                strMsgBuf = sprintf('%s\nOptNo(option)    ... ƒf[ƒ^ƒuƒƒbƒN”Ô†\n', strMsgBuf);
-                strMsgBuf = sprintf('%s                     ‚Ü‚½‚ÍE4Aƒtƒ@ƒCƒ‹‚Ì“¯“Ç‚İ‚İ(-1‚ğw’è‚µC''filename''‚ªKS2ƒtƒ@ƒCƒ‹‚Ìê‡)', strMsgBuf);
+                strMsgBuf = sprintf('%s\nX                ... æŠ½å‡ºã—ãŸãƒ‡ãƒ¼ã‚¿é…åˆ—', strMsgBuf);
+                strMsgBuf = sprintf('%s\nH                ... CHæƒ…å ±\n', strMsgBuf);
+                strMsgBuf = sprintf('%s\nfilename         ... å¯¾è±¡ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«(æ‹¡å¼µå­ã‚‚å«ã‚€)', strMsgBuf);
+                strMsgBuf = sprintf('%s\nOptNo(option)    ... ãƒ‡ãƒ¼ã‚¿ãƒ–ãƒ­ãƒƒã‚¯ç•ªå·\n', strMsgBuf);
+                strMsgBuf = sprintf('%s                     ã¾ãŸã¯E4Aãƒ•ã‚¡ã‚¤ãƒ«ã®åŒæ™‚èª­ã¿è¾¼ã¿(-1ã‚’æŒ‡å®šã—ï¼Œ''filename''ãŒKS2ãƒ•ã‚¡ã‚¤ãƒ«ã®å ´åˆ)', strMsgBuf);
             case 2
                 strMsgBuf = tblInfo.Error{2};
-                strMsgBuf = sprintf('%s:w’è‚³‚ê‚½ƒIƒvƒVƒ‡ƒ“‚Ì”‚ª•s³‚Å‚·B', strMsgBuf);
+                strMsgBuf = sprintf('%s:æŒ‡å®šã•ã‚ŒãŸã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®æ•°ãŒä¸æ­£ã§ã™ã€‚', strMsgBuf);
             case 3
                 strMsgBuf = tblInfo.Error{3};
-                strMsgBuf = sprintf('%s:Šg’£q‚ªw’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB:(%s)', strMsgBuf,tblInfo.err);
+                strMsgBuf = sprintf('%s:æ‹¡å¼µå­ãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚:(%s)', strMsgBuf,tblInfo.err);
             case 11
                 strMsgBuf = tblInfo.Error{11};
-                strMsgBuf = sprintf('%s:w’è‚³‚ê‚½ƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢‚©Aƒtƒ@ƒCƒ‹–¼‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·B', strMsgBuf);
+                strMsgBuf = sprintf('%s:æŒ‡å®šã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„ã‹ã€ãƒ•ã‚¡ã‚¤ãƒ«åãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚', strMsgBuf);
             case 12
                 strMsgBuf = tblInfo.Error{12};
-                strMsgBuf = sprintf('%s:w’è‚³‚ê‚½ƒuƒƒbƒN”Ô†‚Í•s³‚Å‚·B', strMsgBuf);
+                strMsgBuf = sprintf('%s:æŒ‡å®šã•ã‚ŒãŸãƒ–ãƒ­ãƒƒã‚¯ç•ªå·ã¯ä¸æ­£ã§ã™ã€‚', strMsgBuf);
             case 13
                 strMsgBuf = tblInfo.Error{13};
-                strMsgBuf = sprintf('%s:w’è‚³‚ê‚½ƒuƒƒbƒN”Ô†‚ª”’l‚Å‚Í‚ ‚è‚Ü‚¹‚ñB', strMsgBuf);
-                strMsgBuf = sprintf('%s\nƒuƒƒbƒN”Ô†‚É‚Í”’l‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B', strMsgBuf);
+                strMsgBuf = sprintf('%s:æŒ‡å®šã•ã‚ŒãŸãƒ–ãƒ­ãƒƒã‚¯ç•ªå·ãŒæ•°å€¤ã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚', strMsgBuf);
+                strMsgBuf = sprintf('%s\nãƒ–ãƒ­ãƒƒã‚¯ç•ªå·ã«ã¯æ•°å€¤ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚', strMsgBuf);
             case 14
                 strMsgBuf = tblInfo.Error{14};
-                strMsgBuf = sprintf('%s:w’è‚³‚ê‚½ƒtƒ@ƒCƒ‹‚Í%sƒtƒ@ƒCƒ‹‚Å‚Í‚ ‚è‚Ü‚¹‚ñB', strMsgBuf, tblInfo.CmpExt);
+                strMsgBuf = sprintf('%s:æŒ‡å®šã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ã¯%sãƒ•ã‚¡ã‚¤ãƒ«ã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚', strMsgBuf, tblInfo.CmpExt);
             case 15
                 strMsgBuf = tblInfo.Error{15};
-                strMsgBuf = sprintf('%s:w’è‚³‚ê‚½ƒtƒ@ƒCƒ‹‚É‘Î‰‚µ‚½E4Aƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚Ü‚¹‚ñB', strMsgBuf);
+                strMsgBuf = sprintf('%s:æŒ‡å®šã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ã«å¯¾å¿œã—ãŸE4Aãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚', strMsgBuf);
             case 16
                 strMsgBuf = tblInfo.Error{16};
-                strMsgBuf = sprintf('%s:w’è‚³‚ê‚½E4Aƒtƒ@ƒCƒ‹‚ÆKS2ƒtƒ@ƒCƒ‹‚ÌW˜^ğŒ‚ªˆÙ‚È‚è‚Ü‚·B', strMsgBuf);
-                strMsgBuf = sprintf('%s\nE4Aƒtƒ@ƒCƒ‹‚ÆKS2ƒtƒ@ƒCƒ‹‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B', strMsgBuf);
+                strMsgBuf = sprintf('%s:æŒ‡å®šã•ã‚ŒãŸE4Aãƒ•ã‚¡ã‚¤ãƒ«ã¨KS2ãƒ•ã‚¡ã‚¤ãƒ«ã®é›†éŒ²æ¡ä»¶ãŒç•°ãªã‚Šã¾ã™ã€‚', strMsgBuf);
+                strMsgBuf = sprintf('%s\nE4Aãƒ•ã‚¡ã‚¤ãƒ«ã¨KS2ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚', strMsgBuf);
             case 17
                 strMsgBuf = tblInfo.Error{17};
-                strMsgBuf = sprintf('%s:KS2ƒtƒ@ƒCƒ‹‚©E4Aƒtƒ@ƒCƒ‹‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B', strMsgBuf);
+                strMsgBuf = sprintf('%s:KS2ãƒ•ã‚¡ã‚¤ãƒ«ã‹E4Aãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚', strMsgBuf);
             case 21
                 strMsgBuf = tblInfo.Error{21};
                 strMsgBuf = sprintf('%s:\n', strMsgBuf);
-                strMsgBuf = sprintf('%s‘ÎÛƒtƒ@ƒCƒ‹‚ğƒI[ƒvƒ“‚·‚é‚½‚ß‚É‚ÍAŒ»İƒƒ‚ƒŠ‚ª‘«‚è‚Ü‚¹‚ñB', strMsgBuf);
-                strMsgBuf = sprintf('%s\nHELP MEMORY‚Æƒ^ƒCƒv‚µ‚ÄƒIƒvƒVƒ‡ƒ“‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B', strMsgBuf);
+                strMsgBuf = sprintf('%så¯¾è±¡ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚ªãƒ¼ãƒ—ãƒ³ã™ã‚‹ãŸã‚ã«ã¯ã€ç¾åœ¨ãƒ¡ãƒ¢ãƒªãŒè¶³ã‚Šã¾ã›ã‚“ã€‚', strMsgBuf);
+                strMsgBuf = sprintf('%s\nHELP MEMORYã¨ã‚¿ã‚¤ãƒ—ã—ã¦ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚', strMsgBuf);
             case 22
                 strMsgBuf = sprintf('%s:\n%s\n%s\n', tblInfo.Error{22}, tblInfo.err.message, tblInfo.err.identifier);
             case 31
-                strMsgBuf = sprintf('ƒf[ƒ^W˜^”          = %d',tblInfo.LngHeight);
+                strMsgBuf = sprintf('ãƒ‡ãƒ¼ã‚¿é›†éŒ²æ•°          = %d',tblInfo.LngHeight);
                 disp(strMsgBuf);
                 strMsgBuf = '';
             case 32
-                strMsgBuf = sprintf('Please wait ... ƒf[ƒ^•ÏŠ·’†(%sƒtƒ@ƒCƒ‹)',tblInfo.ext);
+                strMsgBuf = sprintf('Please wait ... ãƒ‡ãƒ¼ã‚¿å¤‰æ›ä¸­(%sãƒ•ã‚¡ã‚¤ãƒ«)',tblInfo.ext);
             case 100
-                strMsgBuf = sprintf('ƒtƒ@ƒCƒ‹ID            = %s',tblInfo.machine);
-                strMsgBuf = sprintf('%s\nƒo[ƒWƒ‡ƒ“            = %s', strMsgBuf,tblInfo.version);
-                strMsgBuf = sprintf('%s\nÅ‘åƒf[ƒ^ƒuƒƒbƒN”   = %d', strMsgBuf,tblInfo.BlockNo);
-                strMsgBuf = sprintf('%s\nw’èƒf[ƒ^ƒuƒƒbƒN”Ô† = %d', strMsgBuf,tblInfo.dataBlockNo);
-                strMsgBuf = sprintf('%s\nW˜^CH”              = %d', strMsgBuf,tblInfo.chAll);
-                strMsgBuf = sprintf('%s\nŒÂ•ÊW˜^CH”          = %d', strMsgBuf,tblInfo.ch);
-                strMsgBuf = sprintf('%s\nƒTƒ“ƒvƒŠƒ“ƒOü”g”(%s) = %d', strMsgBuf,tblInfo.HzChar,tblInfo.Hz);
+                strMsgBuf = sprintf('ãƒ•ã‚¡ã‚¤ãƒ«ID            = %s',tblInfo.machine);
+                strMsgBuf = sprintf('%s\nãƒãƒ¼ã‚¸ãƒ§ãƒ³            = %s', strMsgBuf,tblInfo.version);
+                strMsgBuf = sprintf('%s\næœ€å¤§ãƒ‡ãƒ¼ã‚¿ãƒ–ãƒ­ãƒƒã‚¯æ•°   = %d', strMsgBuf,tblInfo.BlockNo);
+                strMsgBuf = sprintf('%s\næŒ‡å®šãƒ‡ãƒ¼ã‚¿ãƒ–ãƒ­ãƒƒã‚¯ç•ªå· = %d', strMsgBuf,tblInfo.dataBlockNo);
+                strMsgBuf = sprintf('%s\né›†éŒ²CHæ•°              = %d', strMsgBuf,tblInfo.chAll);
+                strMsgBuf = sprintf('%s\nå€‹åˆ¥é›†éŒ²CHæ•°          = %d', strMsgBuf,tblInfo.ch);
+                strMsgBuf = sprintf('%s\nã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°(%s) = %d', strMsgBuf,tblInfo.HzChar,tblInfo.Hz);
                 disp(strMsgBuf);
                 strMsgBuf = '';
             otherwise
@@ -763,7 +763,7 @@ function strSndBuf = makeDispMessage(pos,tblInfo)
                 strMsgBuf = sprintf('%s\nH                ... CH\n', strMsgBuf);
                 strMsgBuf = sprintf('%s\nfilename         ... data file(include extension)', strMsgBuf);
                 strMsgBuf = sprintf('%s\nOptNo(option)    ... Data block No. \n', strMsgBuf);
-                strMsgBuf = sprintf('%s@@@@@@@@@@@ Or both KS2 and E4A file Read-mode(If specified value is -1 and specified ''filename'' is KS2 file)\n', strMsgBuf);
+                strMsgBuf = sprintf('%sã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ Or both KS2 and E4A file Read-mode(If specified value is -1 and specified ''filename'' is KS2 file)\n', strMsgBuf);
             case 2
                 strMsgBuf = tblInfo.Error{2};
                 strMsgBuf = sprintf('%s:Intended the number of option is incorrect.', strMsgBuf);
@@ -821,12 +821,12 @@ function strSndBuf = makeDispMessage(pos,tblInfo)
     strSndBuf = strMsgBuf;
 
 %--------------------------------------------------------------------------
-%% ƒeƒLƒXƒg•”‚Ìî•ñæ“¾
-%    ˆø”
-%        fid     ... ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^ƒIƒuƒWƒFƒNƒg
-%        tblInfo ... \‘¢‘Ì•Ï”
-%    –ß‚è’l
-%        info    ... î•ñ‚ğ’Ç‰Á‚µ‚½\‘¢‘Ì•Ï”
+%% ãƒ†ã‚­ã‚¹ãƒˆéƒ¨ã®æƒ…å ±å–å¾—
+%    å¼•æ•°
+%        fid     ... ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+%        tblInfo ... æ§‹é€ ä½“å¤‰æ•°
+%    æˆ»ã‚Šå€¤
+%        info    ... æƒ…å ±ã‚’è¿½åŠ ã—ãŸæ§‹é€ ä½“å¤‰æ•°
 
 function info = getInfo(fid,tblInfo)
 
@@ -837,9 +837,9 @@ function info = getInfo(fid,tblInfo)
         if (i <= 2)
           tbls = split_str(line(2:(length(line)-1)),delm);
           if i == 1
-              tblInfo.machine = tbls{1}; % –¼‘O
+              tblInfo.machine = tbls{1}; % åå‰
           else
-              tblInfo.version = tbls{1}; % ƒo[ƒWƒ‡ƒ“
+              tblInfo.version = tbls{1}; % ãƒãƒ¼ã‚¸ãƒ§ãƒ³
               if strcmp(tblInfo.version,'01.00.00')
                   i = i + 1;
               end
@@ -876,7 +876,7 @@ function info = getInfo(fid,tblInfo)
                     else
                         token = str2double(token(1:(length(token)-1)));
                         if length(token) < 1
-                            token = 0;            % token‚ª‹ó‚Ìê‡
+                            token = 0;            % tokenãŒç©ºã®å ´åˆ
                         end
                     end
                     tblInfo.CAN = token;
@@ -896,49 +896,49 @@ function info = getInfo(fid,tblInfo)
 
 
 %--------------------------------------------------------------------------
-%% DataRead - ƒf[ƒ^‚ğ“Ç‚İ‚Şè‡‚ğs‚¤
-%    ˆø”
-%        f           ... ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^ƒIƒuƒWƒFƒNƒg
-%        tblInfo     ... ƒwƒbƒ_Šeíî•ñ‚ğŠi”[‚µ‚½\‘¢‘Ì•Ï”
-%    –ß‚è’l
-%        strSndBuf ... ’Šo‚µ‚½W˜^ƒf[ƒ^
-%        tblHeader ... CHî•ñ
+%% DataRead - ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€æ‰‹é †ã‚’è¡Œã†
+%    å¼•æ•°
+%        f           ... ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+%        tblInfo     ... ãƒ˜ãƒƒãƒ€å„ç¨®æƒ…å ±ã‚’æ ¼ç´ã—ãŸæ§‹é€ ä½“å¤‰æ•°
+%    æˆ»ã‚Šå€¤
+%        strSndBuf ... æŠ½å‡ºã—ãŸé›†éŒ²ãƒ‡ãƒ¼ã‚¿
+%        tblHeader ... CHæƒ…å ±
 
 function [strSndBuf, tblHeader, CanChNum] = DataRead12(f,tblInfo)
-    global g_NtbFlag;         %‘ª’èŠí‚ªNTB‚©‚ğ¦‚·ƒtƒ‰ƒO
-    global g_CsvFormat;       %ƒwƒbƒ_î•ñ‚ÌƒtƒH[ƒ}ƒbƒg‚Ì‹Œ®E•W€‚ğØ‚è‘Ö‚¦‚Ü‚·      0F‹Œƒ^ƒCƒv  1F•W€ƒ^ƒCƒv
-    global g_IndexType;       %ƒf[ƒ^‚ÌƒCƒ“ƒfƒbƒNƒX‚ğØ‚è‘Ö‚¦‚Ü‚·                     0FŠÔ      1F”Ô†
+    global g_NtbFlag;         %æ¸¬å®šå™¨ãŒNTBã‹ã‚’ç¤ºã™ãƒ•ãƒ©ã‚°
+    global g_CsvFormat;       %ãƒ˜ãƒƒãƒ€æƒ…å ±ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®æ—§å¼ãƒ»æ¨™æº–ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™      0ï¼šæ—§ã‚¿ã‚¤ãƒ—  1ï¼šæ¨™æº–ã‚¿ã‚¤ãƒ—
+    global g_IndexType;       %ãƒ‡ãƒ¼ã‚¿ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™                     0ï¼šæ™‚é–“      1ï¼šç•ªå·
 
 % initalized variable
-    lngSeek = tblInfo.HeadSeek;                 % ƒeƒLƒXƒg•”ƒoƒCƒg”
-    delta   = 0;                                % ƒf[ƒ^‚Ì“Ç‚İ”ò‚Î‚µ—Ê
-    tblCoeff  = zeros(1,tblInfo.ch,'double');   % HŠw’l•ÏŠ·ŒW”A edit at 2012/09/28   single¨double‚É•ÏX  “®ì‚Í‚Ç‚¿‚ç‚Å‚à³í
-    tblOffset = zeros(1,tblInfo.ch,'double');   % HŠw’l•ÏŠ·ŒW”B edit at 2012/09/28   single¨double‚É•ÏX  “®ì‚Í‚Ç‚¿‚ç‚Å‚à³í
-    tblName = {};                               % ƒ`ƒƒƒlƒ‹–¼
-    tblNo = {};                                 % ƒ`ƒƒƒlƒ‹No
-    tblUnit = {};                               % ’PˆÊ•¶š—ñ
-    tblrange = {};                              % ƒŒƒ“ƒW
-    tblCoeff_disp = {};                         % Z³ŒW”
-    tblOffset_disp = {};                        % ƒIƒtƒZƒbƒg
-    tblLowPass = {};                            % ƒ[ƒpƒXƒtƒBƒ‹ƒ^
-    tblHighPass = {};                           % ƒnƒCƒpƒXƒtƒBƒ‹ƒ^
-    tblDigiFilter = {};                         % ƒnƒCƒpƒXƒtƒBƒ‹ƒ^
-    tblfileDate ={};                            % Œ±“ú
-    tblfileData_num = {};                       % ƒf[ƒ^/ch
-    tblChMode = {};                             % CHƒ‚[ƒh
-    tblGaugeFactor = {};                        % ƒQ[ƒW—¦
-    tblZeroMode = {};                           % ZERO’l‚Ìƒ‚[ƒh
-    tblZeroNum = {};                            % ZERO’l
-    blkLMT      = tblInfo.BlockNo;              % Å‘åƒuƒƒbƒN”
-    dataBlockNo = tblInfo.dataBlockNo;          % ˆø”‚Åw’è‚µ‚½ƒuƒƒbƒN”Ô†
-    flgDebug  = 0;                              % î•ñ•\¦‚ğ‘€ì‚·‚éƒtƒ‰ƒO(0:”ñ•\¦,1:•\¦)
-    g_NtbFlag = 0;                              % ‘ª’èŠí‚ªNTB‚©‚ğ¦‚·ƒtƒ‰ƒO
-    tblInfo.checkArray = [];                    % ƒ`ƒFƒbƒN—p”z—ñ(depend printInfoAbove)
+    lngSeek = tblInfo.HeadSeek;                 % ãƒ†ã‚­ã‚¹ãƒˆéƒ¨ãƒã‚¤ãƒˆæ•°
+    delta   = 0;                                % ãƒ‡ãƒ¼ã‚¿ã®èª­ã¿é£›ã°ã—é‡
+    tblCoeff  = zeros(1,tblInfo.ch,'double');   % å·¥å­¦å€¤å¤‰æ›ä¿‚æ•°A edit at 2012/09/28   singleâ†’doubleã«å¤‰æ›´  å‹•ä½œã¯ã©ã¡ã‚‰ã§ã‚‚æ­£å¸¸
+    tblOffset = zeros(1,tblInfo.ch,'double');   % å·¥å­¦å€¤å¤‰æ›ä¿‚æ•°B edit at 2012/09/28   singleâ†’doubleã«å¤‰æ›´  å‹•ä½œã¯ã©ã¡ã‚‰ã§ã‚‚æ­£å¸¸
+    tblName = {};                               % ãƒãƒ£ãƒãƒ«å
+    tblNo = {};                                 % ãƒãƒ£ãƒãƒ«No
+    tblUnit = {};                               % å˜ä½æ–‡å­—åˆ—
+    tblrange = {};                              % ãƒ¬ãƒ³ã‚¸
+    tblCoeff_disp = {};                         % æ ¡æ­£ä¿‚æ•°
+    tblOffset_disp = {};                        % ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+    tblLowPass = {};                            % ãƒ­ãƒ¼ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿
+    tblHighPass = {};                           % ãƒã‚¤ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿
+    tblDigiFilter = {};                         % ãƒã‚¤ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿
+    tblfileDate ={};                            % è©¦é¨“æ—¥æ™‚
+    tblfileData_num = {};                       % ãƒ‡ãƒ¼ã‚¿/ch
+    tblChMode = {};                             % CHãƒ¢ãƒ¼ãƒ‰
+    tblGaugeFactor = {};                        % ã‚²ãƒ¼ã‚¸ç‡
+    tblZeroMode = {};                           % ZEROå€¤ã®ãƒ¢ãƒ¼ãƒ‰
+    tblZeroNum = {};                            % ZEROå€¤
+    blkLMT      = tblInfo.BlockNo;              % æœ€å¤§ãƒ–ãƒ­ãƒƒã‚¯æ•°
+    dataBlockNo = tblInfo.dataBlockNo;          % å¼•æ•°ã§æŒ‡å®šã—ãŸãƒ–ãƒ­ãƒƒã‚¯ç•ªå·
+    flgDebug  = 0;                              % æƒ…å ±è¡¨ç¤ºã‚’æ“ä½œã™ã‚‹ãƒ•ãƒ©ã‚°(0:éè¡¨ç¤º,1:è¡¨ç¤º)
+    g_NtbFlag = 0;                              % æ¸¬å®šå™¨ãŒNTBã‹ã‚’ç¤ºã™ãƒ•ãƒ©ã‚°
+    tblInfo.checkArray = [];                    % ãƒã‚§ãƒƒã‚¯ç”¨é…åˆ—(depend printInfoAbove)
 
-    cell_data = cell(1,tblInfo.chAll+1);        % ƒfƒBƒWƒ^ƒ‹CH‚ğŠÜ‚Ş‘Sƒ`ƒƒƒ“ƒlƒ‹
-    cell_data(:,:)={''};                        % ‹óƒf[ƒ^‚Å‰Šú‰»‚·‚é
+    cell_data = cell(1,tblInfo.chAll+1);        % ãƒ‡ã‚£ã‚¸ã‚¿ãƒ«CHã‚’å«ã‚€å…¨ãƒãƒ£ãƒ³ãƒãƒ«
+    cell_data(:,:)={''};                        % ç©ºãƒ‡ãƒ¼ã‚¿ã§åˆæœŸåŒ–ã™ã‚‹
 
-    %‰Â•Ï’·ƒwƒbƒ_•”î•ñ
+    %å¯å¤‰é•·ãƒ˜ãƒƒãƒ€éƒ¨æƒ…å ±
     [parent,child] = checkFlag(f,lngSeek,delta);
     while parent < 3
         [smlSeek,strCharBuf] = makeSeek(f,parent,child);
@@ -947,24 +947,24 @@ function [strSndBuf, tblHeader, CanChNum] = DataRead12(f,tblInfo)
                                                           delta,flgDebug,cell_data);
         [parent,child] = checkFlag(f,lngSeek,delta);
         switch flgCoeff
-            case 1,     tblCoeff = strRcvBuf;           %   HŠw’l•ÏŠ·ŒW”A
-            case 2,     tblOffset = strRcvBuf;          %   HŠw’l•ÏŠ·ŒW”B
-            case 3,     tblNo = strRcvBuf;              %   CH”Ô†
-            case 4,     tblName = strRcvBuf;            %   CH–¼Ì
-            case 5,     tblUnit = strRcvBuf;            %   ’PˆÊ
-            case 6,     tblrange = strRcvBuf;           %   ƒŒƒ“ƒW
-            case 7,     tblCoeff_disp = strRcvBuf;      %   Z³ŒW”
-            case 8,     tblOffset_disp = strRcvBuf;     %   ƒIƒtƒZƒbƒg
-            case 9,     tblLowPass = strRcvBuf;         %   ƒ[ƒpƒXƒtƒBƒ‹ƒ^
-            case 10,    tblHighPass = strRcvBuf;        %   ƒnƒCƒpƒXƒtƒBƒ‹ƒ^
-            case 11,    tblDigiFilter = strRcvBuf;      %   ƒfƒWƒ^ƒ‹ƒtƒBƒ‹ƒ^
-            case 12,    tblChMode = strRcvBuf;          %   CHƒ‚[ƒh
-            case 13,    tblGaugeFactor = strRcvBuf;     %   ƒQ[ƒW—¦
-            case 14,    tblZeroMode = strRcvBuf;        %   ZERO’l‚Ìƒ‚[ƒh
+            case 1,     tblCoeff = strRcvBuf;           %   å·¥å­¦å€¤å¤‰æ›ä¿‚æ•°A
+            case 2,     tblOffset = strRcvBuf;          %   å·¥å­¦å€¤å¤‰æ›ä¿‚æ•°B
+            case 3,     tblNo = strRcvBuf;              %   CHç•ªå·
+            case 4,     tblName = strRcvBuf;            %   CHåç§°
+            case 5,     tblUnit = strRcvBuf;            %   å˜ä½
+            case 6,     tblrange = strRcvBuf;           %   ãƒ¬ãƒ³ã‚¸
+            case 7,     tblCoeff_disp = strRcvBuf;      %   æ ¡æ­£ä¿‚æ•°
+            case 8,     tblOffset_disp = strRcvBuf;     %   ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+            case 9,     tblLowPass = strRcvBuf;         %   ãƒ­ãƒ¼ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿
+            case 10,    tblHighPass = strRcvBuf;        %   ãƒã‚¤ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿
+            case 11,    tblDigiFilter = strRcvBuf;      %   ãƒ‡ã‚¸ã‚¿ãƒ«ãƒ•ã‚£ãƒ«ã‚¿
+            case 12,    tblChMode = strRcvBuf;          %   CHãƒ¢ãƒ¼ãƒ‰
+            case 13,    tblGaugeFactor = strRcvBuf;     %   ã‚²ãƒ¼ã‚¸ç‡
+            case 14,    tblZeroMode = strRcvBuf;        %   ZEROå€¤ã®ãƒ¢ãƒ¼ãƒ‰
         end
     end
 
-    %ƒf[ƒ^•”î•ñ
+    %ãƒ‡ãƒ¼ã‚¿éƒ¨æƒ…å ±
     for i = 1:blkLMT
         [parent,child] = checkFlag(f,lngSeek,delta);
         flags = parent;
@@ -980,9 +980,9 @@ function [strSndBuf, tblHeader, CanChNum] = DataRead12(f,tblInfo)
             [parent,child] = checkFlag(f,lngSeek,delta);
 
             switch flgCoeff
-                case 9                          %   Œ±“ú
+                case 9                          %   è©¦é¨“æ—¥æ™‚
                     tblfileDate = strRcvBuf;
-                case 10                         %   ƒf[ƒ^”/ch
+                case 10                         %   ãƒ‡ãƒ¼ã‚¿æ•°/ch
                     tblfileData_num = strRcvBuf;
             end
 
@@ -1010,30 +1010,30 @@ function [strSndBuf, tblHeader, CanChNum] = DataRead12(f,tblInfo)
         end
     end
 
-%ƒ`ƒƒƒ“ƒlƒ‹–¼ÌCƒŒƒ“ƒWC’PˆÊ‚ÍKS2ƒtƒ@ƒCƒ‹‚É•K{‚È€–Ú‚Å‚Í–³‚¢‚½‚ßCƒf[ƒ^‚ªŒ©‚Â‚©‚ç‚È‚©‚Á‚½ê‡‚Ìˆ—
+%ãƒãƒ£ãƒ³ãƒãƒ«åç§°ï¼Œãƒ¬ãƒ³ã‚¸ï¼Œå˜ä½ã¯KS2ãƒ•ã‚¡ã‚¤ãƒ«ã«å¿…é ˆãªé …ç›®ã§ã¯ç„¡ã„ãŸã‚ï¼Œãƒ‡ãƒ¼ã‚¿ãŒè¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸå ´åˆã®å‡¦ç†
 
     if(isempty(tblName)==1)
         tblName = cell(1,tblInfo.chAll+tblInfo.CanChNum+1);
         tblName(:,:)={''};
-        %tblName(1,1)={'[CH–¼Ì]'};
+        %tblName(1,1)={'[CHåç§°]'};
         tblName(1,1)={'[CH Name]'};
     end
     if(isempty(tblrange)==1)
         tblrange = cell(1,tblInfo.chAll+tblInfo.CanChNum+1);
         tblrange(:,:)={0};
-        %tblrange(1,1)={'[ƒŒƒ“ƒW]'};
+        %tblrange(1,1)={'[ãƒ¬ãƒ³ã‚¸]'};
         tblrange(1,1)={'[Range]'};
     end
     if(isempty(tblUnit)==1)
         tblUnit = cell(1,tblInfo.chAll+tblInfo.CanChNum+1);
         tblUnit(:,:)={''};
-        %tblUnit(1,1)={'[’PˆÊ]'};
+        %tblUnit(1,1)={'[å˜ä½]'};
         tblUnit(1,1)={'[Unit]'};
     end
     if(isempty(tblLowPass)==1)
         tblLowPass = cell(1,tblInfo.chAll+tblInfo.CanChNum+1);
         tblLowPass(:,:)={'**'};
-        %tblLowPass(1,1)={'[ƒ[ƒpƒXƒtƒBƒ‹ƒ^]'};
+        %tblLowPass(1,1)={'[ãƒ­ãƒ¼ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿]'};
         tblLowPass(1,1)={'[Low Pass Filter]'};
         for i = tblInfo.ch+1:tblInfo.chAll+tblInfo.CanChNum-1
             tblLowPass(i+2)={''};
@@ -1043,7 +1043,7 @@ function [strSndBuf, tblHeader, CanChNum] = DataRead12(f,tblInfo)
     if(isempty(tblHighPass)==1)
         tblHighPass = cell(1,tblInfo.chAll+tblInfo.CanChNum+1);
         tblHighPass(:,:)={'**'};
-        %tblHighPass(1,1)={'[ƒnƒCƒpƒXƒtƒBƒ‹ƒ^]'};
+        %tblHighPass(1,1)={'[ãƒã‚¤ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿]'};
         tblHighPass(1,1)={'[High Pass Filter]'};
         for i = tblInfo.ch+1:tblInfo.chAll+tblInfo.CanChNum-1
             tblHighPass(i+2)={''};
@@ -1052,31 +1052,31 @@ function [strSndBuf, tblHeader, CanChNum] = DataRead12(f,tblInfo)
     if(isempty(tblDigiFilter)==1)
         tblDigiFilter = cell(1,tblInfo.chAll+tblInfo.CanChNum+1);
         tblDigiFilter(:,:)={'***'};
-        %tblDigiFilter(1,1)={'[ƒfƒWƒ^ƒ‹ƒtƒBƒ‹ƒ^]'};
+        %tblDigiFilter(1,1)={'[ãƒ‡ã‚¸ã‚¿ãƒ«ãƒ•ã‚£ãƒ«ã‚¿]'};
         tblDigiFilter(1,1)={'[Digital Filter]'};
         for i = tblInfo.ch++1:tblInfo.chAll+tblInfo.CanChNum-1
             tblDigiFilter(i+2)={''};
         end
     end
 
-    %ZERO’l‚Ì€–Ú‚ª–³‚©‚Á‚½ê‡
+    %ZEROå€¤ã®é …ç›®ãŒç„¡ã‹ã£ãŸå ´åˆ
     if(isempty(tblZeroMode)==1)
         g_NtbFlag = 0;
     else
         g_NtbFlag = 1;
-        %tblZeroNum(1,1) = {'[ZERO’l]'};
+        %tblZeroNum(1,1) = {'[ZEROå€¤]'};
         tblZeroNum(1,1) = {'[ZERO Value]'};
         tblZeroMode(1,1) = {'[ZERO]'};
-        %ZERO’l‚ÆZERO‚Ìƒ‚[ƒh‚Ì€–Ú‚ğ•ª‰ğ‚·‚é
+        %ZEROå€¤ã¨ZEROã®ãƒ¢ãƒ¼ãƒ‰ã®é …ç›®ã‚’åˆ†è§£ã™ã‚‹
         for i = 1:tblInfo.chAll
             TempStr = split_str(cell2mat(tblZeroMode(1,i+1)),',');
             tblZeroNum(1,i+1) = TempStr(1);
             tblZeroMode(1,i+1) = TempStr(2);
         end
     end
-%ƒAƒiƒƒOCH‚ª–³‚©‚Á‚½ê‡‚Ìˆ—
+%ã‚¢ãƒŠãƒ­ã‚°CHãŒç„¡ã‹ã£ãŸå ´åˆã®å‡¦ç†
     if (tblInfo.ch == 0)
-        %CH”Ô†ƒZƒ‹‚Ì‰Šú‰»
+        %CHç•ªå·ã‚»ãƒ«ã®åˆæœŸåŒ–
         if g_CsvFormat == 0
             tblNo(1) = {'[CH No]'};
         else
@@ -1087,65 +1087,65 @@ function [strSndBuf, tblHeader, CanChNum] = DataRead12(f,tblInfo)
             end
         end
 
-        %Z³ŒW”ƒZƒ‹‚Ì‰Šú‰»
-        %tblCoeff_disp(1)={'[Z³ŒW”]'};
+        %æ ¡æ­£ä¿‚æ•°ã‚»ãƒ«ã®åˆæœŸåŒ–
+        %tblCoeff_disp(1)={'[æ ¡æ­£ä¿‚æ•°]'};
         tblCoeff_disp(1)={'[Calibration Coeff.]'};
 
-        %ƒIƒtƒZƒbƒgƒZƒ‹‚Ì‰Šú‰»
-        %tblOffset_disp(1)={'[ƒIƒtƒZƒbƒg]'};
+        %ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚»ãƒ«ã®åˆæœŸåŒ–
+        %tblOffset_disp(1)={'[ã‚ªãƒ•ã‚»ãƒƒãƒˆ]'};
         tblOffset_disp(1)={'[Offset]'};
 
         tblInfo.CanChStNo = 1;
     end
 
-%CANƒf[ƒ^‚ª‚ ‚éê‡‚Ìˆ—
+%CANãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚‹å ´åˆã®å‡¦ç†
     if (tblInfo.CAN ~= 0)
         CanChNum = tblInfo.CanChNum;
         for k = 1:CanChNum
-            %CAN-CH”Ô†‚Ìİ’è
+            %CAN-CHç•ªå·ã®è¨­å®š
             tblNo(k+tblInfo.ch+1) = {strcat('CH-',num2str(tblInfo.CanChStNo+(k-1)))};
 
-            %CAN-CH–¼Ì‚Ìİ’è
+            %CAN-CHåç§°ã®è¨­å®š
             if(isempty(nonzeros(tblInfo.CanCh(k).ChName))==0)
                 tblName(k+tblInfo.ch+1) = {native2unicode(nonzeros(tblInfo.CanCh(k).ChName)')};
             else
                 tblName(k+tblInfo.ch+1) = {''};
             end
 
-            %CAN-CHZ³ŒW”‚Ìİ’è(float‚©double‚©‚Ì”»’è’Ç‰Á•K—v)
+            %CAN-CHæ ¡æ­£ä¿‚æ•°ã®è¨­å®š(floatã‹doubleã‹ã®åˆ¤å®šè¿½åŠ å¿…è¦)
             tblCoeff_disp(k+tblInfo.ch+1) = {tblInfo.CanCh(k).Coeffs};
 
-            %CAN-CHƒIƒtƒZƒbƒg‚Ìİ’è(float‚©double‚©‚Ì”»’è’Ç‰Á•K—v)
+            %CAN-CHã‚ªãƒ•ã‚»ãƒƒãƒˆã®è¨­å®š(floatã‹doubleã‹ã®åˆ¤å®šè¿½åŠ å¿…è¦)
             tblOffset_disp(k+tblInfo.ch+1) = {tblInfo.CanCh(k).Offset};
 
-            %’PˆÊ•¶š—ñ‚Ìİ’è
+            %å˜ä½æ–‡å­—åˆ—ã®è¨­å®š
             if(isempty(nonzeros(tblInfo.CanCh(k).UnitStr))==0)
                 tblUnit(k+tblInfo.ch+1) = {native2unicode(nonzeros(tblInfo.CanCh(k).UnitStr)')};
             end
         end
     end
 
-%”z—ñ‚Ì‰Šú‰»
+%é…åˆ—ã®åˆæœŸåŒ–
     tblInfo.DigiChNum = (tblInfo.chAll-tblInfo.ch);
     tblInfo.MeasChNum = tblInfo.chAll + tblInfo.CanChNum;
 
-    %Œ±“ú‚Ì‰Šú‰»
-    %W˜^CH”‚ª2‚æ‚è‘å‚«‚¢‚È‚ç”z—ñ‚Ì4”Ô–Ú‚©‚ç”z—ñ‚Ì‰Šú‰»‚ğs‚¤
+    %è©¦é¨“æ—¥æ™‚ã®åˆæœŸåŒ–
+    %é›†éŒ²CHæ•°ãŒ2ã‚ˆã‚Šå¤§ãã„ãªã‚‰é…åˆ—ã®4ç•ªç›®ã‹ã‚‰é…åˆ—ã®åˆæœŸåŒ–ã‚’è¡Œã†
     if(tblInfo.MeasChNum > 2)
         tblfileDate(4:tblInfo.MeasChNum+1) = {''};
     end
 
-    %W˜^ƒf[ƒ^”‚Ì‰Šú‰»
-    %W˜^CH”‚ª2‚æ‚è‘å‚«‚¢‚È‚ç”z—ñ‚Ì4”Ô–Ú‚©‚ç”z—ñ‚Ì‰Šú‰»‚ğs‚¤
+    %é›†éŒ²ãƒ‡ãƒ¼ã‚¿æ•°ã®åˆæœŸåŒ–
+    %é›†éŒ²CHæ•°ãŒ2ã‚ˆã‚Šå¤§ãã„ãªã‚‰é…åˆ—ã®4ç•ªç›®ã‹ã‚‰é…åˆ—ã®åˆæœŸåŒ–ã‚’è¡Œã†
     if( (tblInfo.MeasChNum) > 1)
         tblfileData_num(3:tblInfo.MeasChNum+1) = {''};
     else
-        %”z—ñ‚Ì3”Ô–Ú‚ğ‰Šú‰»
+        %é…åˆ—ã®3ç•ªç›®ã‚’åˆæœŸåŒ–
         tblfileData_num(:,3) = {''};
     end
 
-    %CH–¼ÌCZ³ŒW”CƒIƒtƒZƒbƒgC’PˆÊ‚Ì‰Šú‰»
-    %DI‚ÌW˜^‚ª‚ ‚Á‚½ê‡‚»‚ÌCH”•ª‰Šú‰»‚ğs‚¤
+    %CHåç§°ï¼Œæ ¡æ­£ä¿‚æ•°ï¼Œã‚ªãƒ•ã‚»ãƒƒãƒˆï¼Œå˜ä½ã®åˆæœŸåŒ–
+    %DIã®é›†éŒ²ãŒã‚ã£ãŸå ´åˆãã®CHæ•°åˆ†åˆæœŸåŒ–ã‚’è¡Œã†
     if( (tblInfo.ch + tblInfo.CanChNum) == 0)
         tblName(2:3) = {''};
         tblCoeff_disp(2:3) = {''};
@@ -1153,19 +1153,19 @@ function [strSndBuf, tblHeader, CanChNum] = DataRead12(f,tblInfo)
         tblUnit(2:3) = {''};
     elseif((tblInfo.ch + tblInfo.CanChNum) == 1)
         if(tblInfo.DigiChNum == 1)
-            %”z—ñ‚Ì3”Ô–Ú‚ğ‰Šú‰»
+            %é…åˆ—ã®3ç•ªç›®ã‚’åˆæœŸåŒ–
             tblName(:,3) = {''};
             tblCoeff_disp(:,3) = {''};
             tblOffset_disp(:,3) = {''};
             tblUnit(:,3) = {''};
         elseif(tblInfo.DigiChNum == 2)
-            %”z—ñ‚Ì3,4”Ô–Ú‚ğ‰Šú‰»
+            %é…åˆ—ã®3,4ç•ªç›®ã‚’åˆæœŸåŒ–
             tblName(3:4) = {''};
             tblCoeff_disp(3:4) = {''};
             tblOffset_disp(3:4) = {''};
             tblUnit(3:4) = {''};
         else
-            %”z—ñ‚Ì3”Ô–Ú‚ğ‰Šú‰»
+            %é…åˆ—ã®3ç•ªç›®ã‚’åˆæœŸåŒ–
             tblName(:,3) = {''};
             tblCoeff_disp(:,3) = {''};
             tblOffset_disp(:,3) = {''};
@@ -1180,8 +1180,8 @@ function [strSndBuf, tblHeader, CanChNum] = DataRead12(f,tblInfo)
         end
     end
 
-    %CH No‚Ì‰Šú‰»
-    %DI‚ÌW˜^‚ª‚ ‚Á‚½ê‡‚»‚ÌCH”•ª‰Šú‰»‚ğs‚¤
+    %CH Noã®åˆæœŸåŒ–
+    %DIã®é›†éŒ²ãŒã‚ã£ãŸå ´åˆãã®CHæ•°åˆ†åˆæœŸåŒ–ã‚’è¡Œã†
     if( (tblInfo.MeasChNum) == 1)
         tblNo(3) = {''};
     end
@@ -1193,8 +1193,8 @@ function [strSndBuf, tblHeader, CanChNum] = DataRead12(f,tblInfo)
         tblNo((tblInfo.ch + tblInfo.CanChNum)+3) = {'DI-2'};
     end
 
-    %ƒŒƒ“ƒWCƒ[ƒpƒXCƒnƒCƒpƒXCƒfƒWƒ^ƒ‹‚Ì‰Šú‰»
-    %ƒAƒiƒƒO‚ÌCH”‚ª0or1‚È‚ç”z—ñ‚Ì3”Ô–Ú‚Ü‚Å‰Šú‰»
+    %ãƒ¬ãƒ³ã‚¸ï¼Œãƒ­ãƒ¼ãƒ‘ã‚¹ï¼Œãƒã‚¤ãƒ‘ã‚¹ï¼Œãƒ‡ã‚¸ã‚¿ãƒ«ã®åˆæœŸåŒ–
+    %ã‚¢ãƒŠãƒ­ã‚°ã®CHæ•°ãŒ0or1ãªã‚‰é…åˆ—ã®3ç•ªç›®ã¾ã§åˆæœŸåŒ–
     if(tblInfo.ch == 0)
         tblrange(2:3) = {''};
         tblLowPass(2:3)={''};
@@ -1215,7 +1215,7 @@ function [strSndBuf, tblHeader, CanChNum] = DataRead12(f,tblInfo)
 
 
 
-    %NTB‚Ìê‡CCHƒ‚[ƒhCƒQ[ƒW—¦CZERO,ZERO’l‚Ì€–Ú‚ğ’Ç‰Á‚·‚é
+    %NTBã®å ´åˆï¼ŒCHãƒ¢ãƒ¼ãƒ‰ï¼Œã‚²ãƒ¼ã‚¸ç‡ï¼ŒZERO,ZEROå€¤ã®é …ç›®ã‚’è¿½åŠ ã™ã‚‹
     if g_NtbFlag == 1
         if(tblInfo.chAll == 1)
             tblChMode(:,3)      = {''};
@@ -1230,18 +1230,18 @@ function [strSndBuf, tblHeader, CanChNum] = DataRead12(f,tblInfo)
 
     return
 %--------------------------------------------------------------------------
-%% checkFlag - ‘å•ª—Ş,¬•ª—Şƒtƒ‰ƒO‚ğ“Ç‚İo‚·
-%    ˆø”
-%        f         ... ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^ƒIƒuƒWƒFƒNƒg
-%        lngSeek   ... ƒwƒbƒ_ƒTƒCƒY
-%        delta     ... ƒwƒbƒ_ˆÈ~‚Ì“Ç‚İ”ò‚Î‚µ—Ê
-%    –ß‚è’l
-%        parent    ... ‘å•ª—Şƒtƒ‰ƒO
-%        child     ... ¬•ª—Şƒtƒ‰ƒO
+%% checkFlag - å¤§åˆ†é¡,å°åˆ†é¡ãƒ•ãƒ©ã‚°ã‚’èª­ã¿å‡ºã™
+%    å¼•æ•°
+%        f         ... ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+%        lngSeek   ... ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚º
+%        delta     ... ãƒ˜ãƒƒãƒ€ä»¥é™ã®èª­ã¿é£›ã°ã—é‡
+%    æˆ»ã‚Šå€¤
+%        parent    ... å¤§åˆ†é¡ãƒ•ãƒ©ã‚°
+%        child     ... å°åˆ†é¡ãƒ•ãƒ©ã‚°
 function [parent,child] = checkFlag(f,lngSeek,delta)
 
     fseek(f,lngSeek + delta,'bof');
-    if feof(f) == 0                  % I’[ˆ—
+    if feof(f) == 0                  % çµ‚ç«¯å‡¦ç†
         parent = fread(f,1,'uchar');
         child  = fread(f,1,'uchar');
     else
@@ -1251,14 +1251,14 @@ function [parent,child] = checkFlag(f,lngSeek,delta)
 
 
 %--------------------------------------------------------------------------
-%% makeSeek - ƒf[ƒ^“Ç‚İ‚İƒoƒCƒg”A‚¨‚æ‚Ñƒf[ƒ^Œ^‚ğ“Ç‚İæ‚éB
-%    ˆø”
-%        f          ... ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^ƒIƒuƒWƒFƒNƒg
-%        parent     ... ‘å•ª—Şƒtƒ‰ƒO
-%        child      ... ¬•ª—Şƒtƒ‰ƒO
-%    –ß‚è’l
-%        smlSeek    ... ƒf[ƒ^“Ç‚İ‚İƒoƒCƒg”
-%        strCharBuf ... ƒf[ƒ^Œ^
+%% makeSeek - ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿ãƒã‚¤ãƒˆæ•°ã€ãŠã‚ˆã³ãƒ‡ãƒ¼ã‚¿å‹ã‚’èª­ã¿å–ã‚‹ã€‚
+%    å¼•æ•°
+%        f          ... ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+%        parent     ... å¤§åˆ†é¡ãƒ•ãƒ©ã‚°
+%        child      ... å°åˆ†é¡ãƒ•ãƒ©ã‚°
+%    æˆ»ã‚Šå€¤
+%        smlSeek    ... ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿ãƒã‚¤ãƒˆæ•°
+%        strCharBuf ... ãƒ‡ãƒ¼ã‚¿å‹
 function [smlSeek,strCharBuf] = makeSeek(f,parent,child)
 
     flgSeek = checkflgSeek(parent,child);
@@ -1286,50 +1286,50 @@ function [smlSeek,strCharBuf] = makeSeek(f,parent,child)
 
 
 %--------------------------------------------------------------------------
-%% checkflgSeek - “Ç‚İƒoƒCƒg—Ê‚ğZo
-%    ˆø”
-%        flgParent     ... ‘å•ª—Şƒtƒ‰ƒO
-%        flgChild      ... ¬•ª—Şƒtƒ‰ƒO
-%    –ß‚è’l
-%        flgSeek       ... ‘Î‰‚µ‚½ƒoƒCƒg”
+%% checkflgSeek - èª­è¾¼ã¿ãƒã‚¤ãƒˆé‡ã‚’ç®—å‡º
+%    å¼•æ•°
+%        flgParent     ... å¤§åˆ†é¡ãƒ•ãƒ©ã‚°
+%        flgChild      ... å°åˆ†é¡ãƒ•ãƒ©ã‚°
+%    æˆ»ã‚Šå€¤
+%        flgSeek       ... å¯¾å¿œã—ãŸãƒã‚¤ãƒˆæ•°
 %
 function flgSeek = checkflgSeek(flgParent,flgChild)
     global g_Ks2VerNum;
 
     if flgParent == 1
-        if flgChild == 61               % CAN IDî•ñ
-            %KS2‚ÌVer‚ª5ˆÈã‚È‚çƒ{ƒfƒBƒoƒCƒg”‚Í4
+        if flgChild == 61               % CAN IDæƒ…å ±
+            %KS2ã®VerãŒ5ä»¥ä¸Šãªã‚‰ãƒœãƒ‡ã‚£ãƒã‚¤ãƒˆæ•°ã¯4
             if g_Ks2VerNum >= 5
                 flgSeek = 4;
             else
                 flgSeek = 2;
             end
-        elseif flgChild == 62           % CAN CHğŒ(KS2)
+        elseif flgChild == 62           % CAN CHæ¡ä»¶(KS2)
             flgSeek = 4;
-        elseif flgChild == 63           % CAN’ÊMğŒ
-            %KS2‚ÌVer‚ª5ˆÈã‚È‚çƒ{ƒfƒBƒoƒCƒg”‚Í4
+        elseif flgChild == 63           % CANé€šä¿¡æ¡ä»¶
+            %KS2ã®VerãŒ5ä»¥ä¸Šãªã‚‰ãƒœãƒ‡ã‚£ãƒã‚¤ãƒˆæ•°ã¯4
             if g_Ks2VerNum >= 5
                 flgSeek = 4;
             else
                 flgSeek = 2;
             end
-        elseif flgChild == 70           % CAN CHğŒ(KS2)
+        elseif flgChild == 70           % CAN CHæ¡ä»¶(KS2)
             flgSeek = 4;
         else
             flgSeek = 2;
         end
     elseif flgParent == 16
-        if flgChild == 34           % MAX/MINƒf[ƒ^
-            %KS2‚ÌVer‚ª5ˆÈã‚È‚çƒ{ƒfƒBƒoƒCƒg”‚Í4
+        if flgChild == 34           % MAX/MINãƒ‡ãƒ¼ã‚¿
+            %KS2ã®VerãŒ5ä»¥ä¸Šãªã‚‰ãƒœãƒ‡ã‚£ãƒã‚¤ãƒˆæ•°ã¯4
             if g_Ks2VerNum >= 5
                 flgSeek = 4;
             else
                 flgSeek = 2;
             end
-        elseif flgChild == 35       % MAX/MIN‘OŒã400ƒf[ƒ^(KS2)
+        elseif flgChild == 35       % MAX/MINå‰å¾Œ400ãƒ‡ãƒ¼ã‚¿(KS2)
                 flgSeek = 4;
-        elseif flgChild == 36       % MAX/MIN5ƒf[ƒ^‚ÌMAX/MIN”­¶ƒ|ƒCƒ“ƒg
-            %KS2‚ÌVer‚ª5ˆÈã‚È‚çƒ{ƒfƒBƒoƒCƒg”‚Í4
+        elseif flgChild == 36       % MAX/MIN5ãƒ‡ãƒ¼ã‚¿ã®MAX/MINç™ºç”Ÿãƒã‚¤ãƒ³ãƒˆ
+            %KS2ã®VerãŒ5ä»¥ä¸Šãªã‚‰ãƒœãƒ‡ã‚£ãƒã‚¤ãƒˆæ•°ã¯4
             if g_Ks2VerNum >= 5
                 flgSeek = 4;
             else
@@ -1339,13 +1339,13 @@ function flgSeek = checkflgSeek(flgParent,flgChild)
             flgSeek = 2;
         end
     elseif flgParent == 17
-        if flgChild == 1            % ƒf[ƒ^•”(ks1)
+        if flgChild == 1            % ãƒ‡ãƒ¼ã‚¿éƒ¨(ks1)
             flgSeek = 4;
-        elseif flgChild == 2        % ƒf[ƒ^•”(KS2)
+        elseif flgChild == 2        % ãƒ‡ãƒ¼ã‚¿éƒ¨(KS2)
             flgSeek = 8;
         end
     elseif flgParent == 18
-        if flgChild == 25           % REC/PAUSEŠÔ(KS2)
+        if flgChild == 25           % REC/PAUSEæ™‚é–“(KS2)
             flgSeek = 8;
         elseif flgChild == 31
             flgSeek = 2;
@@ -1359,81 +1359,81 @@ function flgSeek = checkflgSeek(flgParent,flgChild)
     end
 
 %--------------------------------------------------------------------------
-%% printInfoAbove - Šeî•ñ‚ğ“Ç‚İæ‚éB
-%    ˆø”
-%        f          ... ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^ƒIƒuƒWƒFƒNƒg
-%        tblInfo    ... ƒwƒbƒ_Šeíî•ñ‚ğŠi”[‚µ‚½\‘¢‘Ì•Ï”
-%        flgParent  ... ‘å•ª—Şƒtƒ‰ƒO
-%        flgChild   ... ¬•ª—Şƒtƒ‰ƒO
-%        smlSeek    ... ƒf[ƒ^“Ç‚İ‚İƒoƒCƒg”
-%        strCharBuf ... ƒf[ƒ^Œ^
-%        tblCoeff   ... Z³ŒW”
-%        tblOffset  ... ƒIƒtƒZƒbƒg
-%        delta      ... “Ç‚İ”ò‚Î‚µ—Ê
-%        flgDebug   ... î•ñ•\¦—L–³‚ğ‘€ì‚·‚éƒtƒ‰ƒO(0:”ñ•\¦,1:•\¦)
-%        cell_data  ... CHî•ñ‚ğˆê•ÛŠÇ”z—ñ
-%    –ß‚è’l
-%        delta      ... “Ç‚İ”ò‚Î‚µ—Ê
-%        strSndBuf  ... Z³ŒW”,ƒIƒtƒZƒbƒg,ÀÛ‚Ìƒf[ƒ^“™
-%        flgCoeff   ... Z³ŒW”,ƒIƒtƒZƒbƒg,ÀÛ‚Ìƒf[ƒ^‚ÌU‚è•ª‚¯
-%        tblInfo    ... •ÏX‚ğ‰Á‚¦‚½\‘¢‘Ì•Ï”
+%% printInfoAbove - å„æƒ…å ±ã‚’èª­ã¿å–ã‚‹ã€‚
+%    å¼•æ•°
+%        f          ... ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+%        tblInfo    ... ãƒ˜ãƒƒãƒ€å„ç¨®æƒ…å ±ã‚’æ ¼ç´ã—ãŸæ§‹é€ ä½“å¤‰æ•°
+%        flgParent  ... å¤§åˆ†é¡ãƒ•ãƒ©ã‚°
+%        flgChild   ... å°åˆ†é¡ãƒ•ãƒ©ã‚°
+%        smlSeek    ... ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿ãƒã‚¤ãƒˆæ•°
+%        strCharBuf ... ãƒ‡ãƒ¼ã‚¿å‹
+%        tblCoeff   ... æ ¡æ­£ä¿‚æ•°
+%        tblOffset  ... ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+%        delta      ... èª­ã¿é£›ã°ã—é‡
+%        flgDebug   ... æƒ…å ±è¡¨ç¤ºæœ‰ç„¡ã‚’æ“ä½œã™ã‚‹ãƒ•ãƒ©ã‚°(0:éè¡¨ç¤º,1:è¡¨ç¤º)
+%        cell_data  ... CHæƒ…å ±ã‚’ä¸€æ™‚ä¿ç®¡é…åˆ—
+%    æˆ»ã‚Šå€¤
+%        delta      ... èª­ã¿é£›ã°ã—é‡
+%        strSndBuf  ... æ ¡æ­£ä¿‚æ•°,ã‚ªãƒ•ã‚»ãƒƒãƒˆ,å®Ÿéš›ã®ãƒ‡ãƒ¼ã‚¿ç­‰
+%        flgCoeff   ... æ ¡æ­£ä¿‚æ•°,ã‚ªãƒ•ã‚»ãƒƒãƒˆ,å®Ÿéš›ã®ãƒ‡ãƒ¼ã‚¿ã®æŒ¯ã‚Šåˆ†ã‘
+%        tblInfo    ... å¤‰æ›´ã‚’åŠ ãˆãŸæ§‹é€ ä½“å¤‰æ•°
 
 
 function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent,flgChild,smlSeek, strCharBuf,tblCoeff,tblOffset,delta,flgDebug,cell_data)
     global g_Ks2VerNum;
-    global g_CsvFormat;       %ƒwƒbƒ_î•ñ‚ÌƒtƒH[ƒ}ƒbƒg‚Ì‹Œ®E•W€‚ğØ‚è‘Ö‚¦‚Ü‚·      0F‹Œƒ^ƒCƒv  1F•W€ƒ^ƒCƒv
-    global g_IndexType;       %ƒf[ƒ^‚ÌƒCƒ“ƒfƒbƒNƒX‚ğØ‚è‘Ö‚¦‚Ü‚·                     0FŠÔ      1F”Ô†
-    global g_StartNumber;     %ƒf[ƒ^‚ÌƒCƒ“ƒfƒbƒNƒX‚ÌŠJn”Ô†‚ğØ‚è‘Ö‚¦‚Ü‚·            0F0n‚Ü‚è   1F1n‚Ü‚è
+    global g_CsvFormat;       %ãƒ˜ãƒƒãƒ€æƒ…å ±ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®æ—§å¼ãƒ»æ¨™æº–ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™      0ï¼šæ—§ã‚¿ã‚¤ãƒ—  1ï¼šæ¨™æº–ã‚¿ã‚¤ãƒ—
+    global g_IndexType;       %ãƒ‡ãƒ¼ã‚¿ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™                     0ï¼šæ™‚é–“      1ï¼šç•ªå·
+    global g_StartNumber;     %ãƒ‡ãƒ¼ã‚¿ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®é–‹å§‹ç•ªå·ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™            0ï¼š0å§‹ã¾ã‚Š   1ï¼š1å§‹ã¾ã‚Š
 
-    persistent CanIdMax;        %CAN-ID‚ÌÅ‘å”
-    persistent CanChMax;        %CAN-CH‚ÌÅ‘å”
-    persistent DoubleMax;       %DoubleŒ^Å‘å’l
-    persistent DoubleMin;       %DoubleŒ^Å¬’l
-    persistent FloatMax;        %FloatŒ^Å‘å’l
-    persistent FloatMin;        %FloatŒ^Å¬’l
-    persistent CanIdEndian;     %CAN-IDƒGƒ“ƒfƒBƒAƒ“
-    persistent CanIdDataLen;    %CAN-IDƒf[ƒ^’·
-    persistent CanIdChNum;      %CAN-ID‚ÌCH”
-    persistent CanChBitShiftR;  %CAN-CH•ª‰ğ—p‰E‘¤ƒrƒbƒgƒVƒtƒg
-    persistent CanChStBit;      %CAN-CHƒXƒ^[ƒgƒrƒbƒg
-    persistent CanChProcType;   %CAN-CHƒf[ƒ^Œ^
-    persistent CanChDataType;   %CAN-CHƒf[ƒ^Œ^
-    persistent CanChBitLen;     %CAN-CHƒrƒbƒg’·
-    persistent CanChBitMask;    %CAN-CHƒrƒbƒgƒ}ƒXƒN
-    persistent CanChSignedMask; %CAN-CHSignedŒ^•ÏŠ·ƒ}ƒXƒN
-    persistent CanChCoeffs;     %CAN-CHZ³ŒW”
-    persistent CanChOffset;     %CAN-CHƒIƒtƒZƒbƒg
-    persistent CanChData;       %CAN-CHƒf[ƒ^(uint64)
-    persistent SignedCanChData; %CAN-CHƒf[ƒ^(int64)
-    persistent DoubleCanChData; %CAN-CHƒf[ƒ^(double)
+    persistent CanIdMax;        %CAN-IDã®æœ€å¤§æ•°
+    persistent CanChMax;        %CAN-CHã®æœ€å¤§æ•°
+    persistent DoubleMax;       %Doubleå‹æœ€å¤§å€¤
+    persistent DoubleMin;       %Doubleå‹æœ€å°å€¤
+    persistent FloatMax;        %Floatå‹æœ€å¤§å€¤
+    persistent FloatMin;        %Floatå‹æœ€å°å€¤
+    persistent CanIdEndian;     %CAN-IDã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³
+    persistent CanIdDataLen;    %CAN-IDãƒ‡ãƒ¼ã‚¿é•·
+    persistent CanIdChNum;      %CAN-IDã®CHæ•°
+    persistent CanChBitShiftR;  %CAN-CHåˆ†è§£ç”¨å³å´ãƒ“ãƒƒãƒˆã‚·ãƒ•ãƒˆ
+    persistent CanChStBit;      %CAN-CHã‚¹ã‚¿ãƒ¼ãƒˆãƒ“ãƒƒãƒˆ
+    persistent CanChProcType;   %CAN-CHãƒ‡ãƒ¼ã‚¿å‹
+    persistent CanChDataType;   %CAN-CHãƒ‡ãƒ¼ã‚¿å‹
+    persistent CanChBitLen;     %CAN-CHãƒ“ãƒƒãƒˆé•·
+    persistent CanChBitMask;    %CAN-CHãƒ“ãƒƒãƒˆãƒã‚¹ã‚¯
+    persistent CanChSignedMask; %CAN-CHSignedå‹å¤‰æ›ãƒã‚¹ã‚¯
+    persistent CanChCoeffs;     %CAN-CHæ ¡æ­£ä¿‚æ•°
+    persistent CanChOffset;     %CAN-CHã‚ªãƒ•ã‚»ãƒƒãƒˆ
+    persistent CanChData;       %CAN-CHãƒ‡ãƒ¼ã‚¿(uint64)
+    persistent SignedCanChData; %CAN-CHãƒ‡ãƒ¼ã‚¿(int64)
+    persistent DoubleCanChData; %CAN-CHãƒ‡ãƒ¼ã‚¿(double)
 
-%ˆÈ‰ºCˆê‰ñ–Ú‚ÌŒÄ‚Ño‚µ‚És—ñ‚Ì‰Šú‰»‚ğs‚¤
-    %CAN-ID”‚ÌÅ‘å’l‚Í5120
+%ä»¥ä¸‹ï¼Œä¸€å›ç›®ã®å‘¼ã³å‡ºã—æ™‚ã«è¡Œåˆ—ã®åˆæœŸåŒ–ã‚’è¡Œã†
+    %CAN-IDæ•°ã®æœ€å¤§å€¤ã¯5120
     if (isempty(CanIdMax))
         CanIdMax = 5120;
     end
 
-    %CAN-CH”‚ÌÅ‘å’l‚Í10240
+    %CAN-CHæ•°ã®æœ€å¤§å€¤ã¯10240
     if (isempty(CanChMax))
         CanChMax = 10240;
     end
 
-    %DoubleŒ^Å‘å’l‚Ìİ’è
+    %Doubleå‹æœ€å¤§å€¤ã®è¨­å®š
     if (isempty(DoubleMax))
         DoubleMax = realmax('double');
     end
 
-    %DoubleŒ^Å¬’l‚Ìİ’è
+    %Doubleå‹æœ€å°å€¤ã®è¨­å®š
     if (isempty(DoubleMin))
         DoubleMin = realmin('double');
     end
 
-    %FloatŒ^Å‘å’l‚Ìİ’è
+    %Floatå‹æœ€å¤§å€¤ã®è¨­å®š
     if (isempty(FloatMax))
         FloatMax = realmax('single');
     end
 
-    %FloatŒ^Å¬’l‚Ìİ’è
+    %Floatå‹æœ€å°å€¤ã®è¨­å®š
     if (isempty(FloatMin))
         FloatMin = realmin('single');
     end
@@ -1488,228 +1488,228 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
     flgCoeff  = 0;
     flgDelta  = 2;
 
-    if flgParent == 1   % ‰Â•Ï’·ƒwƒbƒ_•”‘S‘Ìî•ñ
-        %€–Ú–¼
+    if flgParent == 1   % å¯å¤‰é•·ãƒ˜ãƒƒãƒ€éƒ¨å…¨ä½“æƒ…å ±
+        %é …ç›®å
         if flgChild == 46
             tblInfo.CoefDFlag = 0;
 
             if g_Ks2VerNum <= 3
                 StrBufItem = zeros(1,10,'uint8');
 
-                %15€–Ú–Ú‚Ü‚Åƒ|ƒCƒ“ƒ^‚ğˆÚ“®
+                %15é …ç›®ç›®ã¾ã§ãƒã‚¤ãƒ³ã‚¿ã‚’ç§»å‹•
                 fseek(f,252,'cof');
 
-                %æ“ª‚Ì10•¶š‚ğ“Ç‚İ‚İ
+                %å…ˆé ­ã®10æ–‡å­—ã‚’èª­ã¿è¾¼ã¿
                 for k = 1:10
                     StrBufItem(k) = fread(f,1,'uint8');
                 end
 
-                %•¶š—ñ‚Ö•ÏŠ·
+                %æ–‡å­—åˆ—ã¸å¤‰æ›
                 StrBuf = char(StrBufItem);
 
-                %•¶š—ñ‚ªCAN_DOUBLE‚È‚çZ³ŒW”‚ÆƒIƒtƒZƒbƒg‚ÍDoubleŒ^
+                %æ–‡å­—åˆ—ãŒCAN_DOUBLEãªã‚‰æ ¡æ­£ä¿‚æ•°ã¨ã‚ªãƒ•ã‚»ãƒƒãƒˆã¯Doubleå‹
                 tblInfo.CoefDFlag = strcmp(StrBuf,'CAN_DOUBLE');
             end
 
-        %CAN-IDî•ñ
+        %CAN-IDæƒ…å ±
         elseif flgChild == 61
             tblInfo.CanChNum = 0;
 
             if g_Ks2VerNum >= 5
-                %KS2‚ÌVer‚ª5ˆÈã‚È‚çƒ{ƒfƒBƒoƒCƒg”‚Í4
+                %KS2ã®VerãŒ5ä»¥ä¸Šãªã‚‰ãƒœãƒ‡ã‚£ãƒã‚¤ãƒˆæ•°ã¯4
                 flgDelta = 4;
             else
                 flgDelta = 2;
             end
 
             if(isnan(tblInfo.CAN) == 0)
-                %CAN-ID”•ª“Ç‚İ‚Ş
+                %CAN-IDæ•°åˆ†èª­ã¿è¾¼ã‚€
                 for k = 1:tblInfo.CAN
 
-                    %ID”Ô†
+                    %IDç•ªå·
                     tblInfo.CanId(k).IdNo = fread(f,1,'int16');
 
-                    %1ID•Ó‚è‚ÌCH”
+                    %1IDè¾ºã‚Šã®CHæ•°
                     tblInfo.CanId(k).ChNum = fread(f,1,'int16');
 
-                    %ƒtƒH[ƒ}ƒbƒg(0F•W€  1FŠg’£)
+                    %ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ(0ï¼šæ¨™æº–  1ï¼šæ‹¡å¼µ)
                     tblInfo.CanId(k).Format = fread(f,1,'int16');
 
-                    %ƒtƒŒ[ƒ€ID
+                    %ãƒ•ãƒ¬ãƒ¼ãƒ ID
                     tblInfo.CanId(k).FrameIdNo = fread(f,1,'int32');
 
-                    %ID’·
+                    %IDé•·
                     tblInfo.CanId(k).IdSize = fread(f,1,'int16');
 
-                    %ƒGƒ“ƒfƒBƒAƒ“(0FLittle  1FBig)
+                    %ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³(0ï¼šLittle  1ï¼šBig)
                     tblInfo.CanId(k).Endian = fread(f,1,'int16');
                     fseek(f,40,'cof');
 
-                    %CAN-CH”‚Ìİ’è
+                    %CAN-CHæ•°ã®è¨­å®š
                     CanIdChNum(k) = tblInfo.CanId(k).ChNum;
 
-                    %CAN-ID’·‚Ìİ’è
+                    %CAN-IDé•·ã®è¨­å®š
                     CanIdDataLen(k) = tblInfo.CanId(k).IdSize;
 
-                    %ƒGƒ“ƒfƒBƒAƒ“‚ªLittle‚È‚ç1CBig‚È‚ç2‚ğİ’è
+                    %ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ãŒLittleãªã‚‰1ï¼ŒBigãªã‚‰2ã‚’è¨­å®š
                     if(tblInfo.CanId(k).Endian == 0)
                        CanIdEndian(k) = 1;
                     else
                        CanIdEndian(k) = 2;
                     end
 
-                    %CAN-CH”‚ÌXV
+                    %CAN-CHæ•°ã®æ›´æ–°
                     tblInfo.CanChNum = tblInfo.CanChNum + tblInfo.CanId(k).ChNum;
                 end
             end
 
-        %CAN-CHğŒ
+        %CAN-CHæ¡ä»¶
         elseif flgChild == 62
             flgDelta = 4;
 
-            %CAN-CH”•ª‚Ì“Ç‚İ‚İ
+            %CAN-CHæ•°åˆ†ã®èª­ã¿è¾¼ã¿
             for k = 1:tblInfo.CanChNum
 
-                %ƒXƒ^[ƒgƒrƒbƒg‚Ì“Ç‚İ‚İ
+                %ã‚¹ã‚¿ãƒ¼ãƒˆãƒ“ãƒƒãƒˆã®èª­ã¿è¾¼ã¿
                 CanChStBit(k) = fread(f,1,'int16=>uint32');
 
-                %ƒrƒbƒg’·‚Ì“Ç‚İ‚İ
+                %ãƒ“ãƒƒãƒˆé•·ã®èª­ã¿è¾¼ã¿
                 CanChBitLen(k) = fread(f,1,'int16=>uint32');
 
-                %ƒf[ƒ^Œ^‚Ì“Ç‚İ‚İ
+                %ãƒ‡ãƒ¼ã‚¿å‹ã®èª­ã¿è¾¼ã¿
                 CanChDataType(k) = fread(f,1,'int16=>uint32');
 
-                %6ƒoƒCƒg“Ç‚İ”ò‚Î‚·
+                %6ãƒã‚¤ãƒˆèª­ã¿é£›ã°ã™
                 fseek(f,6,'cof');
 
-                %’PˆÊ•¶š—ñ‚Ì“Ç‚İ‚İ
+                %å˜ä½æ–‡å­—åˆ—ã®èª­ã¿è¾¼ã¿
                 tblInfo.CanCh(k).UnitStr = fread(f,10,'uchar');
 
-                %CAN-DOUBLE‚ª€–Ú‚É‘‚©‚ê‚Ä‚¢‚½‚çZ³ŒW”‚ÆƒIƒtƒZƒbƒg‚ÍDoubleŒ^
+                %CAN-DOUBLEãŒé …ç›®ã«æ›¸ã‹ã‚Œã¦ã„ãŸã‚‰æ ¡æ­£ä¿‚æ•°ã¨ã‚ªãƒ•ã‚»ãƒƒãƒˆã¯Doubleå‹
                 if (tblInfo.CoefDFlag == 0)
 
-                    %Z³ŒW”‚Ì“Ç‚İ‚İ Ver0102
+                    %æ ¡æ­£ä¿‚æ•°ã®èª­ã¿è¾¼ã¿ Ver0102
                     tblInfo.CanCh(k).Coeffs = str2double(sprintf('%.7G', fread(f,1,'float')));
 
-                    %ƒIƒtƒZƒbƒg‚Ì“Ç‚İ‚İ Ver0102
+                    %ã‚ªãƒ•ã‚»ãƒƒãƒˆã®èª­ã¿è¾¼ã¿ Ver0102
                     tblInfo.CanCh(k).Offset = str2double(sprintf('%.7G', fread(f,1,'float')));
 
-                    %CH–¼Ì‚Ì“Ç‚İ‚İ
+                    %CHåç§°ã®èª­ã¿è¾¼ã¿
                     tblInfo.CanCh(k).ChName = fread(f,40,'uchar');
 
-                %Z³ŒW”‚ÆƒIƒtƒZƒbƒg‚ÌDobuleŒ^ƒtƒ‰ƒO‚ªON‚È‚ç
+                %æ ¡æ­£ä¿‚æ•°ã¨ã‚ªãƒ•ã‚»ãƒƒãƒˆã®Dobuleå‹ãƒ•ãƒ©ã‚°ãŒONãªã‚‰
                 else
-                    %FloatŒ^‚ÌZ³ŒW”‚ÆƒIƒtƒZƒbƒg‚Í“Ç‚İ”ò‚Î‚·
+                    %Floatå‹ã®æ ¡æ­£ä¿‚æ•°ã¨ã‚ªãƒ•ã‚»ãƒƒãƒˆã¯èª­ã¿é£›ã°ã™
                     fseek(f,8,'cof');
 
-                    %CH–¼Ì‚Í20ƒoƒCƒg
+                    %CHåç§°ã¯20ãƒã‚¤ãƒˆ
                     tblInfo.CanCh(k).ChName = fread(f,20,'uchar');
 
-                    %—\–ñ4ƒoƒCƒg‚ğ“Ç‚İ”ò‚Î‚·
+                    %äºˆç´„4ãƒã‚¤ãƒˆã‚’èª­ã¿é£›ã°ã™
                     fseek(f,4,'cof');
 
-                    %Z³ŒW”‚ÆƒIƒtƒZƒbƒg‚Ì“Ç‚İ‚İ
+                    %æ ¡æ­£ä¿‚æ•°ã¨ã‚ªãƒ•ã‚»ãƒƒãƒˆã®èª­ã¿è¾¼ã¿
                     tblInfo.CanCh(k).Coeffs = fread(f,1,'double');
                     tblInfo.CanCh(k).Offset = fread(f,1,'double');
                 end
 
-                %SignedŒ^•ÏŠ·—pƒ}ƒXƒNs—ñ‚Ì‰Šú‰»
+                %Signedå‹å¤‰æ›ç”¨ãƒã‚¹ã‚¯è¡Œåˆ—ã®åˆæœŸåŒ–
                 CanChSignedMask(k) = cast(hex2dec('FFFFFFFFFFFFFFFF'), 'uint64');
 
-                %CAN-CH•ÏŠ·—p‰E‘¤‚Ö‚ÌƒrƒbƒgƒVƒtƒgs—ñ‚Ìİ’è
+                %CAN-CHå¤‰æ›ç”¨å³å´ã¸ã®ãƒ“ãƒƒãƒˆã‚·ãƒ•ãƒˆè¡Œåˆ—ã®è¨­å®š
                 CanChBitShiftR(k) = cast(CanChStBit(k),'int32');
                 CanChBitShiftR(k) = CanChBitShiftR(k) * -1;
 
-                %ƒ}ƒXƒNƒrƒbƒg‚ÆSignedƒ}ƒXƒNƒrƒbƒg‚Ìİ’è
+                %ãƒã‚¹ã‚¯ãƒ“ãƒƒãƒˆã¨Signedãƒã‚¹ã‚¯ãƒ“ãƒƒãƒˆã®è¨­å®š
                 for kk = 1:CanChBitLen(k)
                     CanChBitMask(k) = bitset(CanChBitMask(k), kk);
                     CanChSignedMask(k) = bitset(CanChSignedMask(k), kk, 0);
                 end
 
-                %Z³ŒW”‚Ìİ’è
+                %æ ¡æ­£ä¿‚æ•°ã®è¨­å®š
                 CanChCoeffs(k) = tblInfo.CanCh(k).Coeffs;
 
-                %ƒIƒtƒZƒbƒg‚Ìİ’è
+                %ã‚ªãƒ•ã‚»ãƒƒãƒˆã®è¨­å®š
                 CanChOffset(k) = tblInfo.CanCh(k).Offset;
             end
 
-        %CAN’ÊMğŒ
+        %CANé€šä¿¡æ¡ä»¶
         elseif flgChild == 63
             if g_Ks2VerNum >= 5
-                %KS2‚ÌVer‚ª5ˆÈã‚È‚çƒ{ƒfƒBƒoƒCƒg”‚Í4
+                %KS2ã®VerãŒ5ä»¥ä¸Šãªã‚‰ãƒœãƒ‡ã‚£ãƒã‚¤ãƒˆæ•°ã¯4
                 flgDelta = 4;
             else
                 flgDelta = 2;
             end
-        %CAN-CHğŒ
+        %CAN-CHæ¡ä»¶
         elseif flgChild == 70
             flgDelta = 4;
 
-            %CAN-CH”•ª‚Ì“Ç‚İ‚İ
+            %CAN-CHæ•°åˆ†ã®èª­ã¿è¾¼ã¿
             for k = 1:tblInfo.CanChNum
 
-                %ƒXƒ^[ƒgƒrƒbƒg‚Ì“Ç‚İ‚İ
+                %ã‚¹ã‚¿ãƒ¼ãƒˆãƒ“ãƒƒãƒˆã®èª­ã¿è¾¼ã¿
                 CanChStBit(k) = fread(f,1,'int16=>uint32');
 
-                %ƒrƒbƒg’·‚Ì“Ç‚İ‚İ
+                %ãƒ“ãƒƒãƒˆé•·ã®èª­ã¿è¾¼ã¿
                 CanChBitLen(k) = fread(f,1,'int16=>uint32');
 
-                %ƒf[ƒ^Œ^‚Ì“Ç‚İ‚İ
+                %ãƒ‡ãƒ¼ã‚¿å‹ã®èª­ã¿è¾¼ã¿
                 CanChDataType(k) = fread(f,1,'int16=>uint32');
 
-                %6ƒoƒCƒg“Ç‚İ”ò‚Î‚·
+                %6ãƒã‚¤ãƒˆèª­ã¿é£›ã°ã™
                 fseek(f,6,'cof');
 
-                %’PˆÊ•¶š—ñ‚Ì“Ç‚İ‚İ
+                %å˜ä½æ–‡å­—åˆ—ã®èª­ã¿è¾¼ã¿
                 tblInfo.CanCh(k).UnitStr = fread(f,10,'uchar');
 
-                %Z³ŒW”‚Ì“Ç‚İ‚İ
+                %æ ¡æ­£ä¿‚æ•°ã®èª­ã¿è¾¼ã¿
                 tblInfo.CanCh(k).Coeffs = fread(f,1,'double');
 
-                %ƒIƒtƒZƒbƒg‚Ì“Ç‚İ‚İ
+                %ã‚ªãƒ•ã‚»ãƒƒãƒˆã®èª­ã¿è¾¼ã¿
                 tblInfo.CanCh(k).Offset = fread(f,1,'double');
 
-                %¬”“_Œ…”‚Ì“Ç‚İ‚İ
+                %å°æ•°ç‚¹æ¡æ•°ã®èª­ã¿è¾¼ã¿
                 tblInfo.CanCh(k).Digit = fread(f,1,'int16');
 
-                %CH–¼Ì‚Ì“Ç‚İ‚İ
+                %CHåç§°ã®èª­ã¿è¾¼ã¿
                 tblInfo.CanCh(k).ChName = fread(f,40,'uchar');
 
-                %SignedŒ^•ÏŠ·—pƒ}ƒXƒNs—ñ‚Ì‰Šú‰»
+                %Signedå‹å¤‰æ›ç”¨ãƒã‚¹ã‚¯è¡Œåˆ—ã®åˆæœŸåŒ–
                 CanChSignedMask(k) = cast(hex2dec('FFFFFFFFFFFFFFFF'), 'uint64');
 
-                %CAN-CH•ÏŠ·—p‰E‘¤‚Ö‚ÌƒrƒbƒgƒVƒtƒgs—ñ‚Ìİ’è
+                %CAN-CHå¤‰æ›ç”¨å³å´ã¸ã®ãƒ“ãƒƒãƒˆã‚·ãƒ•ãƒˆè¡Œåˆ—ã®è¨­å®š
                 CanChBitShiftR(k) = cast(CanChStBit(k),'int32');
                 CanChBitShiftR(k) = CanChBitShiftR(k) * -1;
 
-                %ƒ}ƒXƒNƒrƒbƒg‚ÆSignedƒ}ƒXƒNƒrƒbƒg‚Ìİ’è
+                %ãƒã‚¹ã‚¯ãƒ“ãƒƒãƒˆã¨Signedãƒã‚¹ã‚¯ãƒ“ãƒƒãƒˆã®è¨­å®š
                 for kk = 1:CanChBitLen(k)
                     CanChBitMask(k) = bitset(CanChBitMask(k), kk);
                     CanChSignedMask(k) = bitset(CanChSignedMask(k), kk, 0);
                 end
 
-                %Z³ŒW”‚Ìİ’è
+                %æ ¡æ­£ä¿‚æ•°ã®è¨­å®š
                 CanChCoeffs(k) = tblInfo.CanCh(k).Coeffs;
 
-                %ƒIƒtƒZƒbƒg‚Ìİ’è
+                %ã‚ªãƒ•ã‚»ãƒƒãƒˆã®è¨­å®š
                 CanChOffset(k) = tblInfo.CanCh(k).Offset;
             end
         end
 
         strSndBuf = strTmpBuf;
-    elseif flgParent == 2 % ‰Â•Ï’·ƒwƒbƒ_•”ŒÂ•Êî•ñ
+    elseif flgParent == 2 % å¯å¤‰é•·ãƒ˜ãƒƒãƒ€éƒ¨å€‹åˆ¥æƒ…å ±
         ch = tblInfo.ch;
         chAll = tblInfo.chAll;
         array = zeros(1,ch,'single');
 
         j = 1;
-        if (flgChild == 2) || (flgChild == 48)    % —LŒøƒ`ƒƒƒlƒ‹”Ô†
+        if (flgChild == 2) || (flgChild == 48)    % æœ‰åŠ¹ãƒãƒ£ãƒãƒ«ç•ªå·
             flgCoeff = 3;
             checkArray = zeros(1,ch,'single');
             for i = 1:ch
                 temp1 = fread(f,1,'int16');
-                if flgChild == 2         % KS1‚Ìê‡(—LŒøCH‚Ì—L–³‚ª0/1‚Ìî•ñ‚¾‚¯)
-                    checkArray(i) = temp1; % ƒ`ƒFƒbƒN—p‚Ì”z—ñ
+                if flgChild == 2         % KS1ã®å ´åˆ(æœ‰åŠ¹CHã®æœ‰ç„¡ãŒ0/1ã®æƒ…å ±ã ã‘)
+                    checkArray(i) = temp1; % ãƒã‚§ãƒƒã‚¯ç”¨ã®é…åˆ—
                     if temp1 > 0
                         temp1 = i;
                         if g_CsvFormat == 0
@@ -1723,7 +1723,7 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                         end
                         j = j + 1;
                     end
-                else       % KS2‚Ìê‡
+                else       % KS2ã®å ´åˆ
                     if g_CsvFormat == 0
                         strTmpBuf = makeChStrings(i,strTmpBuf,temp1,'[CH No],CH-',',CH-');
                     else
@@ -1749,10 +1749,10 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
             end
             strSndBuf = split_str(strTmpBuf,',');
 
-%(KS2 ver01.01`03)‚ÌHŠw’l•ÏŠ·ŒW”A‚ÆB‚Ì’Šo(floatŒ^)
-        elseif (flgChild == 3) || (flgChild == 4)        % HŠw’l•ÏŠ·ŒW”A,B
+%(KS2 ver01.01ã€œ03)ã®å·¥å­¦å€¤å¤‰æ›ä¿‚æ•°Aã¨Bã®æŠ½å‡º(floatå‹)
+        elseif (flgChild == 3) || (flgChild == 4)        % å·¥å­¦å€¤å¤‰æ›ä¿‚æ•°A,B
             for i = 1:ch
-                %Ver0103 floatŒ^‚Ì“Ç‚İ‚İˆ—‚Ì•ÏX
+                %Ver0103 floatå‹ã®èª­ã¿è¾¼ã¿å‡¦ç†ã®å¤‰æ›´
                 array(i) = str2double(sprintf('%.7G', fread(f,1,'float')));
             end
             if flgChild == 4
@@ -1762,7 +1762,7 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
             end
             strSndBuf = array;
 
-%KS2 ver01.04‚ÌHŠw’l•ÏŠ·ŒW”A‚ÆB‚Ì’Šo(doubleŒ^)
+%KS2 ver01.04ã®å·¥å­¦å€¤å¤‰æ›ä¿‚æ•°Aã¨Bã®æŠ½å‡º(doubleå‹)
         elseif (flgChild == 67) || (flgChild == 68)
             double_array =zeros(1,8,'double');
             for i = 1:ch
@@ -1776,8 +1776,8 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
             strSndBuf = double_array;
             clear double_array
 
-%’PˆÊ•¶š—ñ‚Ì’Šo
-        elseif flgChild == 5                            %’PˆÊ
+%å˜ä½æ–‡å­—åˆ—ã®æŠ½å‡º
+        elseif flgChild == 5                            %å˜ä½
             int8_array =zeros(1,10,'uint32');
             flgCoeff = 5;
             for i = 1:ch
@@ -1790,45 +1790,45 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                     cell_data(i+1) = {native2unicode(nonzeros(int8_array)')};
                 end
             end
-            %cell_data(1)={'[’PˆÊ]'};
+            %cell_data(1)={'[å˜ä½]'};
             cell_data(1)={'[Unit]'};
             strSndBuf = cell_data;
             clear int8_array
 
-%Z³ŒW”CƒIƒtƒZƒbƒg‚Ì’Šo(ver01.01`03)
-        elseif (flgChild == 8) || (flgChild ==12)            %Z³ŒW”CƒIƒtƒZƒbƒg
+%æ ¡æ­£ä¿‚æ•°ï¼Œã‚ªãƒ•ã‚»ãƒƒãƒˆã®æŠ½å‡º(ver01.01ã€œ03)
+        elseif (flgChild == 8) || (flgChild ==12)            %æ ¡æ­£ä¿‚æ•°ï¼Œã‚ªãƒ•ã‚»ãƒƒãƒˆ
             for i = 1:ch
-                %Ver0103 floatŒ^‚Ì“Ç‚İ‚İˆ—‚Ì•ÏX
+                %Ver0103 floatå‹ã®èª­ã¿è¾¼ã¿å‡¦ç†ã®å¤‰æ›´
                 cell_data(1,1+i) = {str2double(sprintf('%.7G', fread(f,1,'float')))};
             end
             if flgChild == 8
                 flgCoeff = 7;
-                %cell_data(1)={'[Z³ŒW”]'};
+                %cell_data(1)={'[æ ¡æ­£ä¿‚æ•°]'};
                 cell_data(1)={'[Calibration Coeff.]'};
             else
                 flgCoeff = 8;
-                %cell_data(1)={'[ƒIƒtƒZƒbƒg]'};
+                %cell_data(1)={'[ã‚ªãƒ•ã‚»ãƒƒãƒˆ]'};
                 cell_data(1)={'[Offset]'};
             end
             strSndBuf = cell_data;
 
-%Z³ŒW”CƒIƒtƒZƒbƒg‚Ì’Šo(ver01.04ˆÈ~)
+%æ ¡æ­£ä¿‚æ•°ï¼Œã‚ªãƒ•ã‚»ãƒƒãƒˆã®æŠ½å‡º(ver01.04ä»¥é™)
         elseif (flgChild == 69) || (flgChild ==70)
             for i = 1:ch
                 cell_data(1,1+i) = {fread(f,1,'double')};
             end
             if flgChild == 69
                 flgCoeff = 7;
-                %cell_data(1)={'[Z³ŒW”]'};
+                %cell_data(1)={'[æ ¡æ­£ä¿‚æ•°]'};
                 cell_data(1)={'[Calibration Coeff.]'};
             else
                 flgCoeff = 8;
-                %cell_data(1)={'[ƒIƒtƒZƒbƒg]'};
+                %cell_data(1)={'[ã‚ªãƒ•ã‚»ãƒƒãƒˆ]'};
                 cell_data(1)={'[Offset]'};
             end
             strSndBuf = cell_data;
-%ƒ`ƒƒƒ“ƒlƒ‹–¼Ì‚Ì’Šo
-        elseif flgChild == 49                               %ƒ`ƒƒƒ“ƒlƒ‹–¼Ì
+%ãƒãƒ£ãƒ³ãƒãƒ«åç§°ã®æŠ½å‡º
+        elseif flgChild == 49                               %ãƒãƒ£ãƒ³ãƒãƒ«åç§°
             int8_array =zeros(1,40,'uint32');
             flgCoeff = 4;
             for i = 1:ch
@@ -1841,15 +1841,15 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                     cell_data(i+1) = {native2unicode(nonzeros(int8_array)')};
                 end
             end
-            %cell_data(1)={'[CH–¼Ì]'};
+            %cell_data(1)={'[CHåç§°]'};
             cell_data(1)={'[CH Name]'};
             strSndBuf = cell_data;
             clear int8_array
-%ƒŒƒ“ƒW•¶š—ñ‚Ì’Šo
+%ãƒ¬ãƒ³ã‚¸æ–‡å­—åˆ—ã®æŠ½å‡º
         elseif flgChild == 51
             flgCoeff = 6;
             int8_array =zeros(1,20,'uint32');
-            %CSV‹Œ‚Ìê‡
+            %CSVæ—§ã®å ´åˆ
             if g_CsvFormat == 0
                 for i = 1:ch
                     for ii = 1:20
@@ -1859,14 +1859,14 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                     char_array=zeros(size(int8_array,2),1,'uint32');
 
                         for ii = 1:size(int8_array,2)
-                            if( (48<=int8_array(ii) && int8_array(ii)<=57) || int8_array(ii)==46)   %0`9‚ÆƒsƒŠƒIƒh(¬”“_)
+                            if( (48<=int8_array(ii) && int8_array(ii)<=57) || int8_array(ii)==46)   %0ã€œ9ã¨ãƒ”ãƒªã‚ªãƒ‰(å°æ•°ç‚¹)
                                 char_array(ii)=int8_array(ii);
                             elseif(int8_array(ii)==32)
 
-                            elseif(int8_array(ii)==75 || int8_array(ii)==107)   %kCK(ƒLƒ)‚Ì
+                            elseif(int8_array(ii)==75 || int8_array(ii)==107)   %kï¼ŒK(ã‚­ãƒ­)ã®æ™‚
                                 k_flag=1000;
                                 break;
-                            elseif(int8_array(ii)==79 || int8_array(ii)==111)   %oCO(OFF)‚Ì
+                            elseif(int8_array(ii)==79 || int8_array(ii)==111)   %oï¼ŒO(OFF)ã®æ™‚
                                 char_array(ii)=0;
                                 break;
                             else
@@ -1879,10 +1879,10 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                             cell_data(i+1) = {single(str2double(native2unicode(nonzeros(char_array)'))*k_flag)'};
                         end
                 end
-                %cell_data(1)={'[ƒŒƒ“ƒW]'};
+                %cell_data(1)={'[ãƒ¬ãƒ³ã‚¸]'};
                 cell_data(1)={'[Range]'};
                 clear char_array
-            %CSV•W€‚Ìê‡
+            %CSVæ¨™æº–ã®å ´åˆ
             else
                 for i = 1:ch
                     for ii = 1:20
@@ -1894,13 +1894,13 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                         cell_data(i+1) = {native2unicode(nonzeros(int8_array)')};
                     end
                 end
-                %cell_data(1)={'[ƒŒƒ“ƒW]'};
+                %cell_data(1)={'[ãƒ¬ãƒ³ã‚¸]'};
                 cell_data(1)={'[Range]'};
             end
 
             strSndBuf = cell_data;
             clear int8_array
-%ƒ[ƒpƒXƒtƒBƒ‹ƒ^•¶š—ñ‚Ì’Šo
+%ãƒ­ãƒ¼ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿æ–‡å­—åˆ—ã®æŠ½å‡º
         elseif flgChild == 53
             flgCoeff = 9;
             int8_array =zeros(1,20,'uint32');
@@ -1915,11 +1915,11 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                     cell_data(i+1) = {native2unicode(nonzeros(int8_array)')};
                 end
             end
-            %cell_data(1)={'[ƒ[ƒpƒXƒtƒBƒ‹ƒ^]'};
+            %cell_data(1)={'[ãƒ­ãƒ¼ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿]'};
             cell_data(1)={'[Low Pass Filter]'};
             strSndBuf = cell_data;
             clear int8_array
-%ƒnƒCƒpƒXƒtƒBƒ‹ƒ^•¶š—ñ‚Ì’Šo
+%ãƒã‚¤ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿æ–‡å­—åˆ—ã®æŠ½å‡º
         elseif flgChild == 54
             flgCoeff = 10;
             int8_array =zeros(1,20,'uint32');
@@ -1934,11 +1934,11 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                     cell_data(i+1) = {native2unicode(nonzeros(int8_array)')};
                 end
             end
-            %cell_data(1)={'[ƒnƒCƒpƒXƒtƒBƒ‹ƒ^]'};
+            %cell_data(1)={'[ãƒã‚¤ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿]'};
             cell_data(1)={'[High Pass Filter]'};
             strSndBuf = cell_data;
             clear int8_array
-%ƒfƒWƒ^ƒ‹ƒtƒBƒ‹ƒ^•¶š—ñ‚Ì’Šo
+%ãƒ‡ã‚¸ã‚¿ãƒ«ãƒ•ã‚£ãƒ«ã‚¿æ–‡å­—åˆ—ã®æŠ½å‡º
         elseif flgChild == 71
             flgCoeff = 11;
             int8_array =zeros(1,40,'uint32');
@@ -1953,11 +1953,11 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                     cell_data(i+1) = {native2unicode(nonzeros(int8_array)')};
                 end
             end
-            %cell_data(1)={'[ƒfƒWƒ^ƒ‹ƒtƒBƒ‹ƒ^]'};
+            %cell_data(1)={'[ãƒ‡ã‚¸ã‚¿ãƒ«ãƒ•ã‚£ãƒ«ã‚¿]'};
             cell_data(1)={'[Digital Filter]'};
             strSndBuf = cell_data;
             clear int8_array
-%CHƒ‚[ƒh‚Ì’Šo
+%CHãƒ¢ãƒ¼ãƒ‰ã®æŠ½å‡º
         elseif flgChild == 56
             flgCoeff = 12;
             int8_array =zeros(1,40,'uint32');
@@ -1972,11 +1972,11 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                     cell_data(i+1) = {native2unicode(nonzeros(int8_array)')};
                 end
             end
-            %cell_data(1)={'[CHƒ‚[ƒh]'};
+            %cell_data(1)={'[CHãƒ¢ãƒ¼ãƒ‰]'};
             cell_data(1)={'[CH Mode]'};
             strSndBuf = cell_data;
             clear int8_array
-%ƒQ[ƒW—¦
+%ã‚²ãƒ¼ã‚¸ç‡
         elseif flgChild == 57
             flgCoeff = 13;
             int8_array =zeros(1,20,'uint32');
@@ -1991,11 +1991,11 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                     cell_data(i+1) = {native2unicode(nonzeros(int8_array)')};
                 end
             end
-            %cell_data(1)={'[ƒQ[ƒW—¦]'};
+            %cell_data(1)={'[ã‚²ãƒ¼ã‚¸ç‡]'};
             cell_data(1)={'[Guuji Rate]'};
             strSndBuf = cell_data;
             clear int8_array
-%ZEROCZERO’l
+%ZEROï¼ŒZEROå€¤
         elseif flgChild == 72
             flgCoeff = 14;
             int8_array =zeros(1,20,'uint32');
@@ -2017,7 +2017,7 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                 end
 
                 cell_data(i+1)={''};
-                %•ª‰ğ‚µ‚â‚·‚¢‚æ‚¤‚ÉC','‚Å‹æØ‚é
+                %åˆ†è§£ã—ã‚„ã™ã„ã‚ˆã†ã«ï¼Œ','ã§åŒºåˆ‡ã‚‹
                 cell_data(i+1) = strcat(StrZeroNum,',',StrZeroMode);
             end
             cell_data(1)={'[ZERO]'};
@@ -2026,13 +2026,13 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
         else
             strSndBuf = 0;
         end
-    elseif flgParent == 16 % ƒf[ƒ^•”ƒf[ƒ^ƒwƒbƒ_•”
+    elseif flgParent == 16 % ãƒ‡ãƒ¼ã‚¿éƒ¨ãƒ‡ãƒ¼ã‚¿ãƒ˜ãƒƒãƒ€éƒ¨
 
-%‘ª’èŠJn‚Ì’Šo
-%csvƒf[ƒ^‚Í cell(1,1)=20xx/xx/xxCcell(1,2)=yy:yy:yy‚Å•\Œ»‚µ‚Ä‚¢‚é
-%ƒoƒCƒiƒŠ‚ÍC20xxxxxxyyyyyy‚Å‚ ‚é‚½‚ßC‹æØ‚è(/C:)‚ğ’Ç‰Á‚·‚é
+%æ¸¬å®šé–‹å§‹æ™‚åˆ»ã®æŠ½å‡º
+%csvãƒ‡ãƒ¼ã‚¿ã¯ cell(1,1)=20xx/xx/xxï¼Œcell(1,2)=yy:yy:yyã§è¡¨ç¾ã—ã¦ã„ã‚‹
+%ãƒã‚¤ãƒŠãƒªã¯ï¼Œ20xxxxxxyyyyyyã§ã‚ã‚‹ãŸã‚ï¼ŒåŒºåˆ‡ã‚Š(/ï¼Œ:)ã‚’è¿½åŠ ã™ã‚‹
 
-        if  flgChild == 3 % ‘ª’èŠJn
+        if  flgChild == 3 % æ¸¬å®šé–‹å§‹æ™‚åˆ»
             flgCoeff = 9;
             header_array = fread(f,16,'uchar');
             for n=1:size(header_array,1)
@@ -2049,7 +2049,7 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                 date_2(3)=':';  date_2(6)=':';
                 date_1(1,1:4)=header_array(1:4,1);  date_1(1,6:7)=header_array(5:6,1);  date_1(1,9:10)=header_array(7:8,1);
                 date_2(1,1:2)=header_array(9:10,1);  date_2(1,4:5)=header_array(11:12,1);  date_2(1,7:8)=header_array(13:14,1);
-                %cell_data(1) = {'[Œ±“ú]'};
+                %cell_data(1) = {'[è©¦é¨“æ—¥æ™‚]'};
                 cell_data(1) = {'[Test Date]'};
                 cell_data(2)={native2unicode(date_1)};
                 cell_data(3)={native2unicode(date_2)};
@@ -2060,39 +2060,39 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
             clear data_2;
             clear header_array;
 
-%ƒf[ƒ^”/ch‚Ì’Šo
-        elseif flgChild == 30 % 1ch“–‚½‚è‚Ìƒf[ƒ^”
+%ãƒ‡ãƒ¼ã‚¿æ•°/chã®æŠ½å‡º
+        elseif flgChild == 30 % 1chå½“ãŸã‚Šã®ãƒ‡ãƒ¼ã‚¿æ•°
             flgCoeff = 10;
             ch_data=zeros(1,1,'double');
             header_array = fread(f,8,'uchar');
 
             for n=1:size(header_array,1)
-               haeder_array(n)=native2unicode(header_array(size(header_array,1)-n+1));  %header_array‚Í16i”
-               ch_data=ch_data+double(floor(header_array(n)/16)*16^(2*(n-1)+1)+mod(header_array(n),16)*16^(2*(n-1)));   %16i”‚ğ10i”‚É•ÏŠ·
+               haeder_array(n)=native2unicode(header_array(size(header_array,1)-n+1));  %header_arrayã¯16é€²æ•°
+               ch_data=ch_data+double(floor(header_array(n)/16)*16^(2*(n-1)+1)+mod(header_array(n),16)*16^(2*(n-1)));   %16é€²æ•°ã‚’10é€²æ•°ã«å¤‰æ›
             end
 
             if(isempty(header_array)==0)
-                %cell_data(1) = {'[W˜^ƒf[ƒ^”/CH]'};
+                %cell_data(1) = {'[é›†éŒ²ãƒ‡ãƒ¼ã‚¿æ•°/CH]'};
                 cell_data(1) = {'[Number of Samples/CH]'};
                 cell_data(2)={ch_data};
             end
             strSndBuf = cell_data;
             clear header_array;
 
-        elseif flgChild == 34       % MAX/MINƒf[ƒ^
-            %KS2‚ÌVer‚ª5ˆÈã‚È‚çƒ{ƒfƒBƒoƒCƒg”‚Í4
-            if g_Ks2VerNum >= 5       % KS201.05ˆÈã‚Ìê‡Cƒ{ƒfƒB•”ƒoƒCƒg”‚Í4ƒoƒCƒg
+        elseif flgChild == 34       % MAX/MINãƒ‡ãƒ¼ã‚¿
+            %KS2ã®VerãŒ5ä»¥ä¸Šãªã‚‰ãƒœãƒ‡ã‚£ãƒã‚¤ãƒˆæ•°ã¯4
+            if g_Ks2VerNum >= 5       % KS201.05ä»¥ä¸Šã®å ´åˆï¼Œãƒœãƒ‡ã‚£éƒ¨ãƒã‚¤ãƒˆæ•°ã¯4ãƒã‚¤ãƒˆ
                 flgDelta = 4;
             else
                 flgDelta = 2;
             end
             strSndBuf = 0;
-        elseif flgChild == 35       % MAX/MIN‘OŒã400ƒf[ƒ^
+        elseif flgChild == 35       % MAX/MINå‰å¾Œ400ãƒ‡ãƒ¼ã‚¿
             flgDelta = 4;
             strSndBuf = 0;
-        elseif flgChild == 36       % MAX/MIN”­¶ƒ|ƒCƒ“ƒg
-            %KS2‚ÌVer‚ª5ˆÈã‚È‚çƒ{ƒfƒBƒoƒCƒg”‚Í4
-            if g_Ks2VerNum >= 5       % KS201.05ˆÈã‚Ìê‡Cƒ{ƒfƒB•”ƒoƒCƒg”‚Í4ƒoƒCƒg
+        elseif flgChild == 36       % MAX/MINç™ºç”Ÿãƒã‚¤ãƒ³ãƒˆ
+            %KS2ã®VerãŒ5ä»¥ä¸Šãªã‚‰ãƒœãƒ‡ã‚£ãƒã‚¤ãƒˆæ•°ã¯4
+            if g_Ks2VerNum >= 5       % KS201.05ä»¥ä¸Šã®å ´åˆï¼Œãƒœãƒ‡ã‚£éƒ¨ãƒã‚¤ãƒˆæ•°ã¯4ãƒã‚¤ãƒˆ
                 flgDelta = 4;
             else
                 flgDelta = 2;
@@ -2102,7 +2102,7 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
             flgDelta = 2;
             strSndBuf = 0;
         end
-    elseif flgParent == 17 % ÀÛ‚Ìƒf[ƒ^•”•ª
+    elseif flgParent == 17 % å®Ÿéš›ã®ãƒ‡ãƒ¼ã‚¿éƒ¨åˆ†
         if flgChild == 1
             flgDelta = 4;
         else
@@ -2110,7 +2110,7 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
         end
 
         lngByte   = checkByteSize(strCharBuf);
-        % CAN‚Ì—L–³‚ÅAƒf[ƒ^‚Ì‚‚³‚ª•Ï‰»
+        % CANã®æœ‰ç„¡ã§ã€ãƒ‡ãƒ¼ã‚¿ã®é«˜ã•ãŒå¤‰åŒ–
         if (isnan(tblInfo.CAN) == 1)
             lngDiv    = tblInfo.chAll * lngByte;
             lngHeight = smlSeek / lngDiv;
@@ -2126,7 +2126,7 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
         if flgDebug == 1
             %makeDispMessage(31,tblInfo);
         end
-        try % ƒGƒ‰[ƒgƒ‰ƒbƒv
+        try % ã‚¨ãƒ©ãƒ¼ãƒˆãƒ©ãƒƒãƒ—
             array = zeros(lngHeight,chAll+tblInfo.CanChNum,'double');
             h = waitbar(0,makeDispMessage(32,tblInfo));
 
@@ -2142,7 +2142,7 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                 tblInfo.ChNum =tblInfo.ch;
             end
             for i = 1:lngHeight
-                %ƒf[ƒ^‘‚«o‚µ
+                %ãƒ‡ãƒ¼ã‚¿æ›¸ãå‡ºã—
                 if g_IndexType == 0
                     if(g_StartNumber == 0)
                         array(i,1) = (i-1) / tblInfo.Hz;
@@ -2174,31 +2174,31 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                     val = fread(f,tblInfo.ChNum,valLabel)';
                 end
 
-                %ƒAƒiƒƒOCHƒf[ƒ^‚Ì‚İ“Ç‚İ‚Ş Ver0103
+                %ã‚¢ãƒŠãƒ­ã‚°CHãƒ‡ãƒ¼ã‚¿ã®ã¿èª­ã¿è¾¼ã‚€ Ver0103
                 array(i,2:ch) = tblCoeff(1:ch-1).* val(1:ch-1) + tblOffset(1:ch-1);
 
-                %CANƒf[ƒ^“Ç‚İ‚±‚İ
-                %CAN‚Ìİ’è‚ª–³‚¢ê‡
+                %CANãƒ‡ãƒ¼ã‚¿èª­ã¿ã“ã¿
+                %CANã®è¨­å®šãŒç„¡ã„å ´åˆ
                 SumCanChNum = 0;
                 if (isnan(tblInfo.CAN) == 1)
                 else
-                    %W˜^CAN-ID”‚ª1‚Â‚Å‚à‚ ‚Á‚½‚ç
+                    %é›†éŒ²CAN-IDæ•°ãŒ1ã¤ã§ã‚‚ã‚ã£ãŸã‚‰
                     if tblInfo.CAN ~= 0
 
-                        %CANƒf[ƒ^ˆ——p‚Ìƒf[ƒ^Œ^•Û‘¶”z—ñ‚ÌƒRƒs[ Ver0103
+                        %CANãƒ‡ãƒ¼ã‚¿å‡¦ç†ç”¨ã®ãƒ‡ãƒ¼ã‚¿å‹ä¿å­˜é…åˆ—ã®ã‚³ãƒ”ãƒ¼ Ver0103
                         CanChProcType = CanChDataType;
 
-                        %CAN-ID”‚Ìİ’è
+                        %CAN-IDæ•°ã®è¨­å®š
                         CanIdNum = tblInfo.CAN;
 
-                        %CAN-IDƒf[ƒ^‚Ì“Ç‚İ‚İ
+                        %CAN-IDãƒ‡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿
                         CanIdData(1,1:CanIdNum) = fread(f,CanIdNum,'uint64=>uint64');
 
-                        %ƒrƒbƒNƒGƒ“ƒfƒBƒAƒ“—p‚É–‘O‚ÉƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“‚É•ÏŠ·‚µ‚½”z—ñ‚ğ—pˆÓ‚·‚é
+                        %ãƒ“ãƒƒã‚¯ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ç”¨ã«äº‹å‰ã«ãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ã«å¤‰æ›ã—ãŸé…åˆ—ã‚’ç”¨æ„ã™ã‚‹
                         CanIdData(2,1:CanIdNum) = swapbytes(CanIdData(1,1:CanIdNum));
                         CanIdData(2,1:CanIdNum) = bitshift(CanIdData(2,1:CanIdNum),-8*(8-CanIdDataLen(1:CanIdNum)));
 
-                        %CAN-IDƒf[ƒ^‚ğŠY“–‚·‚éCAN-CHƒf[ƒ^‚ÖƒRƒs[‚·‚é(ƒGƒ“ƒfƒBƒAƒ“‚ªƒŠƒgƒ‹‚È‚ç1s–ÚCƒrƒbƒN‚È‚ç2s–Ú‚ğ“Ç‚İ‚Ş)
+                        %CAN-IDãƒ‡ãƒ¼ã‚¿ã‚’è©²å½“ã™ã‚‹CAN-CHãƒ‡ãƒ¼ã‚¿ã¸ã‚³ãƒ”ãƒ¼ã™ã‚‹(ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ãŒãƒªãƒˆãƒ«ãªã‚‰1è¡Œç›®ï¼Œãƒ“ãƒƒã‚¯ãªã‚‰2è¡Œç›®ã‚’èª­ã¿è¾¼ã‚€)
                         CanChNum = 1;
                         for k = 1:CanIdNum
                             SumCanChNum = (CanChNum+CanIdChNum(k)-1);
@@ -2206,75 +2206,75 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                             CanChNum = SumCanChNum+1;
                         end
 
-                        %•s•K—v‚Èƒrƒbƒg—ñíœ‚Ì‚½‚ß‰E‘¤‚ÖƒVƒtƒg
+                        %ä¸å¿…è¦ãªãƒ“ãƒƒãƒˆåˆ—å‰Šé™¤ã®ãŸã‚å³å´ã¸ã‚·ãƒ•ãƒˆ
                         CanChData(1:SumCanChNum) = bitshift(CanChData(1:SumCanChNum),CanChBitShiftR(1:SumCanChNum));
 
-                        %•K—v‚Èƒrƒbƒg‚¾‚¯c‚·‚½‚ßƒ}ƒXƒN
+                        %å¿…è¦ãªãƒ“ãƒƒãƒˆã ã‘æ®‹ã™ãŸã‚ãƒã‚¹ã‚¯
                         CanChData(1:SumCanChNum) = bitand(CanChData(1:SumCanChNum), CanChBitMask(1:SumCanChNum));
 
-                        %CAN-CH”•ªƒf[ƒ^ˆ—
+                        %CAN-CHæ•°åˆ†ãƒ‡ãƒ¼ã‚¿å‡¦ç†
                         for kk = 1:SumCanChNum
 
-                            %SignedŒ^‚Ìê‡
+                            %Signedå‹ã®å ´åˆ
                             if (CanChDataType(kk) == 0)
 
-                                %—LŒøƒrƒbƒg’·‚ÌÅŒã‚ª1‚¾‚Á‚½‚çC•„†‚ª•‰
+                                %æœ‰åŠ¹ãƒ“ãƒƒãƒˆé•·ã®æœ€å¾ŒãŒ1ã ã£ãŸã‚‰ï¼Œç¬¦å·ãŒè² 
                                 if( bitget(CanChData(kk), CanChBitLen(kk)))
 
-                                    %Signedƒ}ƒXƒN‚É‚æ‚è•‰‚Ìƒf[ƒ^‚É•ÏŠ·
+                                    %Signedãƒã‚¹ã‚¯ã«ã‚ˆã‚Šè² ã®ãƒ‡ãƒ¼ã‚¿ã«å¤‰æ›
                                     SignedCanChData(kk) = typecast(bitor(bitset(CanChData(kk),CanChBitLen(kk)+1), CanChSignedMask(kk)),'int64');
 
-                                    %ƒf[ƒ^ƒ^ƒCƒvŒ^‚ğˆ——p‚É•ÏX
+                                    %ãƒ‡ãƒ¼ã‚¿ã‚¿ã‚¤ãƒ—å‹ã‚’å‡¦ç†ç”¨ã«å¤‰æ›´
                                     CanChProcType(kk) = 4;
                                 else
                                 end
-                            %UnSignedŒ^‚Ìê‡
+                            %UnSignedå‹ã®å ´åˆ
                             elseif(CanChDataType(kk) == 1)
-                            %FloatŒ^‚Ìê‡
+                            %Floatå‹ã®å ´åˆ
                             elseif(CanChDataType(kk) == 2)
 
-                                %uint64Œ^‚©‚çFloat‚É“Ç‚İ‚İŒ^‚Ì•ÏX
+                                %uint64å‹ã‹ã‚‰Floatã«èª­ã¿è¾¼ã¿å‹ã®å¤‰æ›´
                                 FloatCanData = typecast(CanChData(kk),'single');
 
-                                %FloatŒ^‚Ì”ÍˆÍ‚ğ’´‚¦‚Ä‚¢‚½‚çƒf[ƒ^‚Í0‚Æ‚·‚é
+                                %Floatå‹ã®ç¯„å›²ã‚’è¶…ãˆã¦ã„ãŸã‚‰ãƒ‡ãƒ¼ã‚¿ã¯0ã¨ã™ã‚‹
                                 if( abs(FloatCanData(1,1))<FloatMin || abs(FloatCanData(1,1))>FloatMax )
                                     FloatCanData(1,1) = 0;
                                 end
 
-                                %(1,2)‚Í‚²‚İƒf[ƒ^C(1,1)‚ªFloatŒ^‚É•ÏŠ·‚³‚ê‚½ƒf[ƒ^
-                                %Ver0103 floatŒ^ƒf[ƒ^‚Ì—LŒø
+                                %(1,2)ã¯ã”ã¿ãƒ‡ãƒ¼ã‚¿ï¼Œ(1,1)ãŒFloatå‹ã«å¤‰æ›ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿
+                                %Ver0103 floatå‹ãƒ‡ãƒ¼ã‚¿ã®æœ‰åŠ¹
                                 DoubleCanChData(kk) =  str2double(sprintf('%.7G', FloatCanData(1,1)));
 
-                                %ƒf[ƒ^ƒ^ƒCƒvŒ^‚ğˆ——p‚É•ÏX
+                                %ãƒ‡ãƒ¼ã‚¿ã‚¿ã‚¤ãƒ—å‹ã‚’å‡¦ç†ç”¨ã«å¤‰æ›´
                                 CanChProcType(kk) = 3;
-                            %DoubleŒ^‚Ìê‡
+                            %Doubleå‹ã®å ´åˆ
                             else
 
-                                %uint64Œ^‚©‚çDouble‚É“Ç‚İ‚İŒ^‚Ì•ÏX
+                                %uint64å‹ã‹ã‚‰Doubleã«èª­ã¿è¾¼ã¿å‹ã®å¤‰æ›´
                                 DoubleCanData = typecast(CanChData(kk),'double');
 
-                                %DoubleŒ^‚Ì”ÍˆÍ‚ğ’´‚¦‚Ä‚¢‚½‚çƒf[ƒ^‚Í0‚Æ‚·‚é
+                                %Doubleå‹ã®ç¯„å›²ã‚’è¶…ãˆã¦ã„ãŸã‚‰ãƒ‡ãƒ¼ã‚¿ã¯0ã¨ã™ã‚‹
                                 if( abs(DoubleCanData(1,1))<DoubleMin || abs(DoubleCanData(1,1))>DoubleMax )
                                     DoubleCanData = 0;
                                 end
 
-                                %DoubleŒ^ƒf[ƒ^‚Ìİ’è
+                                %Doubleå‹ãƒ‡ãƒ¼ã‚¿ã®è¨­å®š
                                 DoubleCanChData(kk) = DoubleCanData;
                             end
                         end
 
-                        %DoubleŒ^‚Ìƒf[ƒ^‚Æ‚µ‚ÄŒ^•ÏŠ·‚µ‚È‚ª‚çİ’è
+                        %Doubleå‹ã®ãƒ‡ãƒ¼ã‚¿ã¨ã—ã¦å‹å¤‰æ›ã—ãªãŒã‚‰è¨­å®š
                         array(i,ch+1:ch+SumCanChNum)= ...
                             (CanChProcType(1:SumCanChNum) == 0 | CanChProcType(1:SumCanChNum) == 1).*cast(CanChData(1:SumCanChNum),'double')'...
                             + (CanChProcType(1:SumCanChNum) == 3).*DoubleCanChData(1:SumCanChNum)'...
                             + (CanChProcType(1:SumCanChNum) == 4).*cast(SignedCanChData(1:SumCanChNum),'double')';
 
-                        %Z³ŒW”‚ÆƒIƒtƒZƒbƒg‚É‚æ‚è•¨——Ê‚É•ÏŠ·
+                        %æ ¡æ­£ä¿‚æ•°ã¨ã‚ªãƒ•ã‚»ãƒƒãƒˆã«ã‚ˆã‚Šç‰©ç†é‡ã«å¤‰æ›
                         array(i,ch+1:ch+SumCanChNum) = array(i,ch+1:ch+SumCanChNum).* CanChCoeffs(1:SumCanChNum) + CanChOffset(1:SumCanChNum);
                     end
                 end
 
-                %ƒfƒWƒ^ƒ‹CHƒf[ƒ^‚Ì“Ç‚İ‚İ
+                %ãƒ‡ã‚¸ã‚¿ãƒ«CHãƒ‡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿
                 for j = 1:(chAll - ch)
                     if strcmp(strCharBuf,'Int')
                         array(i,ch+SumCanChNum+j) = fread(f,1,'uint16');
@@ -2290,27 +2290,27 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
             flgCoeff = 3;
             strSndBuf = array;
 
-            clear CanIdMax;        %CAN-ID‚ÌÅ‘å”
-            clear CanChMax;        %CAN-CH‚ÌÅ‘å”
-            clear DoubleMax;       %DoubleŒ^Å‘å’l
-            clear DoubleMin;       %DoubleŒ^Å¬’l
-            clear FloatMax;        %FloatŒ^Å‘å’l
-            clear FloatMin;        %FloatŒ^Å¬’l
-            clear CanIdEndian;     %CAN-IDƒGƒ“ƒfƒBƒAƒ“
-            clear CanIdDataLen;    %CAN-IDƒf[ƒ^’·
-            clear CanIdChNum;      %CAN-ID‚ÌCH”
-            clear CanChBitShiftR;  %CAN-CH•ª‰ğ—p‰E‘¤ƒrƒbƒgƒVƒtƒg
-            clear CanChStBit;      %CAN-CHƒXƒ^[ƒgƒrƒbƒg
-            clear CanChDataType;   %CAN-CHƒf[ƒ^Œ^
-            clear CanChBitLen;     %CAN-CHƒrƒbƒg’·
-            clear CanChBitMask;    %CAN-CHƒrƒbƒgƒ}ƒXƒN
-            clear CanChSignedMask; %CAN-CHSignedŒ^•ÏŠ·ƒ}ƒXƒN
-            clear CanChCoeffs;     %CAN-CHZ³ŒW”
-            clear CanChOffset;     %CAN-CHƒIƒtƒZƒbƒg
-            clear CanChData;       %CAN-CHƒf[ƒ^(uint64)
-            clear SignedCanChData; %CAN-CHƒf[ƒ^(int64)
-            clear FloatCanChData;  %CAN-CHƒf[ƒ^(float)
-            clear DoubleCanChData; %CAN-CHƒf[ƒ^(double)
+            clear CanIdMax;        %CAN-IDã®æœ€å¤§æ•°
+            clear CanChMax;        %CAN-CHã®æœ€å¤§æ•°
+            clear DoubleMax;       %Doubleå‹æœ€å¤§å€¤
+            clear DoubleMin;       %Doubleå‹æœ€å°å€¤
+            clear FloatMax;        %Floatå‹æœ€å¤§å€¤
+            clear FloatMin;        %Floatå‹æœ€å°å€¤
+            clear CanIdEndian;     %CAN-IDã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³
+            clear CanIdDataLen;    %CAN-IDãƒ‡ãƒ¼ã‚¿é•·
+            clear CanIdChNum;      %CAN-IDã®CHæ•°
+            clear CanChBitShiftR;  %CAN-CHåˆ†è§£ç”¨å³å´ãƒ“ãƒƒãƒˆã‚·ãƒ•ãƒˆ
+            clear CanChStBit;      %CAN-CHã‚¹ã‚¿ãƒ¼ãƒˆãƒ“ãƒƒãƒˆ
+            clear CanChDataType;   %CAN-CHãƒ‡ãƒ¼ã‚¿å‹
+            clear CanChBitLen;     %CAN-CHãƒ“ãƒƒãƒˆé•·
+            clear CanChBitMask;    %CAN-CHãƒ“ãƒƒãƒˆãƒã‚¹ã‚¯
+            clear CanChSignedMask; %CAN-CHSignedå‹å¤‰æ›ãƒã‚¹ã‚¯
+            clear CanChCoeffs;     %CAN-CHæ ¡æ­£ä¿‚æ•°
+            clear CanChOffset;     %CAN-CHã‚ªãƒ•ã‚»ãƒƒãƒˆ
+            clear CanChData;       %CAN-CHãƒ‡ãƒ¼ã‚¿(uint64)
+            clear SignedCanChData; %CAN-CHãƒ‡ãƒ¼ã‚¿(int64)
+            clear FloatCanChData;  %CAN-CHãƒ‡ãƒ¼ã‚¿(float)
+            clear DoubleCanChData; %CAN-CHãƒ‡ãƒ¼ã‚¿(double)
         catch
             if tblInfo.MATLAB_Ver >= 6.5
                 err = lasterror;
@@ -2324,7 +2324,7 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
                 disp(lasterr);
             end
             strSndBuf = tblInfo;
-            % ƒƒ‚ƒŠƒGƒ‰[”»’è
+            % ãƒ¡ãƒ¢ãƒªã‚¨ãƒ©ãƒ¼åˆ¤å®š
             [~, num] = split_str(err.message, 'MEMORY');
             if num > 1
                 flgCoeff = 999;
@@ -2353,15 +2353,15 @@ function [delta,strSndBuf,flgCoeff,tblInfo] = printInfoAbove(f,tblInfo,flgParent
     end
 
 %--------------------------------------------------------------------------
-%% makeChStrings - ƒJƒ“ƒ}‚Å‹æØ‚ç‚ê‚½•¶š—ñ‚ğ¶¬B
-%    ˆø”
-%       pos       ... ‘–¸ˆÊ’u
-%       strRcvBuf ... ˜AŒ‹•¶š—ñ
-%       array     ... ‘ÎÛ•¶š—ñ
-%       headStr   ... æ“ª‚É‚Â‚¯‚é•¶š—ñ
-%       midStr    ... ‚»‚êˆÈ~‚Ì‹æØ‚è•¶š—ñ
-%    –ß‚è’l
-%       strSndBuf ... ˜AŒ‹‚µ‚½•¶š—ñ
+%% makeChStrings - ã‚«ãƒ³ãƒã§åŒºåˆ‡ã‚‰ã‚ŒãŸæ–‡å­—åˆ—ã‚’ç”Ÿæˆã€‚
+%    å¼•æ•°
+%       pos       ... èµ°æŸ»ä½ç½®
+%       strRcvBuf ... é€£çµæ–‡å­—åˆ—
+%       array     ... å¯¾è±¡æ–‡å­—åˆ—
+%       headStr   ... å…ˆé ­ã«ã¤ã‘ã‚‹æ–‡å­—åˆ—
+%       midStr    ... ãã‚Œä»¥é™ã®åŒºåˆ‡ã‚Šæ–‡å­—åˆ—
+%    æˆ»ã‚Šå€¤
+%       strSndBuf ... é€£çµã—ãŸæ–‡å­—åˆ—
 function strSndBuf = makeChStrings(pos,strRcvBuf,array,headStr,midStr)
     if pos == 1
         strSndBuf = [headStr,num2str(array)];
@@ -2371,11 +2371,11 @@ function strSndBuf = makeChStrings(pos,strRcvBuf,array,headStr,midStr)
 
 
 %--------------------------------------------------------------------------
-%% checkCharacter - w’è‚³‚ê‚½ƒf[ƒ^Œ^‚ğ•Ô‚·B
-%    ˆø”
-%       check     ... ƒ`ƒFƒbƒN—pƒf[ƒ^
-%    –ß‚è’l
-%       strSndBuf ... ŠY“–‚Ìƒf[ƒ^ƒ^ƒCƒv
+%% checkCharacter - æŒ‡å®šã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿å‹ã‚’è¿”ã™ã€‚
+%    å¼•æ•°
+%       check     ... ãƒã‚§ãƒƒã‚¯ç”¨ãƒ‡ãƒ¼ã‚¿
+%    æˆ»ã‚Šå€¤
+%       strSndBuf ... è©²å½“ã®ãƒ‡ãƒ¼ã‚¿ã‚¿ã‚¤ãƒ—
 function strSndBuf = checkCharacter(check)
 
     switch check
@@ -2405,11 +2405,11 @@ function strSndBuf = checkCharacter(check)
 
 
 %--------------------------------------------------------------------------
-%% checkByteSize - w’è‚³‚ê‚½ƒf[ƒ^Œ^‚ÌƒoƒCƒg”‚ğ•Ô‚·B
-%    ˆø”
-%       check     ... ƒ`ƒFƒbƒN—pƒf[ƒ^
-%    –ß‚è’l
-%       strSndBuf ... ŠY“–‚ÌƒoƒCƒgƒ^ƒCƒv
+%% checkByteSize - æŒ‡å®šã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿å‹ã®ãƒã‚¤ãƒˆæ•°ã‚’è¿”ã™ã€‚
+%    å¼•æ•°
+%       check     ... ãƒã‚§ãƒƒã‚¯ç”¨ãƒ‡ãƒ¼ã‚¿
+%    æˆ»ã‚Šå€¤
+%       strSndBuf ... è©²å½“ã®ãƒã‚¤ãƒˆã‚¿ã‚¤ãƒ—
 function strSndBuf = checkByteSize(check)
 
     if strcmp(check,'Char') || strcmp(check,'UChar')
@@ -2458,10 +2458,10 @@ function [tbls,num] = split_str(str,Delm)
 %% e4aread();
 function [e4X, Header, ErrNo] = e4read(file)
 
-    global g_E4aVerNum;     %E4A‚ÌVerî•ñ
+    global g_E4aVerNum;     %E4Aã®Veræƒ…å ±
 
-    global g_LanguageType;  %–{ƒXƒNƒŠƒvƒgÀs‚ÌƒRƒ}ƒ“ƒhƒvƒƒ“ƒvƒgã‚É•\¦‚·‚éŒ¾Œê‚ğØ‚è‘Ö‚¦‚Ü‚·
-                            %0:“ú–{Œê     1:‰pŒê
+    global g_LanguageType;  %æœ¬ã‚¹ã‚¯ãƒªãƒ—ãƒˆå®Ÿè¡Œæ™‚ã®ã‚³ãƒãƒ³ãƒ‰ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆä¸Šã«è¡¨ç¤ºã™ã‚‹è¨€èªã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™
+                            %0:æ—¥æœ¬èª     1:è‹±èª
 
     tblInfo = [];
 
@@ -2482,79 +2482,79 @@ function [e4X, Header, ErrNo] = e4read(file)
     e4X = 0;
     Header = 0;
 
-% MATLAB‚Ìversionƒ`ƒFƒbƒN
+% MATLABã®versionãƒã‚§ãƒƒã‚¯
     vers = version;
     tblInfo.MATLAB_Ver   = str2double(vers(1:3));
-    tblInfo.HeadSeek     = 960; % ŒÅ’è’·ƒwƒbƒ_•”‚Ì‘å‚«‚³
+    tblInfo.HeadSeek     = 960; % å›ºå®šé•·ãƒ˜ãƒƒãƒ€éƒ¨ã®å¤§ãã•
 
-% MATLAB‚ÌVer(R2008ˆÈ~)‚É‚æ‚Á‚ÄŒ¾ŒêØ‚è‘Ö‚¦‚ª¢“ï‚Ì‚½‚ßCƒpƒ‰ƒ[ƒ^‚Åİ’è‚·‚é
+% MATLABã®Ver(R2008ä»¥é™)ã«ã‚ˆã£ã¦è¨€èªåˆ‡ã‚Šæ›¿ãˆãŒå›°é›£ã®ãŸã‚ï¼Œãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã§è¨­å®šã™ã‚‹
     tblInfo.CmpLang = 'jhelp';
     if g_LanguageType == 0
         tblInfo.Lang = 'jhelp';
     else
         tblInfo.Lang = 'Dummy';
     end
-  % (1)ˆø”‚ªw’è‚³‚ê‚Ä‚¢‚È‚¢ê‡
+  % (1)å¼•æ•°ãŒæŒ‡å®šã•ã‚Œã¦ã„ãªã„å ´åˆ
     if nargin < 1 || isempty(file)
         ErrNo = 1;
         return
     elseif nargin > 1
-        % (2)ˆø”‚Ì”‚ª“KØ‚Å‚È‚¢
+        % (2)å¼•æ•°ã®æ•°ãŒé©åˆ‡ã§ãªã„
         ErrNo = 2;
         return
     end
 
     [tbls,num] = split_str(file,delm);
-    % (3)Šg’£q‚ª–³‚¢
+    % (3)æ‹¡å¼µå­ãŒç„¡ã„
     if num < 2
         ErrNo = 3;
         return
     end
-    tblInfo.ext = lower(tbls{2}); % æ“¾‚µ‚½Šg’£q
+    tblInfo.ext = lower(tbls{2}); % å–å¾—ã—ãŸæ‹¡å¼µå­
 
-    % (14)Šg’£q‚ªˆÙ‚È‚é
+    % (14)æ‹¡å¼µå­ãŒç•°ãªã‚‹
     if(strcmpi(tblInfo.CmpExt, tblInfo.ext) == 0)
         ErrNo = 14;
         return
     end
 
     fid = fopen(file,'r');
-    % (11)ƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢ê‡
+    % (11)ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„å ´åˆ
     if fid < 0
         ErrNo = 11;
         return
     end
 
-    %E4A‚æ‚èƒeƒLƒXƒgî•ñ‚Ìæ“¾
+    %E4Aã‚ˆã‚Šãƒ†ã‚­ã‚¹ãƒˆæƒ…å ±ã®å–å¾—
     tblInfo = getE4aInfo(fid,tblInfo);
 
-    %E4A‚Ìƒo[ƒWƒ‡ƒ“”Ô†‚Ìæ“¾
+    %E4Aã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç•ªå·ã®å–å¾—
     VerStr = split_str(tblInfo.version,delm);
     g_E4aVerNum = str2double(cell2mat(VerStr(2)));
 
-    %IDî•ñ‚Ìæ“¾
+    %IDæƒ…å ±ã®å–å¾—
     CanIdDataLen = getIdInfo(fid,tblInfo);
 
-    %ƒf[ƒ^”‚Ìæ“¾
+    %ãƒ‡ãƒ¼ã‚¿æ•°ã®å–å¾—
     tblInfo.e4XLen = getDataNum(fid,tblInfo);
 
-    %CHğŒ‚Ìæ“¾
+    %CHæ¡ä»¶ã®å–å¾—
     [CanChStBit, CanChBitLen, CanChDataType, CanChEndian, CanChIdNo, CanChChNo, CanChEdxId, CanChUnitStr, CanChCoeffs, CanChOffset, CanChName] = getChInfo(fid,tblInfo);
 
-    %CAN-CH•ª‰ğ‚É•K—v‚È•Ï”‚Ì—pˆÓ
+    %CAN-CHåˆ†è§£ã«å¿…è¦ãªå¤‰æ•°ã®ç”¨æ„
     [CanChBitShiftR, CanChBitMask, CanChSignedMask, CanChDataLen] = getCanChDecompPrm(tblInfo, CanChStBit, CanChBitLen, CanChIdNo, CanIdDataLen);
 
-    %W˜^ƒf[ƒ^‚Ìæ“¾
+    %é›†éŒ²ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
     [e4X, e4XIndex, ErrNo]= getCanData(fid, tblInfo, CanChIdNo, CanChEndian, CanChDataType, CanChBitLen, ...
                                 CanChBitShiftR, CanChBitMask, CanChSignedMask, CanChDataLen, CanChCoeffs, CanChOffset);
 
-    %ƒGƒ‰[”­¶‚Ìê‡ˆ—‚ğ”ò‚Î‚·
+    %ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿã®å ´åˆå‡¦ç†ã‚’é£›ã°ã™
     if(ErrNo ~= 0)
         fclose(fid);
         return
     end
 
-    %•s•K—v‚Ès—ñ‚Ìíœ
+    %ä¸å¿…è¦ãªè¡Œåˆ—ã®å‰Šé™¤
     clear CanChBitLen
     clear CanChBitMask
     clear CanChBitShiftR
@@ -2566,10 +2566,10 @@ function [e4X, Header, ErrNo] = e4read(file)
     clear CanChStBit
     clear CanIdDataLen
 
-    %ƒwƒbƒ_î•ñ‚Ìì¬
+    %ãƒ˜ãƒƒãƒ€æƒ…å ±ã®ä½œæˆ
     Header = getHeaderInfo(tblInfo, CanChChNo, CanChEdxId, CanChCoeffs, CanChOffset, CanChName, CanChUnitStr, e4XIndex);
 
-    %•s•K—v‚Ès—ñ‚Ìíœ
+    %ä¸å¿…è¦ãªè¡Œåˆ—ã®å‰Šé™¤
     clear CanChChNo
     clear CanChEdxId
     clear CanChCoeffs
@@ -2585,8 +2585,8 @@ function [e4X, Header, ErrNo] = e4read(file)
 function [tblInfo, ErrNo] = e4readHeader(file)
 
 
-    global g_LanguageType;  %–{ƒXƒNƒŠƒvƒgÀs‚ÌƒRƒ}ƒ“ƒhƒvƒƒ“ƒvƒgã‚É•\¦‚·‚éŒ¾Œê‚ğØ‚è‘Ö‚¦‚Ü‚·
-                            %0:“ú–{Œê     1:‰pŒê
+    global g_LanguageType;  %æœ¬ã‚¹ã‚¯ãƒªãƒ—ãƒˆå®Ÿè¡Œæ™‚ã®ã‚³ãƒãƒ³ãƒ‰ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆä¸Šã«è¡¨ç¤ºã™ã‚‹è¨€èªã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™
+                            %0:æ—¥æœ¬èª     1:è‹±èª
     tblInfo = [];
 
     delm = '.';
@@ -2604,63 +2604,63 @@ function [tblInfo, ErrNo] = e4readHeader(file)
     tblInfo.err.stack      = [];
     tblInfo.CmpExt       = 'e4a';
 
-% MATLAB‚Ìversionƒ`ƒFƒbƒN
+% MATLABã®versionãƒã‚§ãƒƒã‚¯
     vers = version;
     tblInfo.MATLAB_Ver   = str2double(vers(1:3));
-    tblInfo.HeadSeek     = 960; % ŒÅ’è’·ƒwƒbƒ_•”‚Ì‘å‚«‚³
+    tblInfo.HeadSeek     = 960; % å›ºå®šé•·ãƒ˜ãƒƒãƒ€éƒ¨ã®å¤§ãã•
 
-% MATLAB‚ÌVer(R2008ˆÈ~)‚É‚æ‚Á‚ÄŒ¾ŒêØ‚è‘Ö‚¦‚ª¢“ï‚Ì‚½‚ßCƒpƒ‰ƒ[ƒ^‚Åİ’è‚·‚é
+% MATLABã®Ver(R2008ä»¥é™)ã«ã‚ˆã£ã¦è¨€èªåˆ‡ã‚Šæ›¿ãˆãŒå›°é›£ã®ãŸã‚ï¼Œãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã§è¨­å®šã™ã‚‹
     tblInfo.CmpLang = 'jhelp';
     if g_LanguageType == 0
         tblInfo.Lang = 'jhelp';
     else
         tblInfo.Lang = 'Dummy';
     end
-  % (1)ˆø”‚ªw’è‚³‚ê‚Ä‚¢‚È‚¢ê‡
+  % (1)å¼•æ•°ãŒæŒ‡å®šã•ã‚Œã¦ã„ãªã„å ´åˆ
     if nargin < 1 || isempty(file)
         ErrNo = 1;
         return
     elseif nargin > 1
-        % (2)ˆø”‚Ì”‚ª“KØ‚Å‚È‚¢
+        % (2)å¼•æ•°ã®æ•°ãŒé©åˆ‡ã§ãªã„
         ErrNo = 2;
         return
     end
 
     [tbls,num] = split_str(file,delm);
-    % (3)Šg’£q‚ª–³‚¢
+    % (3)æ‹¡å¼µå­ãŒç„¡ã„
     if num < 2
         ErrNo = 3;
         return
     end
-    tblInfo.ext = lower(tbls{2}); % æ“¾‚µ‚½Šg’£q
+    tblInfo.ext = lower(tbls{2}); % å–å¾—ã—ãŸæ‹¡å¼µå­
 
-    % (14)Šg’£q‚ªˆÙ‚È‚é
+    % (14)æ‹¡å¼µå­ãŒç•°ãªã‚‹
     if(strcmpi(tblInfo.CmpExt, tblInfo.ext) == 0)
         ErrNo = 14;
         return
     end
 
     fid = fopen(file,'r');
-    % (11)ƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢ê‡
+    % (11)ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„å ´åˆ
     if fid < 0
         ErrNo = 11;
         return
     end
 
-    %E4A‚æ‚èƒeƒLƒXƒgî•ñ‚Ìæ“¾
+    %E4Aã‚ˆã‚Šãƒ†ã‚­ã‚¹ãƒˆæƒ…å ±ã®å–å¾—
     tblInfo = getE4aInfo(fid,tblInfo);
 
-    %ƒf[ƒ^”‚Ìæ“¾
+    %ãƒ‡ãƒ¼ã‚¿æ•°ã®å–å¾—
     tblInfo.e4XLen = getDataNum(fid,tblInfo);
 
     fclose(fid);
 %--------------------------------------------------------------------------
-%% IDî•ñ‚Ìæ“¾
-%    ˆø”
-%        fid     ... ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^ƒIƒuƒWƒFƒNƒg
-%        tblInfo ... \‘¢‘Ì•Ï”
-%    –ß‚è’l
-%        IdLen    ... CANIDƒf[ƒ^’·”z—ñ
+%% IDæƒ…å ±ã®å–å¾—
+%    å¼•æ•°
+%        fid     ... ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+%        tblInfo ... æ§‹é€ ä½“å¤‰æ•°
+%    æˆ»ã‚Šå€¤
+%        IdLen    ... CANIDãƒ‡ãƒ¼ã‚¿é•·é…åˆ—
 function IdLen = getIdInfo(fid,tblInfo)
 
     IdLen = zeros(1,tblInfo.TransIdInfoNum,'int32');
@@ -2679,22 +2679,22 @@ function IdLen = getIdInfo(fid,tblInfo)
     end
 
 %--------------------------------------------------------------------------
-%% CAN-CHî•ñ‚Ìæ“¾
-%    ˆø”
-%        fid     ... ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^ƒIƒuƒWƒFƒNƒg
-%        tblInfo ... \‘¢‘Ì•Ï”
-%    –ß‚è’l
-%        CanChStBit     ... CAN-CH‚ÌƒXƒ^[ƒgƒrƒbƒg
-%        CanChBitLen    ... CAN-CH‚Ìƒrƒbƒg’·
-%        CanChDataType  ... CAN-CH‚Ìƒf[ƒ^Œ^
-%        CanChEndian    ... CAN-CH‚ÌƒGƒ“ƒfƒBƒAƒ“
-%        CanChIdNo      ... CAN-CH‚ÌID”Ô†
-%        CanChChNo      ... CAN-CH‚ÌCH”Ô†
-%        CanChEdxId     ... CAN-CH‚ÌEDX‚ÌID”Ô†
-%        CanChUnitStr   ... CAN-CH‚Ì’PˆÊ•¶š—ñ
-%        CanChCoeffs    ... CAN-CH‚ÌZ³ŒW”
-%        CanChOffset    ... CAN-CH‚ÌƒIƒtƒZƒbƒg
-%        CanChName      ... CAN-CH‚ÌCH–¼Ì
+%% CAN-CHæƒ…å ±ã®å–å¾—
+%    å¼•æ•°
+%        fid     ... ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+%        tblInfo ... æ§‹é€ ä½“å¤‰æ•°
+%    æˆ»ã‚Šå€¤
+%        CanChStBit     ... CAN-CHã®ã‚¹ã‚¿ãƒ¼ãƒˆãƒ“ãƒƒãƒˆ
+%        CanChBitLen    ... CAN-CHã®ãƒ“ãƒƒãƒˆé•·
+%        CanChDataType  ... CAN-CHã®ãƒ‡ãƒ¼ã‚¿å‹
+%        CanChEndian    ... CAN-CHã®ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³
+%        CanChIdNo      ... CAN-CHã®IDç•ªå·
+%        CanChChNo      ... CAN-CHã®CHç•ªå·
+%        CanChEdxId     ... CAN-CHã®EDXã®IDç•ªå·
+%        CanChUnitStr   ... CAN-CHã®å˜ä½æ–‡å­—åˆ—
+%        CanChCoeffs    ... CAN-CHã®æ ¡æ­£ä¿‚æ•°
+%        CanChOffset    ... CAN-CHã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+%        CanChName      ... CAN-CHã®CHåç§°
 function [CanChStBit, CanChBitLen, CanChDataType, CanChEndian, CanChIdNo, CanChChNo, CanChEdxId, CanChUnitStr, CanChCoeffs, CanChOffset, CanChName] = getChInfo(fid,tblInfo)
 
     CanChStBit = zeros(1,tblInfo.TransChStsNum,'uint32');
@@ -2746,18 +2746,18 @@ function [CanChStBit, CanChBitLen, CanChDataType, CanChEndian, CanChIdNo, CanChC
     end
 
 %--------------------------------------------------------------------------
-%% CAN-CH•ª‰ğ—p‚Ì•Ï”‚Ìæ“¾
-%    ˆø”
-%        tblInfo      ... \‘¢‘Ì•Ï”
-%        CanChStBit   ... CAN-CHƒXƒ^[ƒgƒrƒbƒg
-%        CacChBitLen  ... CAN-CH‚Ìƒrƒbƒg’·
-%        CanChDataLen ... CAN-CH‚ÉŠY“–‚·‚éID‚Ìƒf[ƒ^’·
-%    –ß‚è’l
-%        CanChBitShiftR     ... CAN-CH‚Ìƒrƒbƒg’·
-%        CanChBitMask       ... CAN-CH‚Ìƒf[ƒ^Œ^
-%        CanChSignedMask    ... CAN-CH‚ÌƒGƒ“ƒfƒBƒAƒ“
-%        CanChIdNo          ... CAN-CH‚ÌID”Ô†
-%        CanIdDataLen       ... CAN-ID‚Ìƒf[ƒ^’·
+%% CAN-CHåˆ†è§£ç”¨ã®å¤‰æ•°ã®å–å¾—
+%    å¼•æ•°
+%        tblInfo      ... æ§‹é€ ä½“å¤‰æ•°
+%        CanChStBit   ... CAN-CHã‚¹ã‚¿ãƒ¼ãƒˆãƒ“ãƒƒãƒˆ
+%        CacChBitLen  ... CAN-CHã®ãƒ“ãƒƒãƒˆé•·
+%        CanChDataLen ... CAN-CHã«è©²å½“ã™ã‚‹IDã®ãƒ‡ãƒ¼ã‚¿é•·
+%    æˆ»ã‚Šå€¤
+%        CanChBitShiftR     ... CAN-CHã®ãƒ“ãƒƒãƒˆé•·
+%        CanChBitMask       ... CAN-CHã®ãƒ‡ãƒ¼ã‚¿å‹
+%        CanChSignedMask    ... CAN-CHã®ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³
+%        CanChIdNo          ... CAN-CHã®IDç•ªå·
+%        CanIdDataLen       ... CAN-IDã®ãƒ‡ãƒ¼ã‚¿é•·
 function [CanChBitShiftR, CanChBitMask, CanChSignedMask, CanChDataLen] = getCanChDecompPrm(tblInfo, CanChStBit, CanChBitLen, CanChIdNo, CanIdDataLen)
 
     CanChNum = tblInfo.TransChStsNum;
@@ -2768,14 +2768,14 @@ function [CanChBitShiftR, CanChBitMask, CanChSignedMask, CanChDataLen] = getCanC
     CanChDataLen = zeros(1,CanChNum,'int32');
 
     for i = 1:CanChNum
-        %SignedŒ^•ÏŠ·—pƒ}ƒXƒNs—ñ‚Ì‰Šú‰»
+        %Signedå‹å¤‰æ›ç”¨ãƒã‚¹ã‚¯è¡Œåˆ—ã®åˆæœŸåŒ–
         CanChSignedMask(i) = cast(hex2dec('FFFFFFFFFFFFFFFF'), 'uint64');
 
-        %CAN-CH•ÏŠ·—p‰E‘¤‚Ö‚ÌƒrƒbƒgƒVƒtƒgs—ñ‚Ìİ’è
+        %CAN-CHå¤‰æ›ç”¨å³å´ã¸ã®ãƒ“ãƒƒãƒˆã‚·ãƒ•ãƒˆè¡Œåˆ—ã®è¨­å®š
         CanChBitShiftR(i) = cast(CanChStBit(i),'int32');
         CanChBitShiftR(i) = CanChBitShiftR(i) * -1;
 
-        %ƒ}ƒXƒNƒrƒbƒg‚ÆSignedƒ}ƒXƒNƒrƒbƒg‚Ìİ’è
+        %ãƒã‚¹ã‚¯ãƒ“ãƒƒãƒˆã¨Signedãƒã‚¹ã‚¯ãƒ“ãƒƒãƒˆã®è¨­å®š
         for kk = 1:CanChBitLen(i)
             CanChBitMask(i) = bitset(CanChBitMask(i), kk);
             CanChSignedMask(i) = bitset(CanChSignedMask(i), kk, 0);
@@ -2788,15 +2788,15 @@ function [CanChBitShiftR, CanChBitMask, CanChSignedMask, CanChDataLen] = getCanC
 
 %--------------------------------------------------------------------------
 
-%% CANƒf[ƒ^”‚Ìæ“¾
-%    ˆø”
-%        fid     ... ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^ƒIƒuƒWƒFƒNƒg
-%        tblInfo ... \‘¢‘Ì•Ï”
-%    –ß‚è’l
-%        e4XLen  ... E4aƒf[ƒ^s—ñ‚Ì’·‚³
+%% CANãƒ‡ãƒ¼ã‚¿æ•°ã®å–å¾—
+%    å¼•æ•°
+%        fid     ... ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+%        tblInfo ... æ§‹é€ ä½“å¤‰æ•°
+%    æˆ»ã‚Šå€¤
+%        e4XLen  ... E4aãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®é•·ã•
 function e4XLen = getDataNum(fid,tblInfo)
 
-    %CANƒf[ƒ^•”‚ÌÅIƒf[ƒ^‚Ü‚Å‚ÌƒoƒCƒg”‚ğİ’è
+    %CANãƒ‡ãƒ¼ã‚¿éƒ¨ã®æœ€çµ‚ãƒ‡ãƒ¼ã‚¿ã¾ã§ã®ãƒã‚¤ãƒˆæ•°ã‚’è¨­å®š
     SeekByte = tblInfo.HeadSeek...
                 + (tblInfo.TransStsSize*tblInfo.TransStsNum)...
                 + (tblInfo.TransNodeSize*tblInfo.TransNodeNum)...
@@ -2804,283 +2804,283 @@ function e4XLen = getDataNum(fid,tblInfo)
                 + (tblInfo.TransChStsSize*tblInfo.TransChStsNum)...
                 + (tblInfo.CanDataSize*(tblInfo.DataNum-1));
 
-    %ÅŒã‚ÌCANƒf[ƒ^‚Ü‚Å“Ç‚İ”ò‚Î‚·
+    %æœ€å¾Œã®CANãƒ‡ãƒ¼ã‚¿ã¾ã§èª­ã¿é£›ã°ã™
     fseek(fid,SeekByte,'bof');
 
-    %IDî•ñ”Ô†(2ƒoƒCƒg)‚Æ—\–ñ(2ƒoƒCƒg)‚ğ“Ç‚İ”ò‚Î‚·
+    %IDæƒ…å ±ç•ªå·(2ãƒã‚¤ãƒˆ)ã¨äºˆç´„(2ãƒã‚¤ãƒˆ)ã‚’èª­ã¿é£›ã°ã™
     fseek(fid,4,'cof');
 
-    %ÅI‚ÌW˜^ƒJƒEƒ“ƒ^’l‚Ìæ“¾
+    %æœ€çµ‚ã®é›†éŒ²ã‚«ã‚¦ãƒ³ã‚¿å€¤ã®å–å¾—
     e4XLen = fread(fid, 1, 'uint64=>uint64');
 
     e4XLen = cast(e4XLen, 'double') + 1;
 %--------------------------------------------------------------------------
-%% CANƒf[ƒ^‚Ìæ“¾
-%    ˆø”
-%        fid             ... ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^ƒIƒuƒWƒFƒNƒg
-%        tblInfo         ... \‘¢‘Ì•Ï”
-%        CanChIdNo       ... CAN-CH‚ÌID”Ô†
-%        CanChEndian     ... CAN-CH‚ÌƒGƒ“ƒfƒBƒAƒ“
-%        CanChDataType   ... CAN-CH‚Ìƒf[ƒ^Œ^
-%        CanChBitLen     ... CAN-CH‚Ìƒrƒbƒg’·
-%        CanChBitShiftR  ... CAN-CH‚Ìƒrƒbƒg’·
-%        CanChBitMask    ... CAN-CH‚Ìƒf[ƒ^Œ^
-%        CanChSignedMask ... CAN-CH‚ÌƒGƒ“ƒfƒBƒAƒ“
-%        CanIdDataLen    ... CAN-ID‚Ìƒf[ƒ^’·
-%        CanChCoeffs     ... CAN-CH‚ÌZ³ŒW”
-%        CanChOffset     ... CAN-CH‚ÌƒIƒtƒZƒbƒg
-%    –ß‚è’l
-%        e4XIndex ... CANƒf[ƒ^ÅI”Ô†
-%        e4X      ... CANƒf[ƒ^s—ñ
+%% CANãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+%    å¼•æ•°
+%        fid             ... ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+%        tblInfo         ... æ§‹é€ ä½“å¤‰æ•°
+%        CanChIdNo       ... CAN-CHã®IDç•ªå·
+%        CanChEndian     ... CAN-CHã®ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³
+%        CanChDataType   ... CAN-CHã®ãƒ‡ãƒ¼ã‚¿å‹
+%        CanChBitLen     ... CAN-CHã®ãƒ“ãƒƒãƒˆé•·
+%        CanChBitShiftR  ... CAN-CHã®ãƒ“ãƒƒãƒˆé•·
+%        CanChBitMask    ... CAN-CHã®ãƒ‡ãƒ¼ã‚¿å‹
+%        CanChSignedMask ... CAN-CHã®ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³
+%        CanIdDataLen    ... CAN-IDã®ãƒ‡ãƒ¼ã‚¿é•·
+%        CanChCoeffs     ... CAN-CHã®æ ¡æ­£ä¿‚æ•°
+%        CanChOffset     ... CAN-CHã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+%    æˆ»ã‚Šå€¤
+%        e4XIndex ... CANãƒ‡ãƒ¼ã‚¿æœ€çµ‚ç•ªå·
+%        e4X      ... CANãƒ‡ãƒ¼ã‚¿è¡Œåˆ—
 function [e4X, e4XIndex, ErrNo] = getCanData(fid, tblInfo, CanChIdNo, CanChEndian, CanChDataType, CanChBitLen,...
                                     CanChBitShiftR, CanChBitMask, CanChSignedMask, CanChDataLen, CanChCoeffs, CanChOffset)
 
-    global g_IndexType;     %“Ç‚İ‚ñ‚¾W˜^ƒf[ƒ^s—ñ‚Ìæ“ª—ñ‚É•t‰Á‚·‚éƒf[ƒ^Œ`®‚ğØ‚è‘Ö‚¦‚Ü‚·
-                            %0FŠÔ      1F”Ô†
+    global g_IndexType;     %èª­ã¿è¾¼ã‚“ã é›†éŒ²ãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®å…ˆé ­åˆ—ã«ä»˜åŠ ã™ã‚‹ãƒ‡ãƒ¼ã‚¿å½¢å¼ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™
+                            %0ï¼šæ™‚é–“      1ï¼šç•ªå·
 
-    global g_StartNumber;   %“Ç‚İ‚ñ‚¾W˜^ƒf[ƒ^s—ñ‚Ìæ“ª—ñ‚É•t‰Á‚·‚éƒf[ƒ^‚Ìæ“ª‚ÌŠJn”Ô†‚ğØ‚è‘Ö‚¦‚Ü‚·B
-                            %0F0n‚Ü‚è   1F1n‚Ü‚è
+    global g_StartNumber;   %èª­ã¿è¾¼ã‚“ã é›†éŒ²ãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®å…ˆé ­åˆ—ã«ä»˜åŠ ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã®å…ˆé ­ã®é–‹å§‹ç•ªå·ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™ã€‚
+                            %0ï¼š0å§‹ã¾ã‚Š   1ï¼š1å§‹ã¾ã‚Š
 
     e4X = 0;
     e4XIndex = 0;
     ErrNo = 0;
 
-    %DoubleŒ^Å‘å’l‚Ìİ’è
+    %Doubleå‹æœ€å¤§å€¤ã®è¨­å®š
     DoubleMax = realmax('double');
 
-    %DoubleŒ^Å¬’l‚Ìİ’è
+    %Doubleå‹æœ€å°å€¤ã®è¨­å®š
     DoubleMin = realmin('double');
 
-    %FloatŒ^Å‘å’l‚Ìİ’è
+    %Floatå‹æœ€å¤§å€¤ã®è¨­å®š
     FloatMax = realmax('single');
 
-    %FloatŒ^Å¬’l‚Ìİ’è
+    %Floatå‹æœ€å°å€¤ã®è¨­å®š
     FloatMin = realmin('single');
 
-    %CAN-CH”‚Ìæ“¾
+    %CAN-CHæ•°ã®å–å¾—
     CanChNum = tblInfo.TransChStsNum;
 
-    %CANƒf[ƒ^“Ç‚İ‚İ”(ƒJƒEƒ“ƒ^’l)
+    %CANãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿æ•°(ã‚«ã‚¦ãƒ³ã‚¿å€¤)
     CanDataReadNum = 1;
 
-    %CANƒf[ƒ^“Ç‚İ‚İI—¹ƒtƒ‰ƒO
+    %CANãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿çµ‚äº†ãƒ•ãƒ©ã‚°
     CanDataReadEnd = 0;
 
-    %CAN-CHƒf[ƒ^s—ñ‚Ì‰Šú‰»
+    %CAN-CHãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®åˆæœŸåŒ–
     CanChData = zeros(1,CanChNum,'uint64');
 
-    %SignedŒ^ƒf[ƒ^s—ñ‚Ì‰Šú‰»
+    %Signedå‹ãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®åˆæœŸåŒ–
     SignedCanChData = zeros(CanChNum,1,'int64');
 
-    %DoubleŒ^ƒf[ƒ^s—ñ‚Ì‰Šú‰»
+    %Doubleå‹ãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®åˆæœŸåŒ–
     DoubleCanChData = zeros(CanChNum,1,'double');
 
-    %CAN-IDƒf[ƒ^s—ñ‚Ì‰Šú‰»
+    %CAN-IDãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®åˆæœŸåŒ–
     CanIdData = zeros(1,CanChNum,'uint64');
 
-    %CAN-CHƒf[ƒ^‘¶İƒtƒ‰ƒOs—ñ
+    %CAN-CHãƒ‡ãƒ¼ã‚¿å­˜åœ¨ãƒ•ãƒ©ã‚°è¡Œåˆ—
     NonZerosIndex= zeros(1,CanChNum);
 
-    %CANƒf[ƒ^•”‚Ü‚Å‚ÌƒoƒCƒg”‚ğİ’è
+    %CANãƒ‡ãƒ¼ã‚¿éƒ¨ã¾ã§ã®ãƒã‚¤ãƒˆæ•°ã‚’è¨­å®š
     SeekByte = tblInfo.HeadSeek...
                 + (tblInfo.TransStsSize*tblInfo.TransStsNum)...
                 + (tblInfo.TransNodeSize*tblInfo.TransNodeNum)...
                 + (tblInfo.TransIdInfoSize*tblInfo.TransIdInfoNum)...
                 + (tblInfo.TransChStsSize*tblInfo.TransChStsNum);
 
-    %CANƒf[ƒ^•”‚Ü‚Å“Ç‚İ”ò‚Î‚·
+    %CANãƒ‡ãƒ¼ã‚¿éƒ¨ã¾ã§èª­ã¿é£›ã°ã™
     fseek(fid,SeekByte,'bof');
 
-    %ID”Ô†‚Ìæ“¾
+    %IDç•ªå·ã®å–å¾—
     CanIdNo = fread(fid, 1, 'uint16');
 
-    %—\–ñ(2ƒoƒCƒg)‚ğ“Ç‚İ”ò‚Î‚·
+    %äºˆç´„(2ãƒã‚¤ãƒˆ)ã‚’èª­ã¿é£›ã°ã™
     fseek(fid,2,'cof');
 
-    %W˜^ƒJƒEƒ“ƒ^’l‚Ìæ“¾
+    %é›†éŒ²ã‚«ã‚¦ãƒ³ã‚¿å€¤ã®å–å¾—
     CanAgCnt = fread(fid, 1, 'uint64=>uint64');
 
-    %CANƒf[ƒ^‚Ìæ“¾
+    %CANãƒ‡ãƒ¼ã‚¿ã®å–å¾—
     CanData = typecast(fread(fid, 8, 'uint8=>uint8'),'uint64');
 
-    %—\–ñ(4ƒoƒCƒg)“Ç‚İ”ò‚Î‚·
+    %äºˆç´„(4ãƒã‚¤ãƒˆ)èª­ã¿é£›ã°ã™
     fseek(fid,4,'cof');
 
-    %æ“¾‚µ‚½CANID”Ô†‚ÉŠY“–‚·‚éCAN-ID”Ô†‚ÌƒCƒ“ƒfƒbƒNƒX‚ğs—ñ‚©‚çæ“¾
+    %å–å¾—ã—ãŸCANIDç•ªå·ã«è©²å½“ã™ã‚‹CAN-IDç•ªå·ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’è¡Œåˆ—ã‹ã‚‰å–å¾—
     Index=find(CanChIdNo == CanIdNo);
 
-    %æ“¾‚µ‚½ƒCƒ“ƒfƒbƒNƒX”Ô†‚ÉCANƒf[ƒ^‚ğİ’è
+    %å–å¾—ã—ãŸã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã«CANãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
     CanIdData(Index) = CanData;
 
-    %CAN-CHƒf[ƒ^‘¶İƒtƒ‰ƒOs—ñ‚ğON
+    %CAN-CHãƒ‡ãƒ¼ã‚¿å­˜åœ¨ãƒ•ãƒ©ã‚°è¡Œåˆ—ã‚’ON
     NonZerosIndex(Index) = 1;
 
-    %s—ñ‚Ì’·‚³‚ğæ“¾
+    %è¡Œåˆ—ã®é•·ã•ã‚’å–å¾—
     MatrixLen = cast(tblInfo.e4XLen,'double');
 
     try
-        %CANƒf[ƒ^s—ñ‚ğNaN‚Å‰Šú‰»
+        %CANãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã‚’NaNã§åˆæœŸåŒ–
         e4X(1:MatrixLen-tblInfo.StCnt,1:CanChNum) = NaN;
     catch
         ErrNo = 21;
         return
     end
-    %ƒEƒFƒCƒgƒo[‚ğ•\¦
+    %ã‚¦ã‚§ã‚¤ãƒˆãƒãƒ¼ã‚’è¡¨ç¤º
     h = waitbar(0,makeDispMessage(32,tblInfo));
 
-%CANƒf[ƒ^“Ç‚İ‚İˆ—•”
+%CANãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿å‡¦ç†éƒ¨
     while(1)
         while (1)
-            %‘Oƒf[ƒ^‚ÌƒJƒEƒ“ƒ^’l‚ğİ’è
+            %å‰ãƒ‡ãƒ¼ã‚¿ã®ã‚«ã‚¦ãƒ³ã‚¿å€¤ã‚’è¨­å®š
             CanPreAgCnt = CanAgCnt;
 
-            %CAN-ID”Ô†‚Ìæ“¾
+            %CAN-IDç•ªå·ã®å–å¾—
             CanIdNo = fread(fid, 1, 'uint16');
 
-            %—\–ñ(2ƒoƒCƒg)“Ç‚İ‚Ş
+            %äºˆç´„(2ãƒã‚¤ãƒˆ)èª­ã¿è¾¼ã‚€
             fseek(fid,2,'cof');
 
-            %W˜^ƒJƒEƒ“ƒ^’l‚Ìæ“¾
+            %é›†éŒ²ã‚«ã‚¦ãƒ³ã‚¿å€¤ã®å–å¾—
             CanAgCnt = fread(fid, 1, 'uint64=>uint64');
 
-            %CANƒf[ƒ^‚Ìæ“¾
+            %CANãƒ‡ãƒ¼ã‚¿ã®å–å¾—
             CanData = typecast(fread(fid, 8, 'uint8=>uint8'),'uint64');
 
-            %—\–ñ(4ƒoƒCƒg)“Ç‚İ”ò‚Î‚·
+            %äºˆç´„(4ãƒã‚¤ãƒˆ)èª­ã¿é£›ã°ã™
             fseek(fid,4,'cof');
 
-            %‘OƒJƒEƒ“ƒ^’l‚ÆŒ»İ‚ÌƒJƒEƒ“ƒ^’l‚ªˆÙ‚È‚éê‡
+            %å‰ã‚«ã‚¦ãƒ³ã‚¿å€¤ã¨ç¾åœ¨ã®ã‚«ã‚¦ãƒ³ã‚¿å€¤ãŒç•°ãªã‚‹å ´åˆ
             if(CanPreAgCnt ~= CanAgCnt)
-                %Œ»İ‚ÌƒJƒEƒ“ƒ^’l‚ÌCANƒf[ƒ^‚Ì“Ç‚İ‚İ‚ÍI—¹‚µ1ƒf[ƒ^•ªƒ|ƒCƒ“ƒ^‚ğ–ß‚·
+                %ç¾åœ¨ã®ã‚«ã‚¦ãƒ³ã‚¿å€¤ã®CANãƒ‡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿ã¯çµ‚äº†ã—1ãƒ‡ãƒ¼ã‚¿åˆ†ãƒã‚¤ãƒ³ã‚¿ã‚’æˆ»ã™
                 fseek(fid,-24,'cof');
                 break;
-            %‘OƒJƒEƒ“ƒ^’l‚ÆŒ»İ‚ÌƒJƒEƒ“ƒ^’l‚ªˆê’v‚µ‚½ê‡
+            %å‰ã‚«ã‚¦ãƒ³ã‚¿å€¤ã¨ç¾åœ¨ã®ã‚«ã‚¦ãƒ³ã‚¿å€¤ãŒä¸€è‡´ã—ãŸå ´åˆ
             else
-                %æ“¾‚µ‚½CANID”Ô†‚ÉŠY“–‚·‚éCAN-ID”Ô†‚ÌƒCƒ“ƒfƒbƒNƒX‚ğs—ñ‚©‚çæ“¾
+                %å–å¾—ã—ãŸCANIDç•ªå·ã«è©²å½“ã™ã‚‹CAN-IDç•ªå·ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’è¡Œåˆ—ã‹ã‚‰å–å¾—
                 Index=find(CanChIdNo == CanIdNo);
 
-                %æ“¾‚µ‚½ƒCƒ“ƒfƒbƒNƒX”Ô†‚ÉCANƒf[ƒ^‚ğİ’è
+                %å–å¾—ã—ãŸã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã«CANãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
                 CanIdData(Index) = CanData;
 
-                %CAN-CHƒf[ƒ^‘¶İƒtƒ‰ƒOs—ñ‚ğON
+                %CAN-CHãƒ‡ãƒ¼ã‚¿å­˜åœ¨ãƒ•ãƒ©ã‚°è¡Œåˆ—ã‚’ON
                 NonZerosIndex(Index) = 1;
 
-                %CANƒf[ƒ^“Ç‚İ‚İ”‚ğƒCƒ“ƒNƒŠƒƒ“ƒg
+                %CANãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿æ•°ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
                 CanDataReadNum = CanDataReadNum + 1;
             end
 
-            %CANƒf[ƒ^“Ç‚İ‚İ”‚ªCANƒf[ƒ^”‚Æˆê’v‚µ‚½‚ç
+            %CANãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿æ•°ãŒCANãƒ‡ãƒ¼ã‚¿æ•°ã¨ä¸€è‡´ã—ãŸã‚‰
             if(CanDataReadNum == tblInfo.DataNum)
 
-                %“Ç‚İ‚İI—¹ƒtƒ‰ƒO‚ğON
+                %èª­ã¿è¾¼ã¿çµ‚äº†ãƒ•ãƒ©ã‚°ã‚’ON
                 CanDataReadEnd = 1;
 
-                %‘OƒJƒEƒ“ƒ^’l‚ğŒ»İ‚ÌƒJƒEƒ“ƒ^’l‚Éİ’è(––’[ˆ——p)
+                %å‰ã‚«ã‚¦ãƒ³ã‚¿å€¤ã‚’ç¾åœ¨ã®ã‚«ã‚¦ãƒ³ã‚¿å€¤ã«è¨­å®š(æœ«ç«¯å‡¦ç†ç”¨)
                 CanPreAgCnt = CanAgCnt;
                 break;
             end
         end
 
-        %ƒrƒbƒNƒGƒ“ƒfƒBƒAƒ“—p‚É–‘O‚ÉƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“‚É•ÏŠ·‚µ‚½”z—ñ‚ğ—pˆÓ‚·‚é
+        %ãƒ“ãƒƒã‚¯ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ç”¨ã«äº‹å‰ã«ãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ã«å¤‰æ›ã—ãŸé…åˆ—ã‚’ç”¨æ„ã™ã‚‹
         CanIdData(2,1:CanChNum) = swapbytes(CanIdData(1,1:CanChNum));
         CanIdData(2,1:CanChNum) = bitshift(CanIdData(2,1:CanChNum),-8*(8-CanChDataLen(1:CanChNum)));
 
-       %CAN-CHƒf[ƒ^‚ÖƒRƒs[‚·‚é(ƒGƒ“ƒfƒBƒAƒ“‚ªƒŠƒgƒ‹‚È‚ç1s–ÚCƒrƒbƒN‚È‚ç2s–Ú‚ğ“Ç‚İ‚Ş)
+       %CAN-CHãƒ‡ãƒ¼ã‚¿ã¸ã‚³ãƒ”ãƒ¼ã™ã‚‹(ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ãŒãƒªãƒˆãƒ«ãªã‚‰1è¡Œç›®ï¼Œãƒ“ãƒƒã‚¯ãªã‚‰2è¡Œç›®ã‚’èª­ã¿è¾¼ã‚€)
         CanChData(CanChEndian==0) = CanIdData(1,CanChEndian==0);
         CanChData(CanChEndian==1) = CanIdData(2,CanChEndian==1);
 
-        %•s•K—v‚Èƒrƒbƒg—ñíœ‚Ì‚½‚ß‰E‘¤‚ÖƒVƒtƒg
+        %ä¸å¿…è¦ãªãƒ“ãƒƒãƒˆåˆ—å‰Šé™¤ã®ãŸã‚å³å´ã¸ã‚·ãƒ•ãƒˆ
         CanChData(1:CanChNum) = bitshift(CanChData(1:CanChNum),CanChBitShiftR(1:CanChNum));
 
-        %•K—v‚Èƒrƒbƒg‚¾‚¯c‚·‚½‚ßƒ}ƒXƒN
+        %å¿…è¦ãªãƒ“ãƒƒãƒˆã ã‘æ®‹ã™ãŸã‚ãƒã‚¹ã‚¯
         CanChData(1:CanChNum) = bitand(CanChData(1:CanChNum), CanChBitMask(1:CanChNum));
 
         %Ver0103
         CanChProcType =CanChDataType;
 
-        %CAN-CH”•ªƒf[ƒ^ˆ—
+        %CAN-CHæ•°åˆ†ãƒ‡ãƒ¼ã‚¿å‡¦ç†
         for kk = 1:CanChNum
 
-            %SignedŒ^‚Ìê‡
+            %Signedå‹ã®å ´åˆ
             if (CanChDataType(kk) == 0)
-                %—LŒøƒrƒbƒg’·‚ÌÅŒã‚ª1‚¾‚Á‚½‚çC•„†‚ª•‰
+                %æœ‰åŠ¹ãƒ“ãƒƒãƒˆé•·ã®æœ€å¾ŒãŒ1ã ã£ãŸã‚‰ï¼Œç¬¦å·ãŒè² 
                 if( bitget(CanChData(kk), CanChBitLen(kk)))
 
-                    %Signedƒ}ƒXƒN‚É‚æ‚è•‰‚Ìƒf[ƒ^‚É•ÏŠ·
+                    %Signedãƒã‚¹ã‚¯ã«ã‚ˆã‚Šè² ã®ãƒ‡ãƒ¼ã‚¿ã«å¤‰æ›
                     SignedCanChData(kk) = typecast(bitor(bitset(CanChData(kk),CanChBitLen(kk)+1), CanChSignedMask(kk)),'int64');
 
-                    %ƒf[ƒ^ƒ^ƒCƒvŒ^‚ğˆ——p‚É•ÏX
+                    %ãƒ‡ãƒ¼ã‚¿ã‚¿ã‚¤ãƒ—å‹ã‚’å‡¦ç†ç”¨ã«å¤‰æ›´
                     CanChProcType(kk) = 4;
                 end
-            %UnSignedŒ^‚Ìê‡
+            %UnSignedå‹ã®å ´åˆ
             elseif(CanChDataType(kk) == 1)
-            %FloatŒ^‚Ìê‡
+            %Floatå‹ã®å ´åˆ
             elseif(CanChDataType(kk) == 2)
 
-                %uint64Œ^‚©‚çFloat‚É“Ç‚İ‚İŒ^‚Ì•ÏX
+                %uint64å‹ã‹ã‚‰Floatã«èª­ã¿è¾¼ã¿å‹ã®å¤‰æ›´
                 FloatCanData = typecast(CanChData(kk),'single');
 
-                %FloatŒ^‚Ì”ÍˆÍ‚ğ’´‚¦‚Ä‚¢‚½‚çƒf[ƒ^‚Í0‚Æ‚·‚é
+                %Floatå‹ã®ç¯„å›²ã‚’è¶…ãˆã¦ã„ãŸã‚‰ãƒ‡ãƒ¼ã‚¿ã¯0ã¨ã™ã‚‹
                 if( abs(FloatCanData(1,1))<FloatMin || abs(FloatCanData(1,1))>FloatMax )
                     FloatCanData(1,1) = 0;
                 end
 
-                %(1,2)‚Í‚²‚İƒf[ƒ^C(1,1)‚ªFloatŒ^‚É•ÏŠ·‚³‚ê‚½ƒf[ƒ^
-                %Ver0103 floatŒ^ƒf[ƒ^‚Ì—LŒø
+                %(1,2)ã¯ã”ã¿ãƒ‡ãƒ¼ã‚¿ï¼Œ(1,1)ãŒFloatå‹ã«å¤‰æ›ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿
+                %Ver0103 floatå‹ãƒ‡ãƒ¼ã‚¿ã®æœ‰åŠ¹
                 DoubleCanChData(kk) =  str2double(sprintf('%.7G', FloatCanData(1,1)));
 
-                %ƒf[ƒ^ƒ^ƒCƒvŒ^‚ğˆ——p‚É•ÏX
+                %ãƒ‡ãƒ¼ã‚¿ã‚¿ã‚¤ãƒ—å‹ã‚’å‡¦ç†ç”¨ã«å¤‰æ›´
                 CanChProcType(kk) = 3;
-            %DoubleŒ^‚Ìê‡
+            %Doubleå‹ã®å ´åˆ
             else
 
-                %uint64Œ^‚©‚çDouble‚É“Ç‚İ‚İŒ^‚Ì•ÏX
+                %uint64å‹ã‹ã‚‰Doubleã«èª­ã¿è¾¼ã¿å‹ã®å¤‰æ›´
                 DoubleCanData = typecast(CanChData(kk),'double');
 
-                %DoubleŒ^‚Ì”ÍˆÍ‚ğ’´‚¦‚Ä‚¢‚½‚çƒf[ƒ^‚Í0‚Æ‚·‚é
+                %Doubleå‹ã®ç¯„å›²ã‚’è¶…ãˆã¦ã„ãŸã‚‰ãƒ‡ãƒ¼ã‚¿ã¯0ã¨ã™ã‚‹
                 if( abs(DoubleCanData(1,1))<DoubleMin || abs(DoubleCanData(1,1))>DoubleMax )
                     DoubleCanData = 0;
                 end
 
-                %DoubleŒ^ƒf[ƒ^‚Ìİ’è
+                %Doubleå‹ãƒ‡ãƒ¼ã‚¿ã®è¨­å®š
                 DoubleCanChData(kk) = DoubleCanData;
             end
         end
 
-        %Œ»İ‚Ìs—ñƒCƒ“ƒfƒbƒNƒX”Ô†‚Ìæ“¾
+        %ç¾åœ¨ã®è¡Œåˆ—ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã®å–å¾—
         e4XIndex = cast(CanPreAgCnt,'double')+1-tblInfo.StCnt;
 
-        %DoubleŒ^‚Ìƒf[ƒ^‚Æ‚µ‚ÄŒ^•ÏŠ·‚µ‚È‚ª‚çİ’è
+        %Doubleå‹ã®ãƒ‡ãƒ¼ã‚¿ã¨ã—ã¦å‹å¤‰æ›ã—ãªãŒã‚‰è¨­å®š
         e4X(e4XIndex,1:CanChNum) = ...
             (CanChProcType(1:CanChNum) == 0 | CanChProcType(1:CanChNum) == 1).*cast(CanChData(1:CanChNum),'double')...
             + (CanChProcType(1:CanChNum) == 3).*DoubleCanChData(1:CanChNum)'...
             + (CanChProcType(1:CanChNum) == 4).*cast(SignedCanChData(1:CanChNum),'double')';
 
-        %Z³ŒW”‚ÆƒIƒtƒZƒbƒg‚É‚æ‚è•¨——Ê‚É•ÏŠ·
+        %æ ¡æ­£ä¿‚æ•°ã¨ã‚ªãƒ•ã‚»ãƒƒãƒˆã«ã‚ˆã‚Šç‰©ç†é‡ã«å¤‰æ›
         e4X(e4XIndex,1:CanChNum) = e4X(e4XIndex,1:CanChNum).* CanChCoeffs(1:CanChNum) + CanChOffset(1:CanChNum);
 
-        %CANƒf[ƒ^‚ª‘¶İ‚µ‚È‚¢‰ÓŠ‚ğNaN‚Å–„‚ß‚é
+        %CANãƒ‡ãƒ¼ã‚¿ãŒå­˜åœ¨ã—ãªã„ç®‡æ‰€ã‚’NaNã§åŸ‹ã‚ã‚‹
         e4X(e4XIndex,NonZerosIndex==0) = NaN;
 
-        %CANƒf[ƒ^“Ç‚İ‚İI—¹ƒtƒ‰ƒO‚ªON‚È‚çI—¹
+        %CANãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿çµ‚äº†ãƒ•ãƒ©ã‚°ãŒONãªã‚‰çµ‚äº†
         if(CanDataReadEnd == 1)
             waitbar(100);
             break;
         end
 
-        %CAN-IDƒf[ƒ^s—ñ‚Ì‰Šú‰»
+        %CAN-IDãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®åˆæœŸåŒ–
         CanIdData = zeros(1,CanChNum,'uint64');
 
-        %CAN-CHƒf[ƒ^s—ñ‚Ì‰Šú‰»
+        %CAN-CHãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®åˆæœŸåŒ–
         CanChData = zeros(1,CanChNum,'uint64');
 
-        %SignedŒ^ƒf[ƒ^s—ñ‚Ì‰Šú‰»
+        %Signedå‹ãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®åˆæœŸåŒ–
         SignedCanChData = zeros(CanChNum,1,'int64');
 
-        %DoubleŒ^ƒf[ƒ^s—ñ‚Ì‰Šú‰»
+        %Doubleå‹ãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®åˆæœŸåŒ–
         DoubleCanChData = zeros(CanChNum,1,'double');
 
-        %CAN-CHƒf[ƒ^‘¶İƒtƒ‰ƒOs—ñ‚Ì‰Šú‰»
+        %CAN-CHãƒ‡ãƒ¼ã‚¿å­˜åœ¨ãƒ•ãƒ©ã‚°è¡Œåˆ—ã®åˆæœŸåŒ–
         NonZerosIndex = zeros(1,CanChNum);
 
         if fix(rem(CanDataReadNum,100)) < tblInfo.DataNum
@@ -3088,75 +3088,75 @@ function [e4X, e4XIndex, ErrNo] = getCanData(fid, tblInfo, CanChIdNo, CanChEndia
         end
     end
 
-    %•s•K—v‚Ès—ñ‚Ìíœ
+    %ä¸å¿…è¦ãªè¡Œåˆ—ã®å‰Šé™¤
     clear CanIdData
     clear CanChData
     clear DoubleCanChData
     clear SignedCanChData
 
-    %‘O’l•Ûˆ—
-    %CANƒf[ƒ^s—ñ‚Ìæ“ª‚ÌNaN‚ğ0‚Ö
+    %å‰å€¤ä¿æŒå‡¦ç†
+    %CANãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã®å…ˆé ­ã®NaNã‚’0ã¸
     e4X(1,isnan(e4X(1,:))==1) = 0;
 
-    %CANƒf[ƒ^s—ñ‚æ‚èNaN‚Å‚È‚¢ƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
+    %CANãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã‚ˆã‚ŠNaNã§ãªã„ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—
     [n,m] = find(isnan(e4X)==0);
 
-    %CH‚²‚Æ‚É‘O’l•Ûˆ—
+    %CHã”ã¨ã«å‰å€¤ä¿æŒå‡¦ç†
     for i = 1:CanChNum
-        %i”Ô–Ú‚ÌCAN|CH‚ÌNaN‚Å‚È‚¢ƒCƒ“ƒfƒbƒNƒXs—ñ‚ğæ“¾
+        %iç•ªç›®ã®CANâˆ’CHã®NaNã§ãªã„ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹è¡Œåˆ—ã‚’å–å¾—
         DataIndex = n(m==i);
 
-        %num‚ÉƒCƒ“ƒfƒbƒNƒX”‚ğæ“¾
+        %numã«ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°ã‚’å–å¾—
         [num,~]=size(DataIndex);
 
         for j = 1:(num-1)
-            %NaN‚Å‚È‚¢ƒCƒ“ƒfƒbƒNƒX”Ô†‚©‚çŸ‚ÌNaN‚Å‚È‚¢ƒCƒ“ƒfƒbƒNƒX”Ô†‚Ì1‚Â‘O‚Ü‚Åƒf[ƒ^‚ğƒRƒs[
+            %NaNã§ãªã„ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã‹ã‚‰æ¬¡ã®NaNã§ãªã„ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã®1ã¤å‰ã¾ã§ãƒ‡ãƒ¼ã‚¿ã‚’ã‚³ãƒ”ãƒ¼
             e4X((DataIndex(j):DataIndex(j+1)-1),i) = e4X(DataIndex(j),i);
         end
 
-        %ÅŒã‚ÌNaN‚Å‚È‚¢ƒCƒ“ƒfƒbƒNƒX”Ô†‚©‚çs—ñ‚ÌÅŒã‚Ü‚Åƒf[ƒ^‚ğƒRƒs[
+        %æœ€å¾Œã®NaNã§ãªã„ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã‹ã‚‰è¡Œåˆ—ã®æœ€å¾Œã¾ã§ãƒ‡ãƒ¼ã‚¿ã‚’ã‚³ãƒ”ãƒ¼
         e4X((DataIndex(num):e4XIndex),i) = e4X(DataIndex(num),i);
     end
 
-    %ŠÔ•ª‰ğ”\‚Ìæ“¾
+    %æ™‚é–“åˆ†è§£èƒ½ã®å–å¾—
     TimeDiv = 1/tblInfo.Fs;
 
-    %W˜^ŠÔ‚Ìæ“¾
+    %é›†éŒ²æ™‚é–“ã®å–å¾—
     RecTime = (e4XIndex)/tblInfo.Fs;
 
-    %ŠÔŒ`®‚Ìê‡
+    %æ™‚é–“å½¢å¼ã®å ´åˆ
     if (g_IndexType==0)
-        %0n‚Ü‚è‚Ìê‡
+        %0å§‹ã¾ã‚Šã®å ´åˆ
         if(g_StartNumber == 0)
             xdiv=(0:TimeDiv:RecTime-TimeDiv)';
-        %1n‚Ü‚è‚Ìê‡
+        %1å§‹ã¾ã‚Šã®å ´åˆ
         else
             xdiv=(TimeDiv:TimeDiv:RecTime)';
         end
-    %”Ô†Œ`®‚Ìê‡
+    %ç•ªå·å½¢å¼ã®å ´åˆ
     else
-        %0n‚Ü‚è‚Ìê‡
+        %0å§‹ã¾ã‚Šã®å ´åˆ
         if(g_StartNumber == 0)
             xdiv=(0:e4XIndex-1)';
-        %1n‚Ü‚è‚Ìê‡
+        %1å§‹ã¾ã‚Šã®å ´åˆ
         else
             xdiv=(1:e4XIndex)';
         end
     end
 
-    %ƒf[ƒ^”Ô†s—ñ‚Æƒf[ƒ^s—ñ‚ğŒ‹‡
+    %ãƒ‡ãƒ¼ã‚¿ç•ªå·è¡Œåˆ—ã¨ãƒ‡ãƒ¼ã‚¿è¡Œåˆ—ã‚’çµåˆ
     e4X=horzcat(xdiv,e4X);
 
 
     close(h);
     clear h;
 %--------------------------------------------------------------------------
-%% ƒeƒLƒXƒg•”‚Ìî•ñæ“¾
-%    ˆø”
-%        fid     ... ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^ƒIƒuƒWƒFƒNƒg
-%        tblInfo ... \‘¢‘Ì•Ï”
-%    –ß‚è’l
-%        info    ... î•ñ‚ğ’Ç‰Á‚µ‚½\‘¢‘Ì•Ï”
+%% ãƒ†ã‚­ã‚¹ãƒˆéƒ¨ã®æƒ…å ±å–å¾—
+%    å¼•æ•°
+%        fid     ... ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+%        tblInfo ... æ§‹é€ ä½“å¤‰æ•°
+%    æˆ»ã‚Šå€¤
+%        info    ... æƒ…å ±ã‚’è¿½åŠ ã—ãŸæ§‹é€ ä½“å¤‰æ•°
 
 function info = getE4aInfo(fid,tblInfo)
 
@@ -3208,72 +3208,72 @@ function info = getE4aInfo(fid,tblInfo)
 
 
 %--------------------------------------------------------------------------
-%% ƒwƒbƒ_î•ñ‚Ìì¬
-%    ˆø”
-%        tblInfo      ... \‘¢‘Ì•Ï”
-%        CanChNo      ... CAN-CHƒXƒ^[ƒgƒrƒbƒg
-%        CanChEdxId   ... CAN-CH‚ÌEDX‚ÌID”Ô†
-%        CacChCoeffs  ... CAN-CH‚Ìƒrƒbƒg’·
-%        CanChOffset  ... CAN-CH‚ÉŠY“–‚·‚éID‚Ìƒf[ƒ^’·
-%        CanChName    ... CAN-CH–¼Ì
-%        CanChUnitStr ... CAN-CH’PˆÊ•¶š—ñ
-%    –ß‚è’l
-%        Header       ... ƒwƒbƒ_î•ñ
+%% ãƒ˜ãƒƒãƒ€æƒ…å ±ã®ä½œæˆ
+%    å¼•æ•°
+%        tblInfo      ... æ§‹é€ ä½“å¤‰æ•°
+%        CanChNo      ... CAN-CHã‚¹ã‚¿ãƒ¼ãƒˆãƒ“ãƒƒãƒˆ
+%        CanChEdxId   ... CAN-CHã®EDXã®IDç•ªå·
+%        CacChCoeffs  ... CAN-CHã®ãƒ“ãƒƒãƒˆé•·
+%        CanChOffset  ... CAN-CHã«è©²å½“ã™ã‚‹IDã®ãƒ‡ãƒ¼ã‚¿é•·
+%        CanChName    ... CAN-CHåç§°
+%        CanChUnitStr ... CAN-CHå˜ä½æ–‡å­—åˆ—
+%    æˆ»ã‚Šå€¤
+%        Header       ... ãƒ˜ãƒƒãƒ€æƒ…å ±
 
 function Header = getHeaderInfo(tblInfo, CanChChNo, CanChEdxId, CanChCoeffs, CanChOffset, CanChName, CanChUnitStr, e4XIndex)
 
-    global g_CsvFormat;     %ƒwƒbƒ_î•ñŒ`®‚Ì‹Œƒ^ƒCƒvE•W€ƒ^ƒCƒv‚ğØ‚è‘Ö‚¦‚Ü‚·
-                            %0F‹Œƒ^ƒCƒv  1F•W€ƒ^ƒCƒv
-                            %‹Œƒ^ƒCƒvFDAS-200A‚Ì‰Šú•Û‘¶Œ`®
-                            %•W€ƒ^ƒCƒvFVer01.06‚Å’Ç‰Á‚³‚ê‚½V‚½‚ÈCSV•Û‘¶Œ`®
-    %CAN-CH”‚Ìæ“¾
+    global g_CsvFormat;     %ãƒ˜ãƒƒãƒ€æƒ…å ±å½¢å¼ã®æ—§ã‚¿ã‚¤ãƒ—ãƒ»æ¨™æº–ã‚¿ã‚¤ãƒ—ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™
+                            %0ï¼šæ—§ã‚¿ã‚¤ãƒ—  1ï¼šæ¨™æº–ã‚¿ã‚¤ãƒ—
+                            %æ—§ã‚¿ã‚¤ãƒ—ï¼šDAS-200Aã®åˆæœŸä¿å­˜å½¢å¼
+                            %æ¨™æº–ã‚¿ã‚¤ãƒ—ï¼šVer01.06ã§è¿½åŠ ã•ã‚ŒãŸæ–°ãŸãªCSVä¿å­˜å½¢å¼
+    %CAN-CHæ•°ã®å–å¾—
     CanChNum = tblInfo.TransChStsNum;
 
-%ƒwƒbƒ_î•ñ‚Ìì¬
-%ŠeƒZƒ‹ƒf[ƒ^‚Ì‰Šú‰»
+%ãƒ˜ãƒƒãƒ€æƒ…å ±ã®ä½œæˆ
+%å„ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
         tblfileID = cell(1,CanChNum+1);
         tblfileID(:,:) = {''};
-        %tblfileID(1,1) = {'[ID”Ô†]'};
+        %tblfileID(1,1) = {'[IDç•ªå·]'};
         tblfileID(1,1) = {'[ID No.]'};
 
         tblfileTitle = cell(1,CanChNum+1);
         tblfileTitle(:,:) = {''};
-        %tblfileTitle(1,1) = {'[ƒ^ƒCƒgƒ‹]'};
+        %tblfileTitle(1,1) = {'[ã‚¿ã‚¤ãƒˆãƒ«]'};
         tblfileTitle(1,1) = {'[Title]'};
 
         tblfileDate = cell(1,CanChNum+1);
         tblfileDate(:,:) = {''};
-        %tblfileDate(1,1) = {'[Œ±“ú]'};
+        %tblfileDate(1,1) = {'[è©¦é¨“æ—¥æ™‚]'};
         tblfileDate(1,1) = {'[Test Date]'};
 
         tblfileCh_num = cell(1,CanChNum+1);
         tblfileCh_num(:,:) = {''};
-        %tblfileCh_num(1,1) = {'[‘ª’èCH”]'};
+        %tblfileCh_num(1,1) = {'[æ¸¬å®šCHæ•°]'};
         tblfileCh_num(1,1) = {'[Number of Channels]'};
 
         tblfileDigi_ch = cell(1,CanChNum+1);
         tblfileDigi_ch(:,:) = {''};
-        %tblfileDigi_ch(1,1) = {'[ƒfƒWƒ^ƒ‹“ü—Í]'};
+        %tblfileDigi_ch(1,1) = {'[ãƒ‡ã‚¸ã‚¿ãƒ«å…¥åŠ›]'};
         tblfileDigi_ch(1,1) = {'[Digital Input]'};
 
         tblfileSf = cell(1,CanChNum+1);
         tblfileSf(:,:) = {''};
-        %tblfileSf(1,1) = {'[ƒTƒ“ƒvƒŠƒ“ƒOü”g”(Hz)]'};
+        %tblfileSf(1,1) = {'[ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°(Hz)]'};
         tblfileSf(1,1) = {'[Sampling Frequency (Hz)]'};
 
         tblfileData_num = cell(1,CanChNum+1);
         tblfileData_num(:,:) = {''};
-        %tblfileData_num(1,1) = {'[W˜^ƒf[ƒ^”/CH]'};
+        %tblfileData_num(1,1) = {'[é›†éŒ²ãƒ‡ãƒ¼ã‚¿æ•°/CH]'};
         tblfileData_num(1,1) = {'[Number of Samples/CH]'};
 
         tblfileTime = cell(1,CanChNum+1);
         tblfileTime(:,:) = {''};
-        %tblfileTime(1,1) = {'[‘ª’èŠÔ(sec)]'};
+        %tblfileTime(1,1) = {'[æ¸¬å®šæ™‚é–“(sec)]'};
         tblfileTime(1,1) = {'[Time (sec)]'};
 
         tblName = cell(1,CanChNum+1);
         tblName(:,:) = {''};
-        %tblName(1,1) = {'[CH–¼Ì]'};
+        %tblName(1,1) = {'[CHåç§°]'};
         tblName(1,1) = {'[CH Name]'};
 
         tblNo = cell(1,CanChNum+1);
@@ -3282,153 +3282,153 @@ function Header = getHeaderInfo(tblInfo, CanChChNo, CanChEdxId, CanChCoeffs, Can
 
         tblrange = cell(1,CanChNum+1);
         tblrange(:,:) = {''};
-        %tblrange(1,1) = {'[ƒŒƒ“ƒW]'};
+        %tblrange(1,1) = {'[ãƒ¬ãƒ³ã‚¸]'};
         tblrange(1,1) = {'[Range]'};
 
         tblCoeff_disp = cell(1,CanChNum+1);
         tblCoeff_disp(:,:) = {''};
-        %tblCoeff_disp(1,1) = {'[Z³ŒW”]'};
+        %tblCoeff_disp(1,1) = {'[æ ¡æ­£ä¿‚æ•°]'};
         tblCoeff_disp(1,1) = {'[Calibration Coeff.]'};
 
         tblOffset_disp = cell(1,CanChNum+1);
         tblOffset_disp(:,:) = {''};
-        %tblOffset_disp(1,1) = {'[ƒIƒtƒZƒbƒg]'};
+        %tblOffset_disp(1,1) = {'[ã‚ªãƒ•ã‚»ãƒƒãƒˆ]'};
         tblOffset_disp(1,1) = {'[Offset]'};
 
         tblUnit = cell(1,CanChNum+1);
         tblUnit(:,:) = {''};
-        %tblUnit(1,1) = {'[’PˆÊ]'};
+        %tblUnit(1,1) = {'[å˜ä½]'};
         tblUnit(1,1) = {'[Unit]'};
 
         tblLowPass = cell(1,CanChNum+1);
         tblLowPass(:,:) = {''};
-        %tblLowPass(1,1) = {'[ƒ[ƒpƒXƒtƒBƒ‹ƒ^]'};
+        %tblLowPass(1,1) = {'[ãƒ­ãƒ¼ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿]'};
         tblLowPass(1,1) = {'[Low Pass Filter]'};
 
         tblHighPass = cell(1,CanChNum+1);
         tblHighPass(:,:) = {''};
-        %tblHighPass(1,1) = {'[ƒnƒCƒpƒXƒtƒBƒ‹ƒ^]'};
+        %tblHighPass(1,1) = {'[ãƒã‚¤ãƒ‘ã‚¹ãƒ•ã‚£ãƒ«ã‚¿]'};
         tblHighPass(1,1) = {'[High Pass Filter]'};
 
         tblDigiFilter = cell(1,CanChNum+1);
         tblDigiFilter(:,:) = {''};
-        %tblDigiFilter(1,1) = {'[ƒfƒWƒ^ƒ‹ƒtƒBƒ‹ƒ^]'};
+        %tblDigiFilter(1,1) = {'[ãƒ‡ã‚¸ã‚¿ãƒ«ãƒ•ã‚£ãƒ«ã‚¿]'};
         tblDigiFilter(1,1) = {'[Digital Filter]'};
 
-%ƒwƒbƒ_î•ñ‚Ìİ’è
-    %•¶š—ñs—ñ‚ª‹ó(0)‚ÌƒCƒ“ƒfƒbƒNƒX”Ô†‚Ìæ“¾
+%ãƒ˜ãƒƒãƒ€æƒ…å ±ã®è¨­å®š
+    %æ–‡å­—åˆ—è¡Œåˆ—ãŒç©º(0)ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã®å–å¾—
     StrEndIndex = find(tblInfo.title == 0,1,'first');
 
-    %•¶š—ñ‚ª‹ó‚Ìê‡
+    %æ–‡å­—åˆ—ãŒç©ºã®å ´åˆ
     if StrEndIndex == 1
-    %•¶š—ñ‚ª‚ ‚éê‡
+    %æ–‡å­—åˆ—ãŒã‚ã‚‹å ´åˆ
     else
-        %—]•ª‚Ès—ñ•”‚ğíœ
+        %ä½™åˆ†ãªè¡Œåˆ—éƒ¨ã‚’å‰Šé™¤
         tblInfo.title(StrEndIndex:end) = [];
 
-        %‹@Šíî•ñ‚Éİ’è
+        %æ©Ÿå™¨æƒ…å ±ã«è¨­å®š
         tblfileTitle(1,2) = {tblInfo.title};
     end
 
-    %•¶š—ñs—ñ‚ª‹ó(0)‚ÌƒCƒ“ƒfƒbƒNƒX”Ô†‚Ìæ“¾
+    %æ–‡å­—åˆ—è¡Œåˆ—ãŒç©º(0)ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã®å–å¾—
     StrEndIndex = find(tblInfo.machine == 0,1,'first');
 
-    %•¶š—ñ‚ª‹ó‚Ìê‡
+    %æ–‡å­—åˆ—ãŒç©ºã®å ´åˆ
     if StrEndIndex == 1
-    %•¶š—ñ‚ª‚ ‚éê‡
+    %æ–‡å­—åˆ—ãŒã‚ã‚‹å ´åˆ
     else
-        %—]•ª‚Ès—ñ•”‚ğíœ
+        %ä½™åˆ†ãªè¡Œåˆ—éƒ¨ã‚’å‰Šé™¤
         tblInfo.machine(StrEndIndex:end) = [];
 
-        %‹@Šíî•ñ‚Éİ’è
+        %æ©Ÿå™¨æƒ…å ±ã«è¨­å®š
         tblfileID(1,2) = {tblInfo.machine};
     end
 
-    %•¶š—ñs—ñ‚ª‹ó(0)‚ÌƒCƒ“ƒfƒbƒNƒX”Ô†‚Ìæ“¾
+    %æ–‡å­—åˆ—è¡Œåˆ—ãŒç©º(0)ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã®å–å¾—
     StrEndIndex = find(tblInfo.title==0,1,'first');
 
-    %•¶š—ñ‚ª‹ó‚Ìê‡
+    %æ–‡å­—åˆ—ãŒç©ºã®å ´åˆ
     if StrEndIndex == 1
-    %•¶š—ñ‚ª‚ ‚éê‡
+    %æ–‡å­—åˆ—ãŒã‚ã‚‹å ´åˆ
     else
-        %—]•ª‚Ès—ñ•”‚ğíœ
+        %ä½™åˆ†ãªè¡Œåˆ—éƒ¨ã‚’å‰Šé™¤
         tblfileTitle(StrEndIndex:end) = [];
 
-        %‹@Šíî•ñ‚Éİ’è
+        %æ©Ÿå™¨æƒ…å ±ã«è¨­å®š
         tblfileTitle(1,2) = {tblInfo.title};
     end
 
-    %ˆê“I‚È•¶šs—ñ‚ğ‰Šú‰»
+    %ä¸€æ™‚çš„ãªæ–‡å­—è¡Œåˆ—ã‚’åˆæœŸåŒ–
     TempChar = zeros(1,12);
 
-    %Œ±“úƒf[ƒ^‚ğ››››¢¢¢¢¨››››^¢¢^¢¢‚É•ÏŠ·
+    %è©¦é¨“æ—¥æ™‚ãƒ‡ãƒ¼ã‚¿ã‚’â—‹â—‹â—‹â—‹â–³â–³â–³â–³â†’â—‹â—‹â—‹â—‹ï¼â–³â–³ï¼â–³â–³ã«å¤‰æ›
     TempChar(1:4) = tblInfo.Date(1:4);
     TempChar(5) = '/';
     TempChar(6:7) = tblInfo.Date(5:6);
     TempChar(8) = '/';
     TempChar(9:10) = tblInfo.Date(7:8);
 
-    %•¶š—ñs—ñ‚ª‹ó(0)‚ÌƒCƒ“ƒfƒbƒNƒX”Ô†‚Ìæ“¾
+    %æ–‡å­—åˆ—è¡Œåˆ—ãŒç©º(0)ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã®å–å¾—
     StrEndIndex = find(TempChar==0,1,'first');
 
-    %•¶š—ñ‚ª‹ó‚Ìê‡
+    %æ–‡å­—åˆ—ãŒç©ºã®å ´åˆ
     if StrEndIndex == 1
-    %•¶š—ñ‚ª‚ ‚éê‡
+    %æ–‡å­—åˆ—ãŒã‚ã‚‹å ´åˆ
     else
-        %—]•ª‚Ès—ñ•”‚ğíœ
+        %ä½™åˆ†ãªè¡Œåˆ—éƒ¨ã‚’å‰Šé™¤
         TempChar(StrEndIndex:end) = [];
 
-        %‹@Šíî•ñ‚Éİ’è
+        %æ©Ÿå™¨æƒ…å ±ã«è¨­å®š
         tblfileDate(1,2)={native2unicode(TempChar)};
     end
 
-    %ˆê“I‚È•¶šs—ñ‚ğ‰Šú‰»
+    %ä¸€æ™‚çš„ãªæ–‡å­—è¡Œåˆ—ã‚’åˆæœŸåŒ–
     TempChar = zeros(1,12);
 
-    %Œ±“úƒf[ƒ^‚ğ››¢¢  ¨››F¢¢F  ‚É•ÏŠ·
+    %è©¦é¨“æ—¥æ™‚ãƒ‡ãƒ¼ã‚¿ã‚’â—‹â—‹â–³â–³â–¡â–¡â†’â—‹â—‹ï¼šâ–³â–³ï¼šâ–¡â–¡ã«å¤‰æ›
     TempChar(1:2) = tblInfo.Date(9:10);
     TempChar(3) = ':';
     TempChar(4:5) = tblInfo.Date(11:12);
     TempChar(6) = ':';
     TempChar(7:8) = tblInfo.Date(13:14);
 
-    %•¶š—ñs—ñ‚ª‹ó(0)‚ÌƒCƒ“ƒfƒbƒNƒX”Ô†‚Ìæ“¾
+    %æ–‡å­—åˆ—è¡Œåˆ—ãŒç©º(0)ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã®å–å¾—
     StrEndIndex = find(TempChar==0,1,'first');
 
-    %•¶š—ñ‚ª‹ó‚Ìê‡
+    %æ–‡å­—åˆ—ãŒç©ºã®å ´åˆ
     if StrEndIndex == 1
-    %•¶š—ñ‚ª‚ ‚éê‡
+    %æ–‡å­—åˆ—ãŒã‚ã‚‹å ´åˆ
     else
-        %—]•ª‚Ès—ñ•”‚ğíœ
+        %ä½™åˆ†ãªè¡Œåˆ—éƒ¨ã‚’å‰Šé™¤
         TempChar(StrEndIndex:end) = [];
 
-        %‹@Šíî•ñ‚Éİ’è
+        %æ©Ÿå™¨æƒ…å ±ã«è¨­å®š
         tblfileDate(1,3)={native2unicode(TempChar)};
     end
 
-    %‘ª’èCH”‚Ìİ’è
+    %æ¸¬å®šCHæ•°ã®è¨­å®š
     tblfileCh_num(1,2) = {tblInfo.TransChStsNum};
 
-    %ƒTƒ“ƒvƒŠƒ“ƒOü”g”‚Ìİ’è
+    %ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æ³¢æ•°ã®è¨­å®š
     tblfileSf(1,2) = {tblInfo.Fs};
 
-    %W˜^ƒf[ƒ^”‚Ìİ’è
+    %é›†éŒ²ãƒ‡ãƒ¼ã‚¿æ•°ã®è¨­å®š
     tblfileData_num(1,2) = {e4XIndex};
 
-    %W˜^ŠÔ‚Ìæ“¾
+    %é›†éŒ²æ™‚é–“ã®å–å¾—
     RecTime = (e4XIndex)/tblInfo.Fs;
 
-    %W˜^ŠÔ‚Ìİ’è
+    %é›†éŒ²æ™‚é–“ã®è¨­å®š
     tblfileTime(1,2) = {RecTime};
 
-    %CAN-CH–¼Ì‚Ìİ’è
+    %CAN-CHåç§°ã®è¨­å®š
     tblName(2:end) = CanChName(1:end);
 
-    %’PˆÊ•¶š—ñ‚Ìİ’è
+    %å˜ä½æ–‡å­—åˆ—ã®è¨­å®š
     tblUnit(2:end) = CanChUnitStr(1:end);
 
     for i = 1:CanChNum
-        %CH”Ô†‚Ìİ’è
+        %CHç•ªå·ã®è¨­å®š
         if(CanChChNo(i) < 10)
             tblNo(i+1) = {strcat('E', int2str(CanChEdxId(i)), '-00', int2str(CanChChNo(i)))};
         elseif(CanChChNo(i) < 100)
@@ -3437,17 +3437,17 @@ function Header = getHeaderInfo(tblInfo, CanChChNo, CanChEdxId, CanChCoeffs, Can
             tblNo(i+1) = {strcat('E', int2str(CanChEdxId(i)), '-', int2str(CanChChNo(i)))};
         end
 
-        %Z³ŒW”‚Ìİ’è
+        %æ ¡æ­£ä¿‚æ•°ã®è¨­å®š
         tblCoeff_disp(i+1) = {CanChCoeffs(i)};
 
-        %ƒIƒtƒZƒbƒg‚Ìİ’è
+        %ã‚ªãƒ•ã‚»ãƒƒãƒˆã®è¨­å®š
         tblOffset_disp(i+1) = {CanChOffset(i)};
     end
 
-    %ƒwƒbƒ_î•ñ
-    %‹Œƒ^ƒCƒv
+    %ãƒ˜ãƒƒãƒ€æƒ…å ±
+    %æ—§ã‚¿ã‚¤ãƒ—
     if (g_CsvFormat == 0)
-        %CH”‚ª1‚Ìê‡Œ±“ú‚Ìƒwƒbƒ_î•ñ‚ª3—ñ‚ ‚é‚½‚ßC‚»‚Ì‘¼‚Ìƒwƒbƒ_î•ñ‚ğ1—ñ•ª‘‚â‚·
+        %CHæ•°ãŒ1ã®å ´åˆè©¦é¨“æ—¥æ™‚ã®ãƒ˜ãƒƒãƒ€æƒ…å ±ãŒ3åˆ—ã‚ã‚‹ãŸã‚ï¼Œãã®ä»–ã®ãƒ˜ãƒƒãƒ€æƒ…å ±ã‚’1åˆ—åˆ†å¢—ã‚„ã™
         if (CanChNum == 1)
             tblfileID(3)={''};
             tblfileTitle(3)={''};
@@ -3466,9 +3466,9 @@ function Header = getHeaderInfo(tblInfo, CanChChNo, CanChEdxId, CanChCoeffs, Can
 
         Header = [tblfileID; tblfileTitle; tblfileDate; tblfileCh_num; tblfileDigi_ch; tblfileSf;...
                         tblfileData_num; tblfileTime; tblName; tblNo; tblrange; tblCoeff_disp; tblOffset_disp; tblUnit; ];
-    %•W€ƒ^ƒCƒv
+    %æ¨™æº–ã‚¿ã‚¤ãƒ—
     else
-        %CH”‚ª1‚Ìê‡Œ±“ú‚Ìƒwƒbƒ_î•ñ‚ª3—ñ‚ ‚é‚½‚ßC‚»‚Ì‘¼‚Ìƒwƒbƒ_î•ñ‚ğ1—ñ•ª‘‚â‚·
+        %CHæ•°ãŒ1ã®å ´åˆè©¦é¨“æ—¥æ™‚ã®ãƒ˜ãƒƒãƒ€æƒ…å ±ãŒ3åˆ—ã‚ã‚‹ãŸã‚ï¼Œãã®ä»–ã®ãƒ˜ãƒƒãƒ€æƒ…å ±ã‚’1åˆ—åˆ†å¢—ã‚„ã™
         if (CanChNum == 1)
             tblfileID(3)={''};
             tblfileTitle(3)={''};
