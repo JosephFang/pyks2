@@ -1,12 +1,20 @@
-# A piece of python code for data access of the Kyowa-KS2 baniry file
+# pyks2
 
-By Dr. ZC Fang (Github: JosephFang)
-Copyright 2018
+A python module for accessing the Kyowa KS2 binary file
 
-* *ks2 version*: 0
+By Dr. ZC. Fang (zhichaofang@sjtu.org)
+Copyright (C) 2018
+
+* *ks2 version*: 01.00
 * *csv version*: 0 (old)
+* No CAN channel
+* No digital channel
 
-## Parent ID and Child ID
+数据采用int16存储，转化公式:
+
+  `data = coefA * raw + coefB`
+
+## Appendix: Parent ID and Child ID
 
 ### 可変長ヘッダ部全体情報 (`parent id == 1`)
 
@@ -69,7 +77,7 @@ child id
 
 child id
 
-- 1; flgDelta = 4
+- 1: flgDelta = 4
 - 2 (and else): flgDelta = 8
 
 ## PostData (`parent id == 18`)
