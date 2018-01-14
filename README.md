@@ -32,10 +32,10 @@ child id
 * 58
 * 59
 * 60
-* 61: CAN-ID Info, flgDelta = 2,
-* 62: CAN-CH Condition, flgDelta = 4
-* 63: CAN通信条件, flgDelta = 2
-* 70: CAN-CH条件, flgDelta = 4
+* 61: CAN-ID Info, flgNBytes = 2,
+* 62: CAN-CH Condition, flgNBytes = 4
+* 63: CAN通信条件, flgNBytes = 2
+* 70: CAN-CH条件, flgNBytes = 4
 
 ### 可変長ヘッダ部個別情報 (`parent id == 2`)
 
@@ -69,20 +69,20 @@ child id
 - 31:
 - 32
 - 33
-- 34: max/min data, flgDelta = 2 (for ks2ver < 5)
-- 35: 400 data samples before and after max/min data, flgDelta = 4
+- 34: max/min data, flgNBytes = 2 (for ks2ver < 5)
+- 35: 400 data samples before and after max/min data, flgNBytes = 4
 - 36: time point when the max/min data occur
 
 ### Data (`parent id == 17`)
 
 child id
 
-- 1: flgDelta = 4
-- 2 (and else): flgDelta = 8
+- 1: flgNBytes = 4
+- 2 (and else): flgNBytes = 8
 
 ## PostData (`parent id == 18`)
 
 child id
 
-- 25: flgDelta = 8
-- 26 (and else): flgDelta = 4
+- 25: flgNBytes = 8
+- 26 (and else): flgNBytes = 4
