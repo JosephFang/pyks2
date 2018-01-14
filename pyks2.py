@@ -234,8 +234,8 @@ class KS2:
         elif parent == 16:
             "Read Data Header"
             if child == 3:
-                "Start Time"
-                self.datetime = self.fid.read(16).decode('utf8')
+                "Start Time (20yymmddhhmmss)"
+                self.datetime = self.fid.read(16).decode('utf-8')
                 print("Start Time: ", self.datetime)
             elif child == 30:
                 "Number of Samples"

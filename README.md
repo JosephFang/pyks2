@@ -77,8 +77,8 @@ child id
 
 child id
 
-- 1: flgNBytes = 4
-- 2 (and else): flgNBytes = 8
+- 1: flgNBytes = 4 (ks1)
+- 2 (and else): flgNBytes = 8 (ks2)
 
 ## PostData (`parent id == 18`)
 
