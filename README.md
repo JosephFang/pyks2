@@ -1,6 +1,6 @@
 # **pyks2**
 
-A python module for accessing the Kyowa KS2 binary file
+A python module to access the Kyowa KS2 binary file
 
 By ZC. Fang
 Copyright &copy; 2018
