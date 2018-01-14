@@ -234,7 +234,7 @@ class KS2:
         elif parent == 16:
             "Read Data Header"
             if child == 3:
-                "Start Time (20yymmddhhmmss)"
+                "Start Time (yyyymmddhhmmss)"
                 self.datetime = self.fid.read(16).decode('utf-8')
                 print("Start Time: ", self.datetime)
             elif child == 30:
@@ -246,6 +246,7 @@ class KS2:
 
         elif parent == 17:
             "Read Data"
+            print("Reading Data...", end=' ')
             flgNBytes = 4 if child == 1 else 8
             sizeof = self.getSizeOf(rdtp)
             nBytesPerSample = self.chN * sizeof
@@ -257,6 +258,7 @@ class KS2:
             if nBytes <= 512 * 1024 * 1024:
                 self.raw = np.frombuffer(self.fid.read(nBytes), dtype=rdtp)\
                     .reshape((self.sampN, self.chN))
+                print("Done.")
             # greater than 512MiB
             else:
                 # n samples pre read block
@@ -267,14 +269,17 @@ class KS2:
                 n1 = self.sampN - n * n0
                 self.raw = np.zeros((self.sampN, self.chN), dtype=rdtp)
                 for i in range(n):
+                    print(n - i, end=' ')
                     self.raw[i * n0:(i + 1) * n0, :] = np.frombuffer(
                         self.fid.read(n0 * nBytesPerSample), dtype=rdtp)\
                         .reshape((n0, self.chN))
                 else:
+                    print(0, end=' ')
                     if n1 > 0:
                         self.raw[n * n0:, :] = np.frombuffer(
                             self.fid.read(n1 * nBytesPerSample), dtype=rdtp)\
                             .reshape((n1, self.chN))
+                print("Done.")
 
         elif parent == 18:
             flgNBytes = 8 if child == 25 else 4
@@ -299,28 +304,42 @@ class KS2:
         ext: .mat, save in matlab format
              .xlsx, save in excel format
              .txt, save in ascii format
+
+        NOTE: saving in the latter two formats has not be implemented yet.
         """
         if ext is None and savename is None:
             # Default: .mat
             savename = os.path.splitext(self.filename)[0] + '.mat'
-            spio.savemat(savename,
-                         {'name': self.name,
-                          'datetime': self.datetime,
-                          'sampN': self.sampN,
-                          'chN': self.chN,
-                          'chIndex': self.chIndex,
-                          'chName': self.chName,
-                          'chUnit': self.unit,
-                          'range': self.chRange,
-                          'coefA': self.coefA,
-                          'coefB': self.coefB,
-                          'calCoef': self.calCoef,
-                          'meaZero': self.offset,
-                          'LPFinfo': self.chLPF,
-                          'HPFinfo': self.chHPF,
-                          'RAW': self.raw})
+            self._savemat(savename)
+        elif ext is not None and savename is None:
+            if not ext.startswith('.'):
+                ext = '.' + ext
+            savename = os.path.splitext(self.filename)[0] + ext
+            if savename.endswith('.mat'):
+                self._savemat(savename)
+            else:
+                print("To be expected!")
+
         else:
             print("To be expected!")
+
+    def _savemat(self, savename):
+        print("Saving data in mat format...")
+        spio.savemat(savename, {'name': self.name,
+                                'datetime': self.datetime,
+                                'sampN': self.sampN,
+                                'chN': self.chN,
+                                'chIndex': self.chIndex,
+                                'chName': self.chName,
+                                'chUnit': self.unit,
+                                'range': self.chRange,
+                                'coefA': self.coefA,
+                                'coefB': self.coefB,
+                                'calCoef': self.calCoef,
+                                'meaZero': self.offset,
+                                'LPFinfo': self.chLPF,
+                                'HPFinfo': self.chHPF,
+                                'RAW': self.raw})
 
     def __str__(self):
         return """KS2 data object
@@ -342,7 +361,7 @@ This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.
         """)
 
-    ks2 = KS2('example.ks2')
+    ks2 = KS2('test.ks2')
     print(ks2)
     print(ks2.raw)
-    # ks2.save()
+    ks2.save()
