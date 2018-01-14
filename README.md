@@ -1,9 +1,9 @@
-# pyks2
+# **pyks2**
 
 A python module for accessing the Kyowa KS2 binary file
 
-By Dr. ZC. Fang (zhichaofang@sjtu.org)
-Copyright (C) 2018
+By ZC. Fang
+Copyright &copy; 2018
 
 * *ks2 version*: 01.00
 * *csv version*: 0 (old)
