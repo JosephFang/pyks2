@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 ##########################################################################
 
+import os
 import struct
 import numpy as np
 import scipy.io as spio
@@ -293,6 +294,34 @@ class KS2:
         for i in range(self.chN):
             self.data[:, i] = self.coefA[i] * self.raw[:, i] + self.coefB[i]
 
+    def save(self, ext=None, savename=None):
+        """save data in the given format
+        ext: .mat, save in matlab format
+             .xlsx, save in excel format
+             .txt, save in ascii format
+        """
+        if ext is None and savename is None:
+            # Default: .mat
+            savename = os.path.splitext(self.filename)[0] + '.mat'
+            spio.savemat(savename,
+                         {'name': self.name,
+                          'datetime': self.datetime,
+                          'sampN': self.sampN,
+                          'chN': self.chN,
+                          'chIndex': self.chIndex,
+                          'chName': self.chName,
+                          'chUnit': self.unit,
+                          'range': self.chRange,
+                          'coefA': self.coefA,
+                          'coefB': self.coefB,
+                          'calCoef': self.calCoef,
+                          'meaZero': self.offset,
+                          'LPFinfo': self.chLPF,
+                          'HPFinfo': self.chHPF,
+                          'RAW': self.raw})
+        else:
+            print("To be expected!")
+
     def __str__(self):
         return """KS2 data object
     ({:s}, {:s}, {:s},
@@ -316,3 +345,4 @@ This is free software, and you are welcome to redistribute it under certain cond
     ks2 = KS2('example.ks2')
     print(ks2)
     print(ks2.raw)
+    # ks2.save()
