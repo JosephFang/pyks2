@@ -307,19 +307,23 @@ class KS2:
 
         NOTE: saving in the latter two formats has not be implemented yet.
         """
-        if ext is None and savename is None:
+        if savename is not None:
+            if os.path.splitext(savename)[1] == '.mat':
+                self._savemat(savename)
+            else:
+                print("To be expected!")
+        elif ext is None and savename is None:
             # Default: .mat
             savename = os.path.splitext(self.filename)[0] + '.mat'
             self._savemat(savename)
         elif ext is not None and savename is None:
-            if not ext.startswith('.'):
+            if not ext.beginswith('.'):
                 ext = '.' + ext
             savename = os.path.splitext(self.filename)[0] + ext
             if savename.endswith('.mat'):
                 self._savemat(savename)
             else:
                 print("To be expected!")
-
         else:
             print("To be expected!")
 
@@ -353,6 +357,8 @@ class KS2:
 
 
 if __name__ == "__main__":
+    import argparse
+
     print("""
 A Python code to access Kyowa KS2 file.
 Copyright (C) 2018 ZC. Fang (zhichaofang@sjtu.org)
@@ -361,7 +367,18 @@ This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.
         """)
 
-    ks2 = KS2('test.ks2')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('i', type=str, help='input ks2 file name')
+    parser.add_argument('-s', '--save', dest='save', action='store_const',
+                        const=True, default=False, help='export data file')
+    parser.add_argument('-o', type=str, nargs='?',
+                        default=None, help='export file name')
+
+    args = parser.parse_args()
+
+    ks2 = KS2(args.i)
     print(ks2)
     print(ks2.raw)
-    ks2.save()
+
+    if args.save:
+        ks2.save(savename=args.o)
