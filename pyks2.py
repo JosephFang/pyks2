@@ -42,7 +42,7 @@ class KS2:
     sampN = 0        # number of samples pre ch
     chMode = None    # channel mode
 
-    raw = None
+    raw = None       # raw data (int16)
     data = None      # measured data
 
     # dict for read type
@@ -331,6 +331,7 @@ class KS2:
         print("Saving data in mat format...")
         spio.savemat(savename, {'name': self.name,
                                 'datetime': self.datetime,
+                                'fs': self.fs,
                                 'sampN': self.sampN,
                                 'chN': self.chN,
                                 'chIndex': self.chIndex,
@@ -358,6 +359,8 @@ class KS2:
 
 if __name__ == "__main__":
     import argparse
+    import pandas as pd
+    import matplotlib.pyplot as plt
 
     print("""
 A Python code to access Kyowa KS2 file.
@@ -373,12 +376,36 @@ This is free software, and you are welcome to redistribute it under certain cond
                         const=True, default=False, help='export data file')
     parser.add_argument('-o', type=str, nargs='?',
                         default=None, help='export file name')
+    parser.add_argument('-p', '--plot', dest='plot', action='store_const',
+                        const=True, default=False, help='plot measured data')
+    parser.add_argument('-c', type=int, nargs='+',
+                        default=None, help='channels')
 
     args = parser.parse_args()
 
     ks2 = KS2(args.i)
-    print(ks2)
-    print(ks2.raw)
 
     if args.save:
         ks2.save(savename=args.o)
+
+    if args.plot:
+        if args.c is None:
+            args.c = range(ks2.chN)
+        # down sample data for plot
+        di = round(max(1, ks2.fs / 200))
+        rawDS = ks2.raw[::di, :]
+        if len(args.c) == 1:
+            dataDS = np.array(list(map(
+                lambda i: ks2.coefA[i] * rawDS[:, i] + ks2.coefB[i], args.c))).reshape((-1, 1))
+        else:
+            dataDS = np.array(
+                list(map(lambda i: ks2.coefA[i] * rawDS[:, i] + ks2.coefB[i], args.c))).T
+
+        t = np.arange(dataDS.shape[0]) / (ks2.fs / di)
+        chNames = list(map(lambda i: ks2.chName[i], args.c))
+        dataframe = pd.DataFrame(dataDS, index=t, columns=chNames)
+        ax = dataframe.plot(linewidth=1)
+        ax.set_xlabel(r'$t$ (s)')
+        ax.legend(loc=1, fontsize='small')
+
+        plt.show()
