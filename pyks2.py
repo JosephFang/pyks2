@@ -88,35 +88,35 @@ class KS2:
         return parent, child
 
     def checkFlgNBytes(self, parent, child):
-        flgSeek = 2
+        flgNBytes = 2
         if parent == 1:
             if child in [62, 70]:
-                flgSeek = 4
+                flgNBytes = 4
         elif parent == 16:
             if child == 35:  # MAX/MIN前後400データ(KS2)
-                flgSeek = 4
+                flgNBytes = 4
 
         elif parent == 17:
             if child == 1:  # データ部(ks1)
-                flgSeek = 4
+                flgNBytes = 4
             elif child == 2:  # データ部(KS2)
-                flgSeek = 8
+                flgNBytes = 8
 
         elif parent == 18:
             if child == 25:  # REC/PAUSE時間(KS2)
-                flgSeek = 8
+                flgNBytes = 8
             elif child in [31, 32]:
-                flgSeek = 2
+                flgNBytes = 2
             else:
-                flgSeek = 4
+                flgNBytes = 4
 
-        return flgSeek
+        return flgNBytes
 
     def getNBytes(self, parent, child):
-        flgSeek = self.checkFlgNBytes(parent, child)
-        if flgSeek == 4:
+        flgNBytes = self.checkFlgNBytes(parent, child)
+        if flgNBytes == 4:
             nBytes = struct.unpack('=I', self.fid.read(4))[0] - 2
-        elif flgSeek == 8:
+        elif flgNBytes == 8:
             nBytes = struct.unpack('=Q', self.fid.read(8))[0] - 2
         else:
             nBytes = struct.unpack('=H', self.fid.read(2))[0] - 2
