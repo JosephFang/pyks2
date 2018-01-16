@@ -36,6 +36,8 @@ Copyright &copy; 2018
 
 ## 使用
 
+见run.ipynb
+
 ## Appendix: Parent ID and Child ID
 
 ### 可変長ヘッダ部全体情報 (`parent id == 1`)
