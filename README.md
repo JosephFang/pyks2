@@ -9,7 +9,7 @@ Copyright &copy; 2018
 
 + 读取KS2文件
 
-    数据采用int16存储，转化公式：`data = coefA * raw + coefB`
+    数据采用int16存储，转化公式：``data = coefA * raw + coefB``
 
 + 转存至.mat
 
@@ -25,7 +25,7 @@ Copyright &copy; 2018
 + Python >= 3.4
 + Numpy >= 1.13
 + Scipy >= 0.19
-+ Pandas >=
++ Pandas >= 0.20
 
 ## KS2版本要求
 
@@ -36,7 +36,7 @@ Copyright &copy; 2018
 
 ## 使用
 
-见run.ipynb
+见`run.ipynb`
 
 ## Appendix: Parent ID and Child ID
 
