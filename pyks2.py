@@ -391,7 +391,7 @@ This is free software, and you are welcome to redistribute it under certain cond
     if args.plot:
         if args.c is None:
             args.c = range(ks2.chN)
-        # down sample data for plot
+        # down sample the data for plotting
         di = round(max(1, ks2.fs / 200))
         rawDS = ks2.raw[::di, :]
         if len(args.c) == 1:

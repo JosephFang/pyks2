@@ -5,14 +5,36 @@ A python module to access the Kyowa KS2 binary file
 By ZC. Fang
 Copyright &copy; 2018
 
-* *ks2 version*: 01.00
-* *csv version*: 0 (old)
-* No CAN channel
-* No digital channel
+## 功能
 
-数据采用int16存储，转化公式:
++ 读取KS2文件
 
-  `data = coefA * raw + coefB`
+    数据采用int16存储，转化公式：`data = coefA * raw + coefB`
+
++ 转存至.mat
+
+    仍然采用int16存储
+
++ 基本的绘图功能（对高速采集信号进行下采样后绘出）
+
++ TODO:
+  + 增加导出excel, txt等功能
+
+## 依赖环境
+
++ Python >= 3.4
++ Numpy >= 1.13
++ Scipy >= 0.19
++ Pandas >=
+
+## KS2版本要求
+
++ *ks2 version*: 01.00
++ *csv version*: 0 (old)
++ **No** CAN channel
++ **No** digital channel
+
+## 使用
 
 ## Appendix: Parent ID and Child ID
 
@@ -80,7 +102,7 @@ child id
 - 1: flgNBytes = 4 (ks1)
 - 2 (and else): flgNBytes = 8 (ks2)
 
-## PostData (`parent id == 18`)
+### PostData (`parent id == 18`)
 
 child id
 
