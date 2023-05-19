@@ -22,6 +22,8 @@ import os
 import struct
 import numpy as np
 import scipy.io as spio
+import datetime
+import pandas as pd
 
 
 class KS2:
@@ -298,6 +300,76 @@ class KS2:
         self.data = np.zeros_like(self.raw, dtype=np.float32)
         for i in range(self.chN):
             self.data[:, i] = self.coefA[i] * self.raw[:, i] + self.coefB[i]
+
+    def savecsv(self, savename, instrument = 'edx100a'):
+
+        if savename is not None:
+            if os.path.splitext(savename)[1] == '.csv':
+                
+                date_time_obj = datetime.datetime.strptime(self.datetime.rstrip('\x00'), '%Y%m%d%H%M%S')
+ 
+                if instrument == 'edx100a':
+                    self.raw = self.coefA*self.raw+self.coefB
+                    # ratio = 0.0003125
+                    data = {
+                    'idNo':self.dev,
+                    'name': self.name,
+                    'datetime': date_time_obj,
+                    'fs': self.fs,
+                    'sampN': self.sampN,
+                    'chN': self.chN,
+                    'chName': self.chName,
+                    'chIndex': self.chIndex,
+                    'range': self.chRange,
+                    'coefA': self.coefA,
+                    'coefB': self.coefB,
+                    'calCoef': self.calCoef,
+                    'meaZero': self.offset,
+                    'LPFinfo': self.chLPF,
+                    'HPFinfo': self.chHPF,
+                    'chUnit': self.unit,
+                    # 'RAW': self.raw
+                                        }
+                
+                elif instrument == 'dcs100a':
+                
+                    calibrate_coef = np.array([0.0004596,0.0004766,0.0004598,0.0004778,0.0004544,0.0004787,0.0004492,0.000471,0.0004498,0.0004704,0.0004598,0.0004815,0.0002915,0.0002935,0.0002897,0.0002903,0.0002925,0.000292,0.0002928,0.0002937,0.0002928,0.0002949,0.0002911,0.0002928,0.0002893,0.0002893,0.0002931,0.0002892,0.0002909,0.0002908,0.0002929,0.0002915,0.0002927,0.0002916,0.0002901,0.0002908,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
+                    # list_raw = self.raw[0]
+                    # list_ratio = list_ref/list_raw
+                    # print(list_ratio)
+                    self.raw = calibrate_coef*self.raw
+                        
+                    data = {
+                    'idNo':self.dev,
+                    'name': self.name,
+                    'datetime': date_time_obj,
+                    'fs': self.fs,
+                    'sampN': self.sampN,
+                    'chN': self.chN,
+                    'chName': self.chName,
+                    'chIndex': self.chIndex,
+                    'range': self.chRange,
+                    # 'coefA': self.coefA,
+                    # 'coefB': self.coefB,
+                    # 'calCoef': self.calCoef,
+                    # 'meaZero': self.offset,
+                    'LPFinfo': self.chLPF,
+                    'HPFinfo': self.chHPF,
+                    'chUnit': self.unit,
+                    # 'RAW': self.raw
+                                        }
+                    
+                for i, v in enumerate(self.raw):
+                    data[i] = v
+                
+                df = pd.DataFrame.from_dict(dict([ (k,pd.Series(v)) for k,v in data.items() ]), orient='index')
+                df = df.round(7)
+                df.to_csv(savename, index=True)
+                print("Saving data in csv format...")
+        else:
+            print("To be expected!")
+        
+        
 
     def save(self, ext=None, savename=None):
         """save data in the given format
